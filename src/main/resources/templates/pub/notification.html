@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title th:text="#{msg.introduction.title}">信息</title>
+</head>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <button class='btn btn-white' onclick="markAsRead()">
+                <i class='far fa-bookmark mr-1'></i> 全部标记为已读
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" id="bNotification">
+            <h1> 暂无未读消息 </h1>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.err.err}">ERRRRRRRRRRRRRRRRRRRRRRRRRRRRRRROR</title>
+<body th:replace="~{/framework/brief}">
+<div th:fragment="mainContent">
+    <div class="error">
+        <div class="error__content">
+            <h2 th:text="#{msg.err.err}">ERROR</h2>
+            <h3 th:text="#{msg.err.l2}">Something went wrong!</h3>
+            <p th:text="#{msg.err.l3}">There was a problem on our end. Please try again later.</p>
+            <button class="btn btn-accent btn-pill" onclick="goBack()" th:text="#{msg.button.go.back}" type="button">←
+                Go Back
+            </button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

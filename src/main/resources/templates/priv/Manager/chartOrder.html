@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.manger.chartOrd.title}">添加</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12">
+            <div class="card card-small">
+                <div class="card-header border-bottom">
+                    <div class="float-left">
+                        <h6 class="m-0" th:text="#{msg.manger.chartOrd.chart.title}">Users</h6>
+                    </div>
+                    <div class="float-right">
+                        <i class="fas fa-circle-notch fa-spin" style="color: #79e3c0;"></i>
+                        Live Updating
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <canvas id="myChart"></canvas>
+                    <script>
+                        var dynamicColors = function () {
+                            var r = Math.floor(Math.random() * 255);
+
+                            var g = Math.floor(Math.random() * 255);
+                            var b = Math.floor(Math.random() * 255);
+                            return 'rgba(' + r + ',' + g + ',' + b + ',0.8)';
+                        };
+                        $.ajax({
+                            type: 'get',
+                            url: '/api/user/chart/order',
+                            contentType: "application/json",
+                            async: true,
+                            cache: false,
+                            success: function (respDat) {					//参数
+                                var config = {
+                                    type: 'bar',
+                                    data: {
+                                        labels: respDat.productID,									//X轴数据
+                                        datasets: [{
+                                            label: '客户贷款业务统计',
+                                            data: respDat.orderCount,							//Y轴数据
+                                            backgroundColor: [],
+                                            borderWidth: 1
+                                        }]
+                                    },
+                                    options: {
+                                        scales: {
+                                            yAxes: [{
+                                                ticks: {
+                                                    beginAtZero: true
+                                                }
+                                            }]
+                                        }
+                                    }
+                                };
+
+                                for (let i = 0; i < respDat.productID.length; i++) {
+                                    config.data.datasets[0].backgroundColor.push(dynamicColors());
+                                }
+
+                                var ctx = document.getElementById('myChart').getContext('2d');
+                                window.myChart = new Chart(ctx, config);
+                            }
+                        });
+
+                        window.updateChart = function () {
+                            $.ajax({
+                                url: '/api/user/chart/order',
+                                contentType: "application/json",
+                                cache: false,
+                                success: function (resp) {
+                                    window.myChart.data.datasets[0].data = resp.orderCount;
+                                    let len = resp.productID.length - window.myChart.data.datasets[0].backgroundColor.length;
+                                    console.log(len);
+                                    for (let i = 0; i < len; i++) {
+                                        console.log("new add");
+                                        window.myChart.data.datasets[0].backgroundColor.push(dynamicColors());
+                                    }
+                                    window.myChart.update();
+                                }
+                            });
+                        }
+
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

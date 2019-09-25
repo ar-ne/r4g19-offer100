@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<div th:fragment="welcomeMsg (name)">
+    <header class="card-header">欢迎使用学生选课系统<!--/*@thymesVar id="name" type="java.lang.String"*/-->
+        <span th:text="${name}"></span></header>
+</div>
+<ul>
+    <li class="nav-item" th:fragment="nav-item(icon,text,tref,active)">
+        <a class="spf-link nav-link " href="#" th:classappend="${tref==page?'active':''}" th:href="${tref}">
+            <i class="material-icons" th:text="${icon}">icon</i>
+            <span th:text="${text}">Text</span>
+        </a>
+    </li>
+</ul>
+
+<!--表单-->
+<div th:fragment="table(jURL,table)">
+    <table id="table"></table>
+    <script th:inline="javascript">
+        generateTables([[${jURL}]], [[${table}]]);
+    </script>
+</div>
+
+<div th:fragment="tableNoCheckbox(jURL,table)">
+    <table id="table"></table>
+    <script th:inline="javascript">
+        generateTables([[${jURL}]], [[${table}]], false);
+    </script>
+</div>
+
+<!--带标题的输入区域-->
+<!--title 标题，name 名字，value 默认值，disabled 可否被修改-->
+<div class="form-group col-md-12" th:fragment="titledTextarea(title,name,value,disabled)">
+    <strong class="text-muted d-block mb-2"
+            th:text="${title}"></strong>
+    <textarea class="form-control" style="min-height: 200px" th:name="${name}"
+              th:readonly="${#strings.isEmpty(disabled)?  disableed : ''}"
+              th:required="${#strings.isEmpty(value) ?  '' : required}" th:text="${value}"></textarea>
+</div>
+
+<!--带标题的输入框（文字前）-->
+<!--title 标题，text 输入框前文字， name 名字，value 默认值，disabled 可否被修改-->
+<div class="form-group col-md-5" th:fragment="titledTextInput(title,text,name,value,disabled)">
+    <strong class="text-muted d-block mb-2" th:text="${title}"></strong>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text" th:text="${text}">￥</span>
+        </div>
+        <input class="form-control" th:name="${name}" th:readonly="${#strings.isEmpty(disabled)?  disableed : ''}"
+               th:required="${#strings.isEmpty(value) ?  '' : required}"
+               th:value="${value}"
+               type="text">
+    </div>
+</div>
+
+<!--带标题的输入框（文字后）-->
+<!--title 标题，text 输入框后文字， name 名字，value 默认值，disabled 可否被修改-->
+<div class="form-group col-md-5" th:fragment="titledTextInputAf(title,text,name,value,disabled)">
+    <strong class="text-muted d-block mb-2" th:text="${title}"></strong>
+    <div class="input-group mb-3">
+        <input class="form-control" th:name="${name}" th:readonly="${#strings.isEmpty(disabled)?  disableed : ''}"
+               th:required="${#strings.isEmpty(value) ?  '' : required}"
+               th:value="${value}"
+               type="text">
+        <div class="input-group-append">
+            <span class="input-group-text" th:text="${text}">￥</span>
+        </div>
+    </div>
+</div>
+
+<!--带标题的输入框（无文字）-->
+<!--title 标题， name 名字，value 默认值，disabled 可否被修改-->
+<div class="form-group col-md-5" th:fragment="TextInput(text,name,value,disabled)">
+    <label th:for="${text}" th:text="${text}">First Name</label>
+    <input class="form-control" th:id="${text}" th:name="${name}"
+           th:readonly="${#strings.isEmpty(disabled)?  disableed : ''}"
+           th:required="${#strings.isEmpty(value) ?  '' : required}"
+           th:value="${value}"
+           type="text">
+</div>
+
+<!--带标题的输入框（图片链接）-->
+<div class="form-group col-md-5" th:fragment="titledIconInput(title,icon,name)">
+    <strong class="text-muted d-block mb-2" th:text="$(title)"></strong>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">
+                <i class="material-icons" th:text="${icon}">icon</i>
+            </span>
+        </div>
+        <input class="form-control" th:name="${name}" type="text">
+    </div>
+</div>
+<!--带标题的输入框密码（无文字）-->
+<!--title 标题， name 名字，value 默认值，disabled 可否被修改-->
+<div class="form-group col-md-5" th:fragment="passwordInput(text,name,value,disabled)">
+    <label th:for="${text}" th:text="${text}">First Name</label>
+    <input class="form-control" th:id="${text}" th:name="${name}"
+           th:readonly="${#strings.isEmpty(disabled)?  disableed : ''}"
+           th:required="${#strings.isEmpty(value) ?  '' : required}"
+           th:value="${value}"
+           type="password">
+</div>
+</html>

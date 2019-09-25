@@ -1,0 +1,190 @@
+buildscript {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/spring' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/snapshots' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/snapshot' }
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:5.0.0'
+    }
+}
+
+plugins {
+    id 'org.asciidoctor.convert' version '1.5.3'
+    id 'org.springframework.boot' version '2.2.0.M1'
+    id 'java'
+    id 'nu.studer.jooq' version '3.0.3'
+    id 'com.github.johnrengelman.shadow' version '5.0.0'
+}
+
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'java'
+
+
+group = 'r4g19'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    maven { url 'https://maven.aliyun.com/repository/jcenter' }
+    maven { url 'https://maven.aliyun.com/repository/public' }
+    maven { url 'https://maven.aliyun.com/repository/spring' }
+    maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+    maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+    maven { url 'https://maven.aliyun.com/repository/central' }
+    maven { url 'https://maven.aliyun.com/repository/snapshots' }
+    maven { url 'https://repo.spring.io/milestone' }
+    maven { url 'https://repo.spring.io/snapshot' }
+    mavenCentral()
+}
+
+ext {
+    set('snippetsDir', file('build/generated-snippets'))
+}
+
+dependencies {
+    implementation 'de.codecentric:spring-boot-admin-starter-client'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
+    implementation 'org.springframework.boot:spring-boot-starter-cache'
+    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'org.springframework.session:spring-session-data-redis'
+    implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'uk.com.robust-it:cloning:1.9.12'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web'
+    compile "org.springframework.boot:spring-boot-starter-security"
+    compileOnly 'org.projectlombok:lombok'
+    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
+    runtimeOnly 'com.h2database:h2'
+    jooqRuntime 'com.h2database:h2'
+    annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "de.codecentric:spring-boot-admin-dependencies:2.1.5"
+    }
+}
+
+test {
+    outputs.dir snippetsDir
+}
+
+asciidoctor {
+    inputs.dir snippetsDir
+    dependsOn test
+}
+allprojects {
+    repositories {
+        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url 'https://maven.aliyun.com/repository/public' }
+        maven { url 'https://maven.aliyun.com/repository/spring' }
+        maven { url 'https://maven.aliyun.com/repository/spring-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+        maven { url 'https://maven.aliyun.com/repository/central' }
+        maven { url 'https://maven.aliyun.com/repository/snapshots' }
+        maven { url 'https://repo.spring.io/milestone' }
+        maven { url 'https://repo.spring.io/snapshot' }
+        mavenCentral()
+    }
+}
+
+def application = new Properties()
+file("src/main/resources/application.properties").withInputStream { application.load(it) }
+jooq {
+    ServerDB(sourceSets.main) {
+        jdbc {
+            driver = 'org.h2.Driver'
+            url = application.getProperty("spring.datasource.url")
+            user = application.getProperty("spring.datasource.username")
+            password = application.getProperty("spring.datasource.password")
+        }
+        generator {
+            name = 'org.jooq.codegen.DefaultGenerator'
+            strategy {
+                name = null
+                matchers {
+                    tables {
+                        table {
+                            pojoExtends = 'org.springframework.hateoas.EntityModel'
+                        }
+                    }
+                }
+            }
+            database {
+                name = 'org.jooq.meta.h2.H2Database'
+                inputSchema = 'PUBLIC'
+                includes = '.*'
+                forcedTypes {
+                    forcedType {
+                        userType = 'r4g19.offer100.properties.mapping.UserType'
+                        converter = 'r4g19.offer100.properties.mapping.UserType.Converter'
+                        expression = 'PUBLIC.LOGIN.TYPE'
+                        types = '.*'
+                    }
+                    forcedType {
+                        userType = 'r4g19.offer100.properties.mapping.VerifyType'
+                        converter = 'r4g19.offer100.properties.mapping.UserType.VerifyType'
+                        expression = 'PUBLIC.LOGIN.VERIFY_TYPE'
+                        types = '.*'
+                    }
+                }
+            }
+            generate {
+                daos = true
+                pojos = true
+                relations = true
+                deprecated = false
+                records = true
+                immutablePojos = false
+                fluentSetters = true
+            }
+            target {
+                packageName = 'r4g19.offer100.jooq'
+            }
+        }
+    }
+}
+
+task cleanOut(type: Delete) {
+    delete("out")
+}
+
+clean {
+    finalizedBy cleanOut
+}
+
+shadowJar {
+    minimize()
+}
+
+jar {
+    manifest {
+        attributes 'Main-Class': 'org.springframework.boot.loader.JarLauncher'
+        attributes 'Start-Class': 'r4g19.offer100.Application'
+    }
+}

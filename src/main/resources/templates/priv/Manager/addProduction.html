@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.manger.addPro.title}">添加</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title" th:text="#{msg.manager.addPro.header.title}">添加</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">
+                </div>
+                <div class="card-body">
+                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{addProduction}">
+                        <div class="form-group col-md-7">
+                            <strong class="text-muted d-block mb-2"
+                                    th:text="#{msg.manager.sidebar.production.type}">类型</strong>
+                            <select class="form-control" id="inputState" name="type">
+                                <option selected="" value="债券型">债券型</option>
+                                <option value="信托型">信托型</option>
+                                <option value="挂钩型">挂钩型</option>
+                                <option value="QDII型">QDII型</option>
+                            </select>
+                        </div>
+                        <br>
+                        <div class="form-group col-md-7">
+                            <strong class="text-muted d-block mb-2"
+                                    th:text="#{msg.manager.sidebar.production.risk}">等级</strong>
+                            <div class="btn-group btn-group-toggle mb-3" data-toggle="buttons">
+                                <label class="btn btn-white">
+                                    <input autocomplete="off" id="option1" name="risk" type="radio" value="None">
+                                    无风险
+                                </label>
+                                <label class="btn btn-white">
+                                    <input autocomplete="off" id="option2" name="risk" type="radio" value="Low">
+                                    低风险
+                                </label>
+                                <label class="btn btn-white">
+                                    <input autocomplete="off" id="option3" name="risk" type="radio" value="High">
+                                    高风险
+                                </label>
+                            </div>
+                        </div>
+                        <div th:replace="/parts::titledTextInputAf(#{msg.manager.sidebar.addPro.profit},'%','profit','','')"></div>
+                        <br>
+                        <div th:replace="/parts::titledTextInput(#{msg.manager.sidebar.addPro.pmin},'￥','pmin','','')"></div>
+                        <br>
+                        <div th:replace="/parts::titledTextarea(#{msg.manager.sidebar.addPro.intro},'intro','','')"></div>
+                        <br>
+                        <div class="form-group col-md-12">
+                            <button class="mb-2 btn btn-outline-primary mr-2" id="button"
+                                    th:text="#{msg.manager.sidebar.addPro.button}"
+                                    type="submit">发布
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>

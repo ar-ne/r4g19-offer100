@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.customer.sidebar.advice.title}">建议</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title" th:text="#{msg.customer.advice.header.title}">意见表</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">
+                </div>
+                <div class="card-body">
+                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{advice}">
+                        <div class="form-group col-md-12">
+                            <strong class="text-muted d-block mb-2"
+                                    th:text="#{msg.customer.sidebar.ticket.type}">投诉类型</strong>
+                            <select class="form-control" id="inputState" name="type">
+                                <option selected="" value="界面">界面</option>
+                                <option value="服务">服务</option>
+                                <option value="功能">功能</option>
+                            </select>
+                        </div>
+                        <div th:replace="/parts::titledTextarea(#{msg.customer.sidebar.advice.content},'content','','')"></div>
+                        <div class="form-group col-md-12">
+                            <button class="mb-2 btn btn-outline-primary mr-2" id="button"
+                                    th:text="#{msg.customer.sidebar.advice.button}"
+                                    type="submit">提交意见
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

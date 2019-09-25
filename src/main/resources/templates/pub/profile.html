@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.profile.title}">个人信息</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title" th:text="#{msg.profile.title}">添加</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">
+                    <img alt="User Avatar" class="rounded-circle m-auto" th:src="@{/images/avatars/0.jpg}"
+                         width="110">
+                </div>
+                <div class="card-body">
+                    <!--/*@thymesVar id="user" type="r4g19.offer100.webhw.model.User"*/-->
+                    <!--/*@thymesVar id="userType" type="java.lang.String"*/-->
+                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{profile}">
+                        <div class="form-row p-3">
+                            <div th:replace="/parts::TextInput(#{msg.profile.username},'name',${user.getName()},'')"></div>
+                            <div th:replace="/parts::TextInput(#{msg.profile.phoneNum},'phonenum',${user.getPhonenum()},'')"></div>
+                        </div>
+                        <div class="form-row p-3">
+                            <div th:replace="/parts::TextInput(#{msg.profile.age},'age','20','')"></div>
+                            <div class="form-group col-md-5">
+                                <label for="sex">性别</label>
+                                <div class="form-row pl-3 pt-1" id="sex">
+                                    <div class="custom-control custom-radio mb-1 pr-5">
+                                        <input class="custom-control-input" id="formsRadioDefault" name="sex"
+                                               th:checked="${user.getSex().name()=='Male'}" type="radio"
+                                               value="Male">
+                                        <label class="custom-control-label" for="formsRadioDefault">男</label>
+                                    </div>
+                                    <div class="custom-control custom-radio mb-1">
+                                        <input class="custom-control-input" id="formsRadioChecked" name="sex"
+                                               th:checked="${user.getSex().name()=='Female'}" type="radio"
+                                               value="Female">
+                                        <label class="custom-control-label" for="formsRadioChecked">女</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.personid},'personid',${user.getPersonid()},'')"></div>
+                        <br>
+                        <div class="form-row p-3" th:if="${!#strings.equals(userType,'Customer')}">
+                            <div th:replace="/parts::TextInput(#{msg.profile.joinTime},'joinTime',${#dates.format(user.getJointime(),'yyyy-MM-dd')},'disabled')"></div>
+                            <div th:replace="/parts::titledTextInputAf(#{msg.profile.workYear},'年','workYear',${user.getWorkyear()},'disabled')"></div>
+                        </div>
+                        <br>
+                        <div th:replace="/parts::titledTextarea(#{msg.profile.adress},'adress',${user.getAdress()},'')"></div>
+                        <br>
+                        <div class="form-group col-md-12">
+                            <button class="mb-2 btn btn-outline-primary mr-2" id="button"
+                                    th:text="#{msg.profile.button}"
+                                    type="submit">提交
+                            </button>
+                        </div>
+                    </form>
+                    >
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

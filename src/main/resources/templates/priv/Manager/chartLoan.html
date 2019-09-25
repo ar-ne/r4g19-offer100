@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.manger.chartLoan.title}">统计</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12">
+            <div class="card card-small">
+                <div class="card-header border-bottom">
+                    <div class="float-left">
+                        <h6 class=" m-0" th:text="#{msg.manger.chartLoan.chart.title}">Users</h6>
+                    </div>
+                    <div class="float-right">
+                        <i class="fas fa-circle-notch fa-spin" style="color: #79e3c0;"></i>
+                        Live Updating
+                    </div>
+                </div>
+                <div class="card-body pt-0">
+                    <canvas id="chart-area" style="max-height: 75vh;"></canvas>
+                    <script>
+                        $.ajax({
+                            type: 'get',
+                            url: '/api/user/chart/loan',
+                            contentType: "application/json",
+                            async: true,
+                            cache: false,
+                            success: function (respData) {
+                                var config = {
+                                    type: 'pie',
+                                    data: {
+                                        datasets: [{
+                                            data: respData.counts,
+                                            backgroundColor: [
+                                                'rgba(255, 99, 132, 0.8)',
+                                                'rgba(54, 162, 235, 0.8)',
+                                                'rgba(255, 206, 86, 0.8)',
+                                                'rgba(75, 192, 192, 0.8)',
+                                                'rgba(153, 102, 255, 0.8)',
+                                                'rgba(0, 128, 0, 0.8)',
+                                            ],
+                                            label: 'Dataset 1'
+                                        }],
+                                        labels: [
+                                            '0-1W',
+                                            '1-2W',
+                                            '2-3W',
+                                            '3-4W',
+                                            '4-5W',
+                                            '>5W',
+                                        ]
+                                    },
+                                    options: {
+                                        responsive: true
+                                    }
+                                };
+                                var ctx = document.getElementById('chart-area').getContext('2d');
+                                window.myPie = new Chart(ctx, config);
+                            }
+                        });
+
+                        window.updateChart = function () {
+                            $.ajax({
+                                url: '/api/user/chart/loan',
+                                contentType: "application/json",
+                                cache: false,
+                                success: function (respData) {
+                                    window.myPie.data.datasets[0].data = respData.counts;
+                                    window.myPie.update();
+                                }
+                            });
+                        }
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
