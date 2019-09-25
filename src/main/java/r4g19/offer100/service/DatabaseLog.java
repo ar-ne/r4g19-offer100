@@ -2,8 +2,8 @@ package r4g19.offer100.service;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Service;
-import r4g19.offer100.jooq.tables.pojos.Log;
 import r4g19.offer100.jooq.tables.daos.LogDao;
+import r4g19.offer100.jooq.tables.pojos.Log;
 
 import java.sql.Timestamp;
 

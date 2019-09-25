@@ -1,12 +1,12 @@
 package r4g19.offer100.service;
 
-import r4g19.offer100.model.tables.daos.LoginDao;
-import r4g19.offer100.model.tables.pojos.Login;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import r4g19.offer100.jooq.tables.daos.LoginDao;
+import r4g19.offer100.jooq.tables.pojos.Login;
 
 import java.util.Collections;
 
@@ -25,9 +25,9 @@ public class AuthService extends ServiceBase implements UserDetailsService {
      */
     @Override
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
-        Login login = new LoginDao(dsl.configuration()).fetchOneByLoginname(loginName);
+        Login login = new LoginDao(dsl.configuration()).fetchOneByUsername(loginName);
         if (login == null) throw new UsernameNotFoundException("login name:" + loginName);
-        return new User(login.getLoginname(), login.getPass(), Collections.singletonList(login.getType().getAuthority()));
+        return new User(login.getUsername(), login.getPassword(), Collections.singletonList(login.getType().getAuthority()));
     }
 
 

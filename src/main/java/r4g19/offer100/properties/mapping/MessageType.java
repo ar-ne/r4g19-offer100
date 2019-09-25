@@ -1,7 +1,7 @@
 package r4g19.offer100.properties.mapping;
 
 public enum MessageType {
-    Broadcast, Unicast,LiveUpdate;
+    Broadcast, Unicast, LiveUpdate;
 
     public static class Converter implements org.jooq.Converter<Integer, MessageType> {
         @Override
