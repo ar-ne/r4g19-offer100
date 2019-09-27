@@ -22,8 +22,6 @@ import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import r4g19.offer100.utils.Auth;
 
-import java.util.regex.Pattern;
-
 /**
  * 入口类和配置信息
  */
@@ -88,13 +86,12 @@ public class Application {
     @Configuration
     @EnableWebSecurity
     public class WebSecurity extends WebSecurityConfigurerAdapter {
-        private final Pattern allowedMethods = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
-
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .anyRequest().permitAll()
-                    .and().csrf().requireCsrfProtectionMatcher(request -> !allowedMethods.matcher(request.getMethod()).matches() && !(request.getServletPath().contains("/druid") || request.getServletPath().contains("/ws/")))
+                    .antMatchers("/", "/webpack/**", "/fonts/**", "/scripts/**", "/styles/**", "/register").permitAll()
+                    .antMatchers("/admin/**").access("hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
+                    .antMatchers("/web/**", "/api/**").access("hasAnyRole('Entrepreneurial','Personal')")
                     .and().formLogin().loginPage("/login").successHandler(authSuccessHandler()).failureHandler(authFailureHandler()).permitAll()
                     .and().logout().logoutSuccessHandler(logoutHandler());
         }

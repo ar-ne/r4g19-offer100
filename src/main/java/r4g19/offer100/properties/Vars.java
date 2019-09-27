@@ -34,8 +34,8 @@ public class Vars {
         HashMap<Class, Table<?>> map1 = new HashMap<>();
         System.out.println("Building static map => Vars.POJO_DAO_MAPPER | Vars.POJO_DAO_MAPPER");
         for (Table<?> table : Public.PUBLIC.getTables()) {
-            String pojo = String.format("%s.pojos.%s", table.getClass().getPackage().getName(), table.getName());
-            String dao = String.format("%s.daos.%sDao", table.getClass().getPackage().getName(), table.getName());
+            String pojo = String.format("%s.pojos.%s", table.getClass().getPackage().getName(), table.getClass().getSimpleName());
+            String dao = String.format("%s.daos.%sDao", table.getClass().getPackage().getName(), table.getClass().getSimpleName());
             System.out.println(pojo + " <=> " + dao);
             try {
                 map.put(Class.forName(pojo), Class.forName(dao).getConstructor(org.jooq.Configuration.class));
@@ -49,9 +49,9 @@ public class Vars {
         System.out.println("Built Vars.POJO_DAO_MAPPER...............");
 
         HashMap<UserType, Class<? extends EntityModel>> map2 = new HashMap<>();
-        map2.put(UserType.PERSONAL, r4g19.offer100.jooq.tables.pojos.Personal.class);
+        map2.put(UserType.Personal, r4g19.offer100.jooq.tables.pojos.Personal.class);
 
-        map2.put(UserType.ENTREPRENEURIAL, r4g19.offer100.jooq.tables.pojos.Entrepreneurial.class);
+        map2.put(UserType.Entrepreneurial, r4g19.offer100.jooq.tables.pojos.Entrepreneurial.class);
         TYPE_POJO_MAP = Collections.unmodifiableMap(map2);
     }
 }

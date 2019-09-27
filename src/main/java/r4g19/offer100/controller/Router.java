@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
  * 页面路由，将对应的页面，对应到相应的view
  */
 @Controller
-@RequestMapping("/")
 public class Router extends ControllerBase {
     /**
      * 跳转到首屏，负责重定向
@@ -24,12 +23,21 @@ public class Router extends ControllerBase {
      * @return 跳转页面
      */
     @GetMapping("")
-    public String splash(Model model, String redirect, HttpServletRequest request) {
+    public String splash(Model model, String redirect, HttpServletRequest request, Authentication authentication) {
         model.addAttribute("direction", redirect);
         if (request.getSession(false) == null) {
             logger.debug("No session! create one, new session is:{}", request.getSession(true).getId());
         }
+        if (authentication != null && authentication.isAuthenticated()) {
+            model.addAttribute("username", getUsername(authentication));
+            model.addAttribute("userType", getUserType(authentication));
+        }
         return "framework/splash";
+    }
+
+    @GetMapping("web")
+    public String index(Authentication authentication) {
+        return "redirect:/web/index";
     }
 
     @GetMapping("/web/{page}")

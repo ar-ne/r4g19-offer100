@@ -1,15 +1,15 @@
 create table login (
-                       username             VARCHAR(10240)                 not null,
-                       displayname          VARCHAR(10240),
-                       password             VARCHAR(10240),
-                       email                VARCHAR(10240),
-                       tel                  VARCHAR(10240),
-                       join_time            TIMESTAMP,
-                       type                 INTEGER,
-                       avatar               BLOB,
-                       contact              VARCHAR(10240),
-                       verify_type          INTEGER,
-                       primary key (username)
+username             VARCHAR(10240)                 not null,
+displayname          VARCHAR(10240),
+password             VARCHAR(10240),
+email                VARCHAR(10240),
+tel                  VARCHAR(10240),
+join_time            TIMESTAMP,
+type                 INTEGER,
+avatar               BLOB,
+contact              VARCHAR(10240),
+verify_type          INTEGER,
+primary key (username)
 );
 
 create table Log(
@@ -48,9 +48,9 @@ create table entrepreneurial
     accu_addr VARCHAR(10240),
     brief     VARCHAR(10240),
     detail    VARCHAR(81920),
-                                 primary key (username),
-                                 foreign key (username)
-                                     references login (username)
+primary key (username),
+foreign key (username)
+      references login (username)
 );
 
 create table hiring (
@@ -97,8 +97,8 @@ create index Index_1 on login (
     );
 
 create  index Index_2 on personal (
-                                   username ASC
-    );
+username ASC
+);
 
 create table resume
 (
@@ -118,9 +118,9 @@ create table resume
 );
 
 create  index Index_4 on resume (
-                                 username ASC,
-                                 id ASC
-    );
+username ASC,
+id ASC
+);
 
 create table submission
 (
@@ -137,9 +137,9 @@ create table submission
 );
 
 create  index Index_8 on submission (
-                                     hir_username ASC,
-                                     res_username ASC,
-                                     hir_id ASC,
-                                     res_id ASC
-    );
+hir_username ASC,
+res_username ASC,
+hir_id ASC,
+res_id ASC
+);
 
