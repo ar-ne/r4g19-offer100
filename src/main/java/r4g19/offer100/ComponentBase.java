@@ -26,12 +26,13 @@ public abstract class ComponentBase {
      * @param authentication 身份
      * @return 登录名
      */
-    public static String getLoginName(Authentication authentication) {
+    public static String getUsername(Authentication authentication) {
         return ((User) authentication.getPrincipal()).getUsername();
     }
 
     public static UserType getUserType(Authentication authentication) {
-        return ((UserType.Authority) authentication.getAuthorities().toArray()[0]).getUserType();
+        return UserType.Personal;
+//        return ((UserType.Authority) authentication.getAuthorities().toArray()[0]).getUserType();
     }
 
     public <T> T deepClone(T o) {

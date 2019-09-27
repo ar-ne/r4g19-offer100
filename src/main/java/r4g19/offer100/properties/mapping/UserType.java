@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
  * 用户类型的枚举类型和转换器
  */
 public enum UserType {
-    PERSONAL, ENTREPRENEURIAL;
+    Personal, Entrepreneurial;
 
     public static final String prefix = "ROLE_";
 
@@ -28,9 +28,9 @@ public enum UserType {
         public UserType from(Integer databaseObject) {
             switch (databaseObject) {
                 case 0:
-                    return PERSONAL;
+                    return Personal;
                 case 1:
-                    return ENTREPRENEURIAL;
+                    return Entrepreneurial;
             }
             throw new RuntimeException("DBO not a valid 'UserType'");
         }
@@ -38,9 +38,9 @@ public enum UserType {
         @Override
         public Integer to(UserType userObject) {
             switch (userObject) {
-                case PERSONAL:
+                case Personal:
                     return 0;
-                case ENTREPRENEURIAL:
+                case Entrepreneurial:
                     return 1;
             }
             throw new RuntimeException("UO not a valid 'UserType'");
