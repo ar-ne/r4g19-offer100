@@ -1,12 +1,11 @@
 package r4g19.offer100.controller;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import r4g19.offer100.ComponentBase;
-import r4g19.offer100.service.CommonCRUD;
-import r4g19.offer100.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -16,15 +15,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 @RequestMapping("/")
-public class Router extends ComponentBase {
-    private final UserService userService;
-    private final CommonCRUD commonCRUD;
-
-    public Router(UserService userService, CommonCRUD commonCRUD) {
-        this.userService = userService;
-        this.commonCRUD = commonCRUD;
-    }
-
+public class Router extends ControllerBase {
     /**
      * 跳转到首屏，负责重定向
      *
@@ -39,5 +30,10 @@ public class Router extends ComponentBase {
             logger.debug("No session! create one, new session is:{}", request.getSession(true).getId());
         }
         return "framework/splash";
+    }
+
+    @GetMapping("/web/{page}")
+    public String router(@PathVariable String page, Authentication authentication) {
+        return String.format("/priv/%s/%s", getUserType(authentication), page);
     }
 }

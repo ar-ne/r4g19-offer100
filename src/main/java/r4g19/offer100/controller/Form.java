@@ -9,5 +9,5 @@ import r4g19.offer100.ComponentBase;
  */
 @Controller
 @RequestMapping("/")
-public class Form extends ComponentBase {
+public class Form extends ControllerBase {
 }
