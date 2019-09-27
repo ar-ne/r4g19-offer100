@@ -1,14 +1,18 @@
 package r4g19.offer100.controller.yhr;
 
-import org.springframework.security.core.Authentication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 import r4g19.offer100.controller.ControllerBase;
+import r4g19.offer100.jooq.tables.pojos.Log;
+import r4g19.offer100.service.CommonCRUD;
 
 @Controller
 public class Admin extends ControllerBase {
+    @Autowired
+    CommonCRUD commonCRUD;
+
     @GetMapping("admin")
     public String index() {
         return "redirect:/admin/index";

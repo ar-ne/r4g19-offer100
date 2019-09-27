@@ -13,10 +13,10 @@ create table login (
 );
 
 create table Log (
-                     username             VARCHAR(10240)                 not null,
-                     time                 TIMESTAMP                      not null,
-                     description          VARCHAR(10240)                 not null,
-                     notes                VARCHAR(10240)                 not null,
+                     username             VARCHAR(10240),
+                     time                 TIMESTAMP,
+                     description          VARCHAR(10240),
+                     notes                VARCHAR(10240),
                      id                   BIGINT                         not null,
                      primary key (id),
                      foreign key (username)

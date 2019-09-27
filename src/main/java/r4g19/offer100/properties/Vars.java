@@ -34,8 +34,8 @@ public class Vars {
         HashMap<Class, Table<?>> map1 = new HashMap<>();
         System.out.println("Building static map => Vars.POJO_DAO_MAPPER | Vars.POJO_DAO_MAPPER");
         for (Table<?> table : Public.PUBLIC.getTables()) {
-            String pojo = String.format("%s.pojos.%s", table.getClass().getPackage().getName(), table.getName());
-            String dao = String.format("%s.daos.%sDao", table.getClass().getPackage().getName(), table.getName());
+            String pojo = String.format("%s.pojos.%s", table.getClass().getPackage().getName(), table.getClass().getSimpleName());
+            String dao = String.format("%s.daos.%sDao", table.getClass().getPackage().getName(), table.getClass().getSimpleName());
             System.out.println(pojo + " <=> " + dao);
             try {
                 map.put(Class.forName(pojo), Class.forName(dao).getConstructor(org.jooq.Configuration.class));
