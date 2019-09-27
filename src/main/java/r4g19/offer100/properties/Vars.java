@@ -49,9 +49,9 @@ public class Vars {
         System.out.println("Built Vars.POJO_DAO_MAPPER...............");
 
         HashMap<UserType, Class<? extends EntityModel>> map2 = new HashMap<>();
-        map2.put(UserType.PERSONAL, r4g19.offer100.jooq.tables.pojos.Personal.class);
+        map2.put(UserType.Personal, r4g19.offer100.jooq.tables.pojos.Personal.class);
 
-        map2.put(UserType.ENTREPRENEURIAL, r4g19.offer100.jooq.tables.pojos.Entrepreneurial.class);
+        map2.put(UserType.Entrepreneurial, r4g19.offer100.jooq.tables.pojos.Entrepreneurial.class);
         TYPE_POJO_MAP = Collections.unmodifiableMap(map2);
     }
 }
