@@ -12,15 +12,16 @@ verify_type          INTEGER,
 primary key (username)
 );
 
-create table Log(
-                    username    VARCHAR(10240) not null,
-                    time        TIMESTAMP      not null,
-                    description VARCHAR(10240) not null,
-                    notes       VARCHAR(10240) not null,
-                    id          BIGINT         not null,
-                    primary key (id),
-                    foreign key (username)
-                        references login (username)
+create table Log
+(
+    username    VARCHAR(10240),
+    time        TIMESTAMP,
+    description VARCHAR(10240),
+    notes       VARCHAR(10240),
+    id          BIGINT not null,
+    primary key (id),
+    foreign key (username)
+        references login (username)
 );
 
 create index Index_5 on Log (
@@ -48,24 +49,25 @@ create table entrepreneurial
     accu_addr VARCHAR(10240),
     brief     VARCHAR(10240),
     detail    VARCHAR(81920),
-primary key (username),
-foreign key (username)
-      references login (username)
+    primary key (username),
+    foreign key (username)
+        references login (username)
 );
 
-create table hiring (
-                        username          VARCHAR(10240)                 not null,
-                        id                BIGINT                         not null,
-                        position          VARCHAR(10240),
-                        edu_requirement   VARCHAR(10240),
-                        work_address      VARCHAR(10240),
-                        interview_address VARCHAR(10240),
-                        pubtime           VARCHAR(10240),
-                        salary            VARCHAR(10240),
-                        detail            VARCHAR(81920),
-                        primary key (username, id),
-                        foreign key (username)
-                            references entrepreneurial (username)
+create table hiring
+(
+    username          VARCHAR(10240) not null,
+    id                BIGINT         not null,
+    position          VARCHAR(10240),
+    edu_requirement   VARCHAR(10240),
+    work_address      VARCHAR(10240),
+    interview_address VARCHAR(10240),
+    pubtime           VARCHAR(10240),
+    salary            VARCHAR(10240),
+    detail            VARCHAR(81920),
+    primary key (username, id),
+    foreign key (username)
+        references entrepreneurial (username)
 );
 
 create table collection

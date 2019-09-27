@@ -5577,11 +5577,10 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Code>username</a:Code>
 <a:CreationDate>1569372868</a:CreationDate>
 <a:Creator>Arne</a:Creator>
-<a:ModificationDate>1569373055</a:ModificationDate>
+<a:ModificationDate>1569552924</a:ModificationDate>
 <a:Modifier>Arne</a:Modifier>
 <a:DataType>VARCHAR(10240)</a:DataType>
 <a:Length>10240</a:Length>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 <a:AutoMigrated>1</a:AutoMigrated>
 </o:Column>
 <o:Column Id="o108">
@@ -5590,10 +5589,9 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Code>time</a:Code>
 <a:CreationDate>1569372869</a:CreationDate>
 <a:Creator>Arne</a:Creator>
-<a:ModificationDate>1569373055</a:ModificationDate>
+<a:ModificationDate>1569552924</a:ModificationDate>
 <a:Modifier>Arne</a:Modifier>
 <a:DataType>TIMESTAMP</a:DataType>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o109">
 <a:ObjectID>84DAD6A8-7A9A-45E8-AE82-AFFB79FA9754</a:ObjectID>
@@ -5601,11 +5599,10 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Code>description</a:Code>
 <a:CreationDate>1569372869</a:CreationDate>
 <a:Creator>Arne</a:Creator>
-<a:ModificationDate>1569373027</a:ModificationDate>
+<a:ModificationDate>1569552924</a:ModificationDate>
 <a:Modifier>Arne</a:Modifier>
 <a:DataType>VARCHAR(10240)</a:DataType>
 <a:Length>10240</a:Length>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o110">
 <a:ObjectID>2F23C5BB-6B6F-4A1B-AE18-A53C49AD2B8C</a:ObjectID>
@@ -5613,11 +5610,10 @@ LABL 0 新宋体,8,N</a:FontList>
 <a:Code>notes</a:Code>
 <a:CreationDate>1569372869</a:CreationDate>
 <a:Creator>Arne</a:Creator>
-<a:ModificationDate>1569373027</a:ModificationDate>
+<a:ModificationDate>1569552924</a:ModificationDate>
 <a:Modifier>Arne</a:Modifier>
 <a:DataType>VARCHAR(10240)</a:DataType>
 <a:Length>10240</a:Length>
-<a:Column.Mandatory>1</a:Column.Mandatory>
 </o:Column>
 <o:Column Id="o111">
 <a:ObjectID>03FF8116-CC4A-486F-9DDE-7FB7A47B672D</a:ObjectID>
