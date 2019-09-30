@@ -85,6 +85,12 @@ create table collection
         references hiring (username, id)
 );
 
+create index Index_7 on collection (
+                                    per_username ASC,
+                                    hir_username ASC,
+                                    hir_id ASC
+    );
+
 create index Index_3 on entrepreneurial (
                                          username ASC
     );
@@ -98,15 +104,15 @@ create index Index_1 on login (
                                username ASC
     );
 
-create  index Index_2 on personal (
-username ASC
-);
+create index Index_2 on personal (
+                                  username ASC
+    );
 
 create table resume
 (
     username   VARCHAR(10240) not null,
     id         BIGINT         not null,
-    sex        VARCHAR(10240),
+    sex        int,
     age        int,
     school     VARCHAR(10240),
     address    VARCHAR(10240),
@@ -127,11 +133,11 @@ id ASC
 create table submission
 (
     hir_username VARCHAR(10240) not null,
-    res_username VARCHAR(10240),
+    res_username VARCHAR(10240) not null,
     hir_id       BIGINT         not null,
     res_id       BIGINT         not null,
     status       INT,
-    primary key (hir_username, hir_id, res_id),
+    primary key (hir_username, res_username, hir_id, res_id),
     foreign key (hir_username, hir_id)
         references hiring (username, id),
     foreign key (res_username, res_id)

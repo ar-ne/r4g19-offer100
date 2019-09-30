@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Component;
-import r4g19.offer100.properties.mapping.UserType;
-import r4g19.offer100.service.DatabaseLog;
+import r4g19.offer100.properties.cym.mapping.UserType;
+import r4g19.offer100.service.cym.DatabaseLog;
 
 /**
  * 所有Component的父类

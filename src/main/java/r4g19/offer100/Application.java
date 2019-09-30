@@ -6,6 +6,8 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -20,7 +22,7 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
-import r4g19.offer100.utils.Auth;
+import r4g19.offer100.utils.cym.Auth;
 
 /**
  * 入口类和配置信息
@@ -82,6 +84,14 @@ public class Application {
         }
     }
 
+    @Configuration
+    @EnableGlobalMethodSecurity(
+            prePostEnabled = true,
+            securedEnabled = true,
+            jsr250Enabled = true)
+    public static class MethodSecurityConfig extends GlobalMethodSecurityConfiguration {
+    }
+
     @Controller
     @Configuration
     @EnableWebSecurity
@@ -90,8 +100,9 @@ public class Application {
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
                     .antMatchers("/", "/webpack/**", "/fonts/**", "/scripts/**", "/styles/**", "/register").permitAll()
-                    .antMatchers("/admin/**").access("hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
-                    .antMatchers("/web/**", "/api/**").access("hasAnyRole('Entrepreneurial','Personal')")
+                    .antMatchers("/admin/**", "/api/admin/**").access("hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
+                    .antMatchers("/web/**", "/api/user/**").access("hasAnyRole('Entrepreneurial','Personal')")
+                    .antMatchers("/api/public/**").access("hasAnyRole('Entrepreneurial','Personal') or hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
                     .and().formLogin().loginPage("/login").successHandler(authSuccessHandler()).failureHandler(authFailureHandler()).permitAll()
                     .and().logout().logoutSuccessHandler(logoutHandler());
         }
