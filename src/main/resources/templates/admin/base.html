@@ -1,0 +1,125 @@
+<!doctype html>
+<html class="no-js h-100" lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script>
+        if (!window.Turbolinks) window.location.replace('/?redirect=' + (window.location + "").substring(window.location.origin.length));
+    </script>
+    <meta name="turbolinks-cache-control" content="no-cache">
+    <meta charset="UTF-8">
+    <title>Shards Dashboard Lite - Free Bootstrap Admin Template – DesignRevision</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+    <script src="../../static/webpack/fonts.bundle.js"></script>
+</head>
+<body class="h-100">
+<div class="container-fluid">
+    <div class="row">
+        <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
+            <div class="main-navbar">
+                <nav class="navbar align-items-stretch navbar-light bg-white flex-md-nowrap border-bottom p-0">
+                    <a class="navbar-brand w-100 mr-0" href="#" style="line-height: 25px;">
+                        <div class="d-table m-auto">
+                            <img id="main-logo" data-turbolinks-permanent class="d-inline-block align-top mr-1"
+                                 style="max-width: 25px;" th:src="@{/images/logo.jpg}">
+                            <span class="d-none d-md-inline ml-1" th:text="#{msg.main.name}">Shards Dashboard</span>
+                        </div>
+                    </a>
+                    <a class="toggle-sidebar d-sm-inline d-md-none d-lg-none">
+                        <i class="material-icons">&#xE5C4;</i>
+                    </a>
+                </nav>
+            </div>
+            <div class="nav-wrapper">
+                <!--/*@thymesVar id="userType" type="java.lang.String"*/-->
+                <ul class="nav flex-column" >
+                    <li th:replace="/parts::nav-item('add_circle_outline',#{msg.manager.sidebar.add.production},@{addProduction},false)"></li>
+                    <li th:replace="/parts::nav-item('select_all',#{msg.manager.sidebar.select.production},@{selectProduction},false)"></li>
+                    <li th:replace="/parts::nav-item('saved_search',#{msg.manager.sidebar.select.order},@{selectOrder},false)"></li>
+                    <li th:replace="/parts::nav-item('search',#{msg.manager.sidebar.select.loan},@{selectLoan},false)"></li>
+                    <li th:replace="/parts::nav-item('add_comment',#{msg.manager.sidebar.add.Introduction},@{addIntroduction},false)"></li>
+                    <li th:replace="/parts::nav-item('insert_chart_outlined',#{msg.manager.sidebar.chart.order},@{chartOrder},false)"></li>
+                    <li th:replace="/parts::nav-item('pie_chart_outlined',#{msg.manager.sidebar.chart.loan},@{chartLoan},false)"></li>
+
+                </ul>
+            </div>
+        </aside>
+        <main class="main-content col-lg-10 col-md-9 col-sm-12 p-0 offset-lg-2 offset-md-3">
+            <div class="main-navbar sticky-top bg-white">
+                <!-- Main Navbar -->
+                <nav class="navbar align-items-stretch navbar-light flex-md-nowrap p-0">
+                    <div class="main-navbar__search w-75 d-none d-md-flex d-lg-flex">
+                    </div>
+                    <ul class="navbar-nav border-left flex-row ">
+                        <li class="nav-item border-right dropdown notifications">
+                            <a class="nav-link nav-link-icon text-center" href="#" role="button" id="dropdownMenuLink"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <div class="nav-link-icon__wrapper">
+                                    <i class="material-icons">&#xE7F4;</i>
+                                    <span class="badge badge-pill badge-danger" data-turbolinks-permanent=""
+                                          id="aCount"></span>
+                                </div>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-small"
+                                 aria-labelledby="dropdownMenuLink">
+                                <div data-turbolinks-permanent="" id="aNotification" style="overflow-y:scroll;max-height: 75vh;">
+                                    <a class="dropdown-item notification__all text-center" th:href="@{notification}">
+                                        查看全部提醒 </a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a id="permanentElement01" data-turbolinks-permanent
+                               class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
+                               role="button" aria-haspopup="true" aria-expanded="false">
+                                <!--                                <img class="user-avatar rounded-circle mr-2" th:src="@{/images/avatars/0.jpg}"-->
+                                <!--                                     alt="User Avatar">-->
+                                <!--/*@thymesVar id="user" type="r4g19.offer100.webhw.model.User"*/-->
+                                <span class="d-none d-md-inline-block" th:text="${user!=null?user.getName():'admin'}">Sierra Brooks</span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-small">
+                                <a class="dropdown-item" href="#" th:href="@{profile}">
+                                    <i class="material-icons">&#xE7FD;</i> 设置</a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item text-danger" th:href="@{/logout}">
+                                    <i class="material-icons text-danger">&#xE879;</i> 登出 </a>
+                            </div>
+                        </li>
+                    </ul>
+                    <nav class="nav">
+                        <a href="#"
+                           class="nav-link nav-link-icon toggle-sidebar d-md-inline d-lg-none text-center border-left"
+                           data-toggle="collapse" data-target=".header-navbar" aria-expanded="false"
+                           aria-controls="header-navbar">
+                            <i class="material-icons">&#xE5D2;</i>
+                        </a>
+                    </nav>
+                </nav>
+            </div>
+            <!-- / .main-navbar -->
+            <div id="alert"></div>
+            <div id="mainContent" class="main-content-container container-fluid px-4" style="display: none;"
+                 th:include="::mainContent">
+                Main content
+            </div>
+            <footer id="mainFooter" data-turbolinks-permanent class="main-footer d-flex p-2 px-3 bg-white border-top">
+                <ul class="nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/web/}">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/admin/}">Admin</a>
+                    </li>
+                </ul>
+                <span class="copyright ml-auto my-auto mr-2">Copyright © 2019
+              <a href="#" rel="nofollow">r4g19</a>
+            </span>
+            </footer>
+        </main>
+    </div>
+</div>
+<script data-turbolinks-eval=true>
+    if ([[${userType != null}]]) setUT("[[${userType}]]");
+    init()
+</script>
+</body>

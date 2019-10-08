@@ -22,4 +22,6 @@ public class Admin extends ControllerBase {
     public String router(@PathVariable String page) {
         return String.format("admin/%s", page);
     }
+
+    //@GetMapping("")
 }
