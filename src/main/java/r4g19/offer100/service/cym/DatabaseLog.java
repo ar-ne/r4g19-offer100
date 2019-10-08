@@ -1,4 +1,4 @@
-package r4g19.offer100.service;
+package r4g19.offer100.service.cym;
 
 import org.jooq.DSLContext;
 import org.springframework.stereotype.Service;

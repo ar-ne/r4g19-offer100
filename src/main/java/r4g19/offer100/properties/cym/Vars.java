@@ -1,9 +1,9 @@
-package r4g19.offer100.properties;
+package r4g19.offer100.properties.cym;
 
 import org.jooq.Table;
-import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.RepresentationModel;
 import r4g19.offer100.jooq.Public;
-import r4g19.offer100.properties.mapping.UserType;
+import r4g19.offer100.properties.cym.mapping.UserType;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -19,7 +19,7 @@ public class Vars {
     public static final Set<String> PUBLIC_PAGES;
     public static final Map<Class, Constructor> POJO_DAO_MAPPER;
     public static final Map<Class, Table<?>> POJO_DAO_TABLE;
-    public static final Map<UserType, Class<? extends EntityModel>> TYPE_POJO_MAP;
+    public static final Map<UserType, Class<? extends RepresentationModel>> TYPE_POJO_MAP;
 //    public static final Map<CRUDOperation, Map<Class, MessageParam[]>> DB_BROADCAST_TRIGGER;
 
 
@@ -48,7 +48,7 @@ public class Vars {
         POJO_DAO_TABLE = unmodifiableMap(map1);
         System.out.println("Built Vars.POJO_DAO_MAPPER...............");
 
-        HashMap<UserType, Class<? extends EntityModel>> map2 = new HashMap<>();
+        HashMap<UserType, Class<? extends RepresentationModel>> map2 = new HashMap<>();
         map2.put(UserType.Personal, r4g19.offer100.jooq.tables.pojos.Personal.class);
 
         map2.put(UserType.Entrepreneurial, r4g19.offer100.jooq.tables.pojos.Entrepreneurial.class);

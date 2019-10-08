@@ -31,7 +31,7 @@ apply plugin: 'java'
 
 group = 'r4g19'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
+sourceCompatibility = '11'
 
 configurations {
     compileOnly {
@@ -57,7 +57,7 @@ ext {
 }
 
 dependencies {
-    implementation 'de.codecentric:spring-boot-admin-starter-client'
+//    implementation 'de.codecentric:spring-boot-admin-starter-client'
     implementation 'org.springframework.boot:spring-boot-starter-websocket'
 //    implementation 'org.springframework.boot:spring-boot-starter-cache'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
@@ -130,7 +130,7 @@ jooq {
                 matchers {
                     tables {
                         table {
-                            pojoExtends = 'org.springframework.hateoas.EntityModel'
+                            pojoExtends = 'org.springframework.hateoas.RepresentationModel'
                         }
                     }
                 }
@@ -141,15 +141,21 @@ jooq {
                 includes = '.*'
                 forcedTypes {
                     forcedType {
-                        userType = 'r4g19.offer100.properties.mapping.UserType'
-                        converter = 'r4g19.offer100.properties.mapping.UserType.Converter'
+                        userType = 'r4g19.offer100.properties.cym.mapping.UserType'
+                        converter = 'r4g19.offer100.properties.cym.mapping.UserType.Converter'
                         expression = 'PUBLIC.LOGIN.TYPE'
                         types = '.*'
                     }
                     forcedType {
-                        userType = 'r4g19.offer100.properties.mapping.VerifyType'
-                        converter = 'r4g19.offer100.properties.mapping.VerifyType.Converter'
+                        userType = 'r4g19.offer100.properties.cym.mapping.VerifyType'
+                        converter = 'r4g19.offer100.properties.cym.mapping.VerifyType.Converter'
                         expression = 'PUBLIC.LOGIN.VERIFY_TYPE'
+                        types = '.*'
+                    }
+                    forcedType {
+                        userType = 'r4g19.offer100.properties.cym.mapping.Sex'
+                        converter = 'r4g19.offer100.properties.cym.mapping.Sex.Converter'
+                        expression = 'PUBLIC.RESUME.SEX'
                         types = '.*'
                     }
                 }

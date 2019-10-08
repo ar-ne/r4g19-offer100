@@ -1,11 +1,11 @@
-package r4g19.offer100.controller;
+package r4g19.offer100.controller.cym;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import r4g19.offer100.controller.ControllerBase;
 
 import javax.servlet.http.HttpServletRequest;
 

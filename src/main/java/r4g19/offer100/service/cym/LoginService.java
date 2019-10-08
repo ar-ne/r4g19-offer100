@@ -1,12 +1,12 @@
-package r4g19.offer100.service;
+package r4g19.offer100.service.cym;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
 import r4g19.offer100.jooq.tables.pojos.Login;
-import r4g19.offer100.properties.mapping.UserType;
-import r4g19.offer100.utils.LogMsgHelper;
+import r4g19.offer100.properties.cym.mapping.UserType;
+import r4g19.offer100.utils.cym.LogMsgHelper;
 
 @Service
 public class LoginService extends ServiceBase {
