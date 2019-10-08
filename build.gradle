@@ -18,7 +18,7 @@ buildscript {
 
 plugins {
     id 'org.asciidoctor.convert' version '1.5.3'
-    id 'org.springframework.boot' version '2.2.0.M6'
+    id 'org.springframework.boot' version '2.2.0.M1'
     id 'java'
     id 'nu.studer.jooq' version '3.0.3'
     id 'com.github.johnrengelman.shadow' version '5.0.0'

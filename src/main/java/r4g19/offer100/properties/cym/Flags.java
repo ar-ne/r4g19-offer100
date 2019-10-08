@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource("classpath:/flags.properties")
+@PropertySource("classpath:properties/flags.properties")
 public class Flags {
 
     public static final char TRUE = 'T';
