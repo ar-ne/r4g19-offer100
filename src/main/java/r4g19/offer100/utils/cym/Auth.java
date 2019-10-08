@@ -1,4 +1,4 @@
-package r4g19.offer100.utils;
+package r4g19.offer100.utils.cym;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;

@@ -1,4 +1,4 @@
-package r4g19.offer100.properties;
+package r4g19.offer100.properties.cym;
 
 public class Status {
     public static final int normal = 200;

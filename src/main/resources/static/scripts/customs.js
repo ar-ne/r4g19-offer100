@@ -108,8 +108,8 @@ function dismissAll() {
 }
 
 //TODO:将第一次请求内容改为只有一个空元素
-function generateTables(jURL, table, chb = true, container = 'table') {
-    $.get(jURL, function (data, status) {
+function generateTables(dataURL, table, checkbox = true, container = 'table') {
+    $.get(dataURL, function (data, status) {
         if (status !== "success") return;
         let jsonTable = data;
         const col = [];
@@ -123,14 +123,14 @@ function generateTables(jURL, table, chb = true, container = 'table') {
         }
         $.ajax({
             type: "POST",
-            url: "/api/i18n/tableCol/" + table,
+            url: "/api/public/table/bs-table/" + table,
             dataType: 'json',
             headers: {'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")},
             async: false,
             contentType: "application/json",
             data: JSON.stringify(col),
             success: function (data) {
-                if (chb) data.splice(0, 0, {checkbox: true});
+                if (checkbox) data.splice(0, 0, {checkbox: true});
                 $('#' + container).bootstrapTable({
                     locale: 'zh-CN',
                     pagination: true,
@@ -141,7 +141,7 @@ function generateTables(jURL, table, chb = true, container = 'table') {
                     checkboxHeader: false,
                     columns: data,
                     // data: jsonTable,
-                    url: jURL,
+                    url: dataURL,
                     showRefresh: true,
                     showPaginationSwitch: true,
                     showToggle: true,

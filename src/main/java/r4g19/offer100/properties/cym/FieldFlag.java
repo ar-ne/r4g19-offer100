@@ -1,4 +1,4 @@
-package r4g19.offer100.properties;
+package r4g19.offer100.properties.cym;
 
 //    #show显示 #hide隐藏 #editable可编辑 #uneditable不可编辑 #direct直接显示(SEX=1转为SEX=男) #indirect编码后显示
 public class FieldFlag {
