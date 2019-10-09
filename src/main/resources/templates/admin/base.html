@@ -33,14 +33,12 @@
             <div class="nav-wrapper">
                 <!--/*@thymesVar id="userType" type="java.lang.String"*/-->
                 <ul class="nav flex-column" >
-                    <li th:replace="/parts::nav-item('add_circle_outline',#{msg.manager.sidebar.add.production},@{addProduction},false)"></li>
-                    <li th:replace="/parts::nav-item('select_all',#{msg.manager.sidebar.select.production},@{selectProduction},false)"></li>
-                    <li th:replace="/parts::nav-item('saved_search',#{msg.manager.sidebar.select.order},@{selectOrder},false)"></li>
-                    <li th:replace="/parts::nav-item('search',#{msg.manager.sidebar.select.loan},@{selectLoan},false)"></li>
-                    <li th:replace="/parts::nav-item('add_comment',#{msg.manager.sidebar.add.Introduction},@{addIntroduction},false)"></li>
-                    <li th:replace="/parts::nav-item('insert_chart_outlined',#{msg.manager.sidebar.chart.order},@{chartOrder},false)"></li>
-                    <li th:replace="/parts::nav-item('pie_chart_outlined',#{msg.manager.sidebar.chart.loan},@{chartLoan},false)"></li>
-
+                    <li th:replace="/parts::nav-item('add_circle_outline',#{msg.admin.queryUser},@{addProduction},false)"></li>
+                    <li th:replace="/parts::nav-item('select_all',#{msg.admin.delUser},@{selectProduction},false)"></li>
+                    <li th:replace="/parts::nav-item('saved_search',#{msg.admin.editUser},@{selectOrder},false)"></li>
+                    <li th:replace="/parts::nav-item('search',#{msg.admin.queryEnterprise},@{selectLoan},false)"></li>
+                    <li th:replace="/parts::nav-item('add_comment',#{msg.admin.delEnterprise},@{addIntroduction},false)"></li>
+                    <li th:replace="/parts::nav-item('insert_chart_outlined',#{msg.admin.editEnterprise},@{chartOrder},false)"></li>
                 </ul>
             </div>
         </aside>
