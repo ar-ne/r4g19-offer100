@@ -1,16 +1,16 @@
-package r4g19.offer100.service;
+package r4g19.offer100.service.cym;
 
 import org.jooq.impl.DAOImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import r4g19.offer100.jooq.tables.pojos.Log;
-import r4g19.offer100.properties.CRUDOperation;
-import r4g19.offer100.utils.LogMsgHelper;
+import r4g19.offer100.properties.cym.CRUDOperation;
+import r4g19.offer100.utils.cym.LogMsgHelper;
 
 import java.lang.reflect.InvocationTargetException;
 
-import static r4g19.offer100.properties.Vars.POJO_DAO_MAPPER;
-import static r4g19.offer100.properties.Vars.POJO_DAO_TABLE;
+import static r4g19.offer100.properties.cym.Vars.POJO_DAO_MAPPER;
+import static r4g19.offer100.properties.cym.Vars.POJO_DAO_TABLE;
 
 /**
  * 常用的增删改查

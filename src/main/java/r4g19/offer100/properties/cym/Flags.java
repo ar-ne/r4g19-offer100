@@ -1,4 +1,4 @@
-package r4g19.offer100.properties;
+package r4g19.offer100.properties.cym;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 @Configuration
-@PropertySource("classpath:/flags.properties")
+@PropertySource("classpath:properties/flags.properties")
 public class Flags {
 
     public static final char TRUE = 'T';
@@ -35,7 +35,7 @@ public class Flags {
      * @return Field Flags
      */
     public Field getFieldFlag(String tableName, String fieldName) {
-        String flagStr = env.getProperty(String.format("field.%s.%s", tableName, fieldName));
+        String flagStr = env.getProperty(String.format("%s.%s", tableName, fieldName));
         if (flagStr == null) {
 //            System.out.println(String.format("field not exist: field.%s.%s", tableName, fieldName));
             return new Field(true, false, true);

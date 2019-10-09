@@ -1,9 +1,9 @@
-package r4g19.offer100.utils;
+package r4g19.offer100.utils.cym;
 
 import org.jooq.Table;
 import r4g19.offer100.jooq.tables.pojos.Log;
 import r4g19.offer100.jooq.tables.pojos.Login;
-import r4g19.offer100.properties.CRUDOperation;
+import r4g19.offer100.properties.cym.CRUDOperation;
 
 import java.sql.Timestamp;
 

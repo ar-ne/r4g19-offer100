@@ -1,4 +1,4 @@
-package r4g19.offer100.controller;
+package r4g19.offer100.controller.cym;
 
 import org.jooq.DSLContext;
 import org.springframework.messaging.simp.SimpMessagingTemplate;

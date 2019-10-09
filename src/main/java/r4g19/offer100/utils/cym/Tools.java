@@ -1,4 +1,4 @@
-package r4g19.offer100.utils;
+package r4g19.offer100.utils.cym;
 
 import static java.lang.Math.random;
 

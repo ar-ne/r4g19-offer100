@@ -20,4 +20,5 @@ pluginManagement {
     }
 }
 rootProject.name = 'offer100'
-include 'wpack', 'devops'
+include 'wpack'
+//include 'wpack', 'devops'

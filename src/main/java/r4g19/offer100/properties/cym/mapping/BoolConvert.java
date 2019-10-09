@@ -1,4 +1,4 @@
-package r4g19.offer100.properties.mapping;
+package r4g19.offer100.properties.cym.mapping;
 
 import org.jooq.Converter;
 

@@ -1,4 +1,4 @@
-package r4g19.offer100.service;
+package r4g19.offer100.service.cym;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
