@@ -3,6 +3,7 @@ package r4g19.offer100.properties.cym;
 import org.jooq.Table;
 import org.springframework.hateoas.RepresentationModel;
 import r4g19.offer100.jooq.Public;
+import r4g19.offer100.jooq.Tables;
 import r4g19.offer100.properties.cym.mapping.UserType;
 
 import java.lang.reflect.Constructor;
@@ -20,6 +21,7 @@ public class Vars {
     public static final Map<Class, Constructor> POJO_DAO_MAPPER;
     public static final Map<Class, Table<?>> POJO_DAO_TABLE;
     public static final Map<UserType, Class<? extends RepresentationModel>> TYPE_POJO_MAP;
+    public static final String JOOQ_PACKAGE_NAME;
 //    public static final Map<CRUDOperation, Map<Class, MessageParam[]>> DB_BROADCAST_TRIGGER;
 
 
@@ -27,6 +29,7 @@ public class Vars {
      * 填充数据
      */
     static {
+        JOOQ_PACKAGE_NAME = Tables.class.getPackageName();
         String[] strings = new String[]{"notification", "profile", "production", "answerTicket"};
         PUBLIC_PAGES = unmodifiableSet(new HashSet<>(Arrays.asList(strings)));
 

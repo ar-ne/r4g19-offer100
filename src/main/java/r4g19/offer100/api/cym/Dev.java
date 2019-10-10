@@ -2,6 +2,7 @@ package r4g19.offer100.api.cym;
 
 import org.jooq.Field;
 import org.jooq.Table;
+import org.jooq.impl.DAOImpl;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +13,33 @@ import org.springframework.web.bind.annotation.RestController;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.jooq.tables.pojos.Login;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static r4g19.offer100.jooq.Public.PUBLIC;
+import static r4g19.offer100.properties.cym.Vars.JOOQ_PACKAGE_NAME;
+import static r4g19.offer100.properties.cym.Vars.POJO_DAO_MAPPER;
 
 @RestController
 @RequestMapping("api/dev")
 public class Dev extends APIBase {
+
+    @RestController
+    @RequestMapping("api/dev/data")
+    public static class Data extends APIBase {
+        @GetMapping("tables/{t}")
+        public HttpEntity tableSample(@PathVariable String t) {
+            try {
+                Class table = Class.forName(JOOQ_PACKAGE_NAME + ".tables.pojos." + t);
+                List d = ((DAOImpl) POJO_DAO_MAPPER.get(table).newInstance(dsl.configuration())).findAll();
+                return new ResponseEntity(d, HttpStatus.OK);
+            } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+                e.printStackTrace();
+            }
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+    }
 
     @RestController
     @RequestMapping("api/dev/sample")

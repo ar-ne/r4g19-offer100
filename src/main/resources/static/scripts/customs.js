@@ -121,9 +121,10 @@ function generateTables(dataURL, table, checkbox = true, container = 'table') {
                 });
             }
         }
+        if (col.length === 0) return;
         $.ajax({
             type: "POST",
-            url: "/api/public/table/bs-table/" + table,
+            url: "/api/public/lang/bs-table/" + table,
             dataType: 'json',
             headers: {'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")},
             async: false,
