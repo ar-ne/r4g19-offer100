@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="page-header pt-5">
+            <ul>
+                <li class="p-1">
+                    <a th:href="@{/priv/}">
+                        <button class="btn btn-outline-primary">返回首页</button>
+                    </a>
+                </li>
+                <li class="p-1">
+                    <a th:href="@{queryUser}">
+                        <button class="btn btn-outline-primary">查询用户信息</button>
+                    </a>
+                </li>
+                <li class="p-1">
+                    <a th:href="@{editUser}">
+                        <button class="btn btn-outline-primary">修改用户信息</button>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
