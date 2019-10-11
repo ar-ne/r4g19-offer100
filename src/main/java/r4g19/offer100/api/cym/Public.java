@@ -25,7 +25,7 @@ public class Public extends APIBase {
     @RestController
     @RequestMapping("api/public/lang")
     @PropertySource("classpath:properties/flags.properties")
-    public class Lang extends APIBase {
+    public static class Lang extends APIBase {
 
         private final MessageSource messageSource; //在代码里获取Messages
         private final Flags flags;

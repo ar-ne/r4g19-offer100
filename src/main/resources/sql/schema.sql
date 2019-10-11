@@ -99,6 +99,17 @@ create  index Index_1 on login (
 username ASC
 );
 
+create table notice (
+notice_id            int                            not null,
+notice_text          varchar(10240)                 not null,
+notice_time          TIMESTAMP,
+primary key (notice_id)
+);
+
+create  index Index_9 on notice (
+notice_id ASC
+);
+
 create  index Index_2 on personal (
 username ASC
 );

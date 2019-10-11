@@ -90,24 +90,37 @@ create  index Index_3 on entrepreneurial (
 username ASC
 );
 
-create  index Index_6 on hiring (
-username ASC,
-id ASC
+create index Index_6 on hiring (
+                                username ASC,
+                                id ASC
+    );
+
+create index Index_1 on login (
+                               username ASC
+    );
+
+create table notice
+(
+    notice_id   int            not null,
+    notice_text varchar(10240) not null,
+    notice_time TIMESTAMP,
+    primary key (notice_id)
 );
 
-create  index Index_1 on login (
-username ASC
-);
+create index Index_9 on notice (
+                                notice_id ASC
+    );
 
-create  index Index_2 on personal (
-username ASC
-);
+create index Index_2 on personal (
+                                  username ASC
+    );
 
-create table resume (
-username             VARCHAR(10240)                 not null,
-id                   BIGINT                         not null,
-sex                  int,
-age                  int,
+create table resume
+(
+    username         VARCHAR(10240) not null,
+    id               BIGINT         not null,
+    sex              int,
+    age              int,
 school               VARCHAR(10240),
 address              VARCHAR(10240),
 phone                VARCHAR(10240),
