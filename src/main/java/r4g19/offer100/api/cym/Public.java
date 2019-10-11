@@ -16,6 +16,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import static r4g19.offer100.utils.cym.ReflectUtils.getTable;
+
 @RestController
 @RequestMapping("api/public")
 public class Public extends APIBase {
@@ -40,14 +42,16 @@ public class Public extends APIBase {
             for (BootstrapTableColumn col : cols) {
                 try {
                     col.setTitle(messageSource.getMessage(tableName + "." + col.getField(), null, Locale.getDefault()));
-                    Flags.Field colFlag = flags.getFieldFlag(tableName, col.getField());
-                    col.setVisible(colFlag.visibility);
                 } catch (NoSuchMessageException ignored) {
-                    col.setVisible(true);
                     col.setTitle(col.getField());
-                } finally {
-                    list.add(col);
                 }
+                try {
+                    Flags.Field colFlag = flags.getTableField(getTable(tableName), col.getField());
+                    col.setVisible(colFlag.visibility);
+                } catch (Exception e) {
+                    col.setVisible(true);
+                }
+                list.add(col);
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
         }

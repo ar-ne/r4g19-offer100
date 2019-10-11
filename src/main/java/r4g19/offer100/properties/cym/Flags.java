@@ -3,14 +3,16 @@ package r4g19.offer100.properties.cym;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jooq.Table;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
+import r4g19.offer100.ComponentBase;
 
 @Configuration
 @PropertySource("classpath:properties/flags.properties")
-public class Flags {
+public class Flags extends ComponentBase {
 
     public static final char TRUE = 'T';
     public static final char FALSE = 'F';
@@ -30,22 +32,23 @@ public class Flags {
     /**
      * 获取表中字段对应的FieldFlags
      *
-     * @param tableName 对应表的名字
-     * @param fieldName 字段名
+     * @param jTable    表
+     * @param fieldName 字段
      * @return Field Flags
      */
-    public Field getFieldFlag(String tableName, String fieldName) {
-        String flagStr = env.getProperty(String.format("%s.%s", tableName, fieldName));
+    public Field getTableField(Table jTable, String fieldName) {
+        String flagStr = env.getProperty(String.format("%s.%s", jTable.getName(), fieldName));
         if (flagStr == null) {
-//            System.out.println(String.format("field not exist: field.%s.%s", tableName, fieldName));
+            logger.trace(String.format("field not exist: field.%s.%s", jTable, fieldName));
             return new Field(true, false, true);
         }
-//        System.out.println(String.format("field.%s.%s", tableName, fieldName));
+        logger.trace(String.format("field.%s.%s", jTable, fieldName));
 
         Field field = new Field();
         field.setVisibility(c2b(flagStr.charAt(0)));
         field.setEditability(c2b(flagStr.charAt(1)));
         field.setShowType(c2b(flagStr.charAt(2)));
+        logger.debug(field.toString());
         return field;
     }
 

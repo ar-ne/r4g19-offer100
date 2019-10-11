@@ -2,6 +2,7 @@ package r4g19.offer100.service.cym;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import r4g19.offer100.service.ServiceBase;
 
 /**
  * 所有用户的Service

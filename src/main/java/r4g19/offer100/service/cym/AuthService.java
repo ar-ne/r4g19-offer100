@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
 import r4g19.offer100.jooq.tables.pojos.Login;
+import r4g19.offer100.service.ServiceBase;
 
 import java.util.Collections;
 
