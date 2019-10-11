@@ -6,6 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
 import r4g19.offer100.jooq.tables.pojos.Login;
 import r4g19.offer100.properties.cym.mapping.UserType;
+import r4g19.offer100.service.ServiceBase;
 import r4g19.offer100.utils.cym.LogMsgHelper;
 
 @Service
