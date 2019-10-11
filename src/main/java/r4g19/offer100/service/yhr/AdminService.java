@@ -7,7 +7,7 @@
  * Description:
  */
 
-package r4g19.offer100.service;
+package r4g19.offer100.service.yhr;
 
 /**
  * 功能描述: 
