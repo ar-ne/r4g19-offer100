@@ -22,7 +22,7 @@ public class Vars {
     public static final String liveUpdate = "NX";
     public static final Set<String> PUBLIC_PAGES;
     public static final Map<Class, Constructor> POJO_DAO_MAPPER;
-    public static final Map<Class, Table<?>> POJO_DAO_TABLE;
+    public static final Map<Class, Table<?>> POJO_TABLE_MAPPER;
     public static final Map<UserType, Class<? extends RepresentationModel>> TYPE_POJO_MAP;
     public static final String JOOQ_PACKAGE_NAME;
     public static final Set<Class<? extends APIBase>> API_ENTRANCES;
@@ -58,10 +58,10 @@ public class Vars {
                 }
             }
             POJO_DAO_MAPPER = unmodifiableMap(map);
-            POJO_DAO_TABLE = unmodifiableMap(map1);
+            POJO_TABLE_MAPPER = unmodifiableMap(map1);
             System.out.println("Build static maps: Vars.POJO_DAO_MAPPER , Vars.POJO_DAO_MAPPER...DONE");
             System.out.println("POJO_DAO_MAPPER=" + Arrays.toString(POJO_DAO_MAPPER.entrySet().toArray()));
-            System.out.println("POJO_DAO_TABLE=" + Arrays.toString(POJO_DAO_TABLE.entrySet().toArray()));
+            System.out.println("POJO_TABLE_MAPPER=" + Arrays.toString(POJO_TABLE_MAPPER.entrySet().toArray()));
         }
         {
             HashMap<UserType, Class<? extends RepresentationModel>> map2 = new HashMap<>();

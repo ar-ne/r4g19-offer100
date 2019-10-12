@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<title th:text="#{msg.profile.title}">详细信息</title>
+<title th:text="#{msg.profile.pswrestore}">找回密码</title>
 <body th:replace="~{/framework/main}">
 <div th:fragment="mainContent">
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <h3 class="page-title" th:text="#{msg.profile.title}">添加</h3>
+            <h3 class="page-title" th:text="#{msg.profile.pswrestore}">添加</h3>
         </div>
     </div>
     <div class="row ">
@@ -15,9 +15,9 @@
                     <img alt="User Avatar" class="rounded-circle m-auto" id="avatar" width="110">
                 </div>
                 <div class="card-body">
-                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{profile}">
+                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{pswrestore}">
                         <div class="form-row p-3">
-                            <div th:replace="/parts::TextInput(#{msg.profile.displayname},'displayname',${login.getDisplayname()},'')"></div>
+                            <div th:replace="/parts::TextInput(#{msg.profile.newpassword},'password',${login.getPassword()},'')"></div>
                         </div>
                         <div th:replace="/parts::TextInput(#{msg.profile.phoneNum},'tel',${login.getTel()},'')"></div>
                         <br>

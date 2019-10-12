@@ -16,6 +16,7 @@ import r4g19.offer100.model.cjs.SmsCode;
 import r4g19.offer100.properties.cym.Status;
 import r4g19.offer100.properties.cym.mapping.VerifyType;
 import r4g19.offer100.service.cjs.UserService;
+import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.cym.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,8 @@ public class UserController extends ControllerBase {
     LoginService loginService;
     @Autowired
     UserService userService;
+    @Autowired
+    CommonCRUD crud;
 
     @GetMapping("login")
     public String login() {
@@ -55,7 +58,7 @@ public class UserController extends ControllerBase {
         if (((SmsCode) session.getAttribute("code")).equals(code, login.getTel())) {
             login.setVerifyType(VerifyType.PHONE);
             personalService.register(personal, login);
-            response.setStatus(Status.showSuccessMsg);
+            response.setStatus(Status.eval);
             return "showSuccessAlert('注册成功',3000,function(){Turbolinks.visit('/login')});";
         }
         response.setStatus(Status.showFail);
@@ -87,8 +90,52 @@ public class UserController extends ControllerBase {
     }
 
     @ResponseBody
-    @PostMapping("pub/web/profile")
-    public String profile(Authentication authentication) {
-        return null;
+    @PostMapping("/web/profile")
+    public String profile(Authentication authentication, Login login, Personal personal, Entrepreneurial entrepreneurial, HttpServletResponse response) {
+        String username = getUsername(authentication);
+        switch (getUserType(authentication)) {
+            case Entrepreneurial:
+                crud.updateRecord(getUpdatedObject(entrepreneurial, userService.getEntrepreneurial(username)), username);
+                break;
+            case Personal:
+                crud.updateRecord(getUpdatedObject(personal, userService.getPersonal(username)), username);
+                break;
+        }
+        crud.updateRecord(getUpdatedObject(login, loginService.getLogin(username)), username);
+        response.setStatus(Status.eval);
+        return "showSuccessAlert('修改成功',3000,function(){Turbolinks.visit('/web/profile')});";
+    }
+
+    @GetMapping("/web/pswrestore")
+    @Order(1)
+    public String pswrestore1(Authentication authentication, Model model) {
+        Login login = loginService.getLogin(getUsername(authentication));
+//        switch (login.getUserType()) {
+//            case Personal:
+//                model.addAttribute("userDetail", userService.getPersonal(getUsername(authentication)));
+//                break;
+//            case Entrepreneurial:
+//                model.addAttribute("userDetail", userService.getEntrepreneurial(getUsername(authentication)));
+//                break;
+//        }
+        model.addAttribute("login", login);
+        return "pub/web/pswrestore";
+    }
+
+    @ResponseBody
+    @PostMapping("/web/pswrestore")
+    public String pswrestore(Authentication authentication, Login login, HttpServletResponse response) {
+        String username = getUsername(authentication);
+//        switch (getUserType(authentication)){
+//            case Entrepreneurial:
+//                crud.updateRecord(getUpdatedObject(entrepreneurial,userService.getEntrepreneurial(username)),username);
+//                break;
+//            case Personal:
+//                crud.updateRecord(getUpdatedObject(personal,userService.getPersonal(username)),username);
+//                break;
+//        }
+        crud.updateRecord(getUpdatedObject(login, loginService.getLogin(username)), username);
+        response.setStatus(Status.eval);
+        return "showSuccessAlert('密码修改成功',3000,function(){Turbolinks.visit('/login')});";
     }
 }
