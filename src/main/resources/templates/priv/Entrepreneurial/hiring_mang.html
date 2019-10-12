@@ -13,12 +13,15 @@
             <div class="card card-small ">
                 <div class="card-header ">
                     已发布的招聘信息
+                    <a th:href="@{/web/hiring/new}">
+                        <button class="btn btn-outline-primary">新建招聘信息</button>
+                    </a>
                 </div>
                 <div class="card-body">
                     <div th:include="/parts::tableNoCheckbox('/api/user/entrepreneurial/hiring/list','Entrepreneurial')"></div>
                     <script>
                         $('#table').on('click-row.bs.table', function (e, row, $element, field) {
-                            Turbolinks.visit("hiring/" + row.pid);
+                            Turbolinks.visit("hiring/" + row.id);
                         })
                     </script>
                 </div>
