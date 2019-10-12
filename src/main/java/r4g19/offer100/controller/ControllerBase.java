@@ -21,6 +21,6 @@ public abstract class ControllerBase extends ComponentBase {
     private String setUsername(Authentication authentication) {
         if (authentication != null && authentication.isAuthenticated())
             return getUsername(authentication);
-        return "";
+        return null;
     }
 }
