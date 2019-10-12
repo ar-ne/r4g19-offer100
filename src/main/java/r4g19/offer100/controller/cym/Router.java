@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import r4g19.offer100.controller.ControllerBase;
 import r4g19.offer100.jooq.tables.pojos.Hiring;
+import r4g19.offer100.service.cym.EntrepreneurialService;
 import r4g19.offer100.service.cym.HiringService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,8 @@ import static r4g19.offer100.properties.cym.Vars.PUBLIC_PAGES;
 public class Router extends ControllerBase {
     @Autowired
     HiringService hiringService;
+    @Autowired
+    EntrepreneurialService entrepreneurialService;
 
     /**
      * 跳转到首屏，负责重定向
@@ -60,7 +63,11 @@ public class Router extends ControllerBase {
 
     @GetMapping("/web/hiring/new")
     @Order(1)
-    public String hiring(Model model) {
+    public String hiring(Model model, Authentication authentication) {
+        model.addAttribute("disabled", "");
+        model.addAttribute("new", true);
+        model.addAttribute("hiring", new Hiring());
+        model.addAttribute("entrepreneurial", entrepreneurialService.getEntrepreneurial(getUsername(authentication)));
         return "/pub/web/hiring";
     }
 
