@@ -31,8 +31,7 @@ public abstract class ComponentBase {
     }
 
     public static UserType getUserType(Authentication authentication) {
-        return UserType.Personal;
-//        return ((UserType.Authority) authentication.getAuthorities().toArray()[0]).getUserType();
+        return ((UserType.Authority) authentication.getAuthorities().toArray()[0]).getUserType();
     }
 
     public <T> T deepClone(T o) {

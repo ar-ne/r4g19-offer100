@@ -40,10 +40,6 @@ public class Router extends ControllerBase {
         if (request.getSession(false) == null) {
             logger.debug("No session! create one, new session is:{}", request.getSession(true).getId());
         }
-        if (authentication != null && authentication.isAuthenticated()) {
-            model.addAttribute("username", getUsername(authentication));
-            model.addAttribute("userType", getUserType(authentication));
-        }
         return "framework/splash";
     }
 
@@ -54,7 +50,7 @@ public class Router extends ControllerBase {
 
     @GetMapping("/web/{page}")
     @Order()
-    public String router(@PathVariable String page, Authentication authentication, Model model) {
+    public String router(@PathVariable String page, Authentication authentication) {
         if (PUBLIC_PAGES.contains(page)) {
             return String.format("/pub/web/%s", page);
         }
