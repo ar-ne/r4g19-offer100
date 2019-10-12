@@ -1,13 +1,19 @@
 package r4g19.offer100.controller.cym;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import r4g19.offer100.controller.ControllerBase;
+import r4g19.offer100.jooq.tables.pojos.Hiring;
+import r4g19.offer100.service.cym.HiringService;
 
 import javax.servlet.http.HttpServletRequest;
+
+import static r4g19.offer100.properties.cym.Vars.PUBLIC_PAGES;
 
 /**
  * 本项目的神奇之处
@@ -15,6 +21,9 @@ import javax.servlet.http.HttpServletRequest;
  */
 @Controller
 public class Router extends ControllerBase {
+    @Autowired
+    HiringService hiringService;
+
     /**
      * 跳转到首屏，负责重定向
      *
@@ -36,12 +45,31 @@ public class Router extends ControllerBase {
     }
 
     @GetMapping("web")
-    public String index(Authentication authentication) {
+    public String index() {
         return "redirect:/web/index";
     }
 
     @GetMapping("/web/{page}")
-    public String router(@PathVariable String page, Authentication authentication) {
+    @Order()
+    public String router(@PathVariable String page, Authentication authentication, Model model) {
+        if (PUBLIC_PAGES.contains(page)) {
+            return String.format("/pub/web/%s", page);
+        }
         return String.format("/priv/%s/%s", getUserType(authentication), page);
+    }
+
+    @GetMapping("/web/hiring/new")
+    @Order(1)
+    public String hiring(Model model) {
+        return "/pub/web/hiring";
+    }
+
+    @GetMapping("/web/hiring/{id}")
+    @Order(2)
+    public String hiring(@PathVariable Long id, Model model) {
+        Hiring hiring = hiringService.getHiring(id);
+        model.addAttribute("hiring", hiring);
+        model.addAttribute("entrepreneurial", hiringService.getEntrepreneurial(hiring));
+        return "/pub/web/hiring";
     }
 }

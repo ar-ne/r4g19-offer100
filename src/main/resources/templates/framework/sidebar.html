@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <body>
+<ul class="nav flex-column" th:fragment="Entrepreneurial">
+    <li th:replace="/parts::nav-item('add_circle_outline',#{msg.entrepreneurial.sidebar.add.production},@{hiring_mang},false)"></li>
+    <!--    <li th:replace="/parts::nav-item('select_all',#{msg.manager.sidebar.select.production},@{selectProduction},false)"></li>-->
+    <!--    <li th:replace="/parts::nav-item('saved_search',#{msg.manager.sidebar.select.order},@{selectOrder},false)"></li>-->
+    <!--    <li th:replace="/parts::nav-item('search',#{msg.manager.sidebar.select.loan},@{selectLoan},false)"></li>-->
+    <!--    <li th:replace="/parts::nav-item('add_comment',#{msg.manager.sidebar.add.Introduction},@{addIntroduction},false)"></li>-->
+    <!--    <li th:replace="/parts::nav-item('insert_chart_outlined',#{msg.manager.sidebar.chart.order},@{chartOrder},false)"></li>-->
+    <!--    <li th:replace="/parts::nav-item('pie_chart_outlined',#{msg.manager.sidebar.chart.loan},@{chartLoan},false)"></li>-->
+
+</ul>
 <ul class="nav flex-column" th:fragment="Manager">
     <li th:replace="/parts::nav-item('add_circle_outline',#{msg.manager.sidebar.add.production},@{addProduction},false)"></li>
     <li th:replace="/parts::nav-item('select_all',#{msg.manager.sidebar.select.production},@{selectProduction},false)"></li>

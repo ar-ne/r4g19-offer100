@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import r4g19.offer100.annotations.cym.APIEntrance;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.model.cym.BootstrapTableColumn;
 import r4g19.offer100.properties.cym.Flags;
@@ -16,14 +17,17 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
 
+import static r4g19.offer100.utils.cym.ReflectUtils.getTable;
+
 @RestController
 @RequestMapping("api/public")
+@APIEntrance(name = "public")
 public class Public extends APIBase {
 
     @RestController
     @RequestMapping("api/public/lang")
     @PropertySource("classpath:properties/flags.properties")
-    public class Lang extends APIBase {
+    public static class Lang extends APIBase {
 
         private final MessageSource messageSource; //在代码里获取Messages
         private final Flags flags;
@@ -40,14 +44,16 @@ public class Public extends APIBase {
             for (BootstrapTableColumn col : cols) {
                 try {
                     col.setTitle(messageSource.getMessage(tableName + "." + col.getField(), null, Locale.getDefault()));
-                    Flags.Field colFlag = flags.getFieldFlag(tableName, col.getField());
-                    col.setVisible(colFlag.visibility);
                 } catch (NoSuchMessageException ignored) {
-                    col.setVisible(true);
                     col.setTitle(col.getField());
-                } finally {
-                    list.add(col);
                 }
+                try {
+                    Flags.Field colFlag = flags.getTableField(getTable(tableName), col.getField());
+                    col.setVisible(colFlag.visibility);
+                } catch (Exception e) {
+                    col.setVisible(true);
+                }
+                list.add(col);
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
         }

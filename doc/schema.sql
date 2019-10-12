@@ -28,13 +28,16 @@ username ASC,
 time ASC
 );
 
-create table personal (
-username             VARCHAR(10240)                 not null,
-birth                DATE,
-edu                  VARCHAR(10240),
-primary key (username),
-foreign key (username)
-      references login (username)
+create table personal(
+                         username VARCHAR(10240) not null,
+                         birth    DATE,
+                         edu      VARCHAR(10240),
+                         sex      int,
+                         age      int,
+                         school   VARCHAR(10240),
+                         primary key (username),
+                         foreign key (username)
+                             references login (username)
 );
 
 create table entrepreneurial (
@@ -80,43 +83,53 @@ foreign key (hir_username, hir_id)
       references hiring (username, id)
 );
 
-create  index Index_7 on collection (
-per_username ASC,
-hir_username ASC,
-hir_id ASC
+create index Index_7 on collection (
+                                    per_username ASC,
+                                    hir_username ASC,
+                                    hir_id ASC
+    );
+
+create index Index_3 on entrepreneurial (
+                                         username ASC
+    );
+
+create index Index_6 on hiring (
+                                username ASC,
+                                id ASC
+    );
+
+create index Index_1 on login (
+                               username ASC
+    );
+
+create table notice
+(
+    notice_id   int            not null,
+    notice_text varchar(10240) not null,
+    notice_time TIMESTAMP,
+    primary key (notice_id)
 );
 
-create  index Index_3 on entrepreneurial (
-username ASC
-);
+create index Index_9 on notice (
+                                notice_id ASC
+    );
 
-create  index Index_6 on hiring (
-username ASC,
-id ASC
-);
+create index Index_2 on personal (
+                                  username ASC
+    );
 
-create  index Index_1 on login (
-username ASC
-);
-
-create  index Index_2 on personal (
-username ASC
-);
-
-create table resume (
-username             VARCHAR(10240)                 not null,
-id                   BIGINT                         not null,
-sex                  int,
-age                  int,
-school               VARCHAR(10240),
-address              VARCHAR(10240),
-phone                VARCHAR(10240),
-email                VARCHAR(10240),
-introduce            VARCHAR(10240),
-experience           VARCHAR(10240),
-primary key (username, id),
-foreign key (username)
-      references personal (username)
+create table resume
+(
+    username   VARCHAR(10240) not null,
+    id         BIGINT         not null,
+    address    VARCHAR(10240),
+    phone      VARCHAR(10240),
+    email      VARCHAR(10240),
+    introduce  VARCHAR(10240),
+    experience VARCHAR(10240),
+    primary key (username, id),
+    foreign key (username)
+        references personal (username)
 );
 
 create  index Index_4 on resume (
