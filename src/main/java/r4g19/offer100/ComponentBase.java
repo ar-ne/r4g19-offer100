@@ -10,6 +10,8 @@ import org.springframework.stereotype.Component;
 import r4g19.offer100.properties.cym.mapping.UserType;
 import r4g19.offer100.service.cym.DatabaseLog;
 
+import java.lang.reflect.Field;
+
 /**
  * 所有Component的父类
  */
@@ -36,5 +38,24 @@ public abstract class ComponentBase {
 
     public <T> T deepClone(T o) {
         return cloner.deepClone(o);
+    }
+
+    public <T> T getUpdatedObject(T uo, T dbo) {
+        try {
+            Class clazz = uo.getClass();
+
+            for (Field field : clazz.getDeclaredFields()) { //遍历类属性，包括私有属性
+                if (field.getName().equalsIgnoreCase("serialVersionUID")) continue;
+                boolean dboAcc = field.canAccess(dbo);  //获取属性原本是否可写
+                field.setAccessible(true); //设置可写
+                if (field.get(uo) != null)
+                    field.set(dbo, field.get(uo));  //更新类属性
+                field.setAccessible(dboAcc); //还原是否可写
+            }
+            return dbo;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        return uo;
     }
 }

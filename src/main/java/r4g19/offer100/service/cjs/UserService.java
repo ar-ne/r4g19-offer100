@@ -1,7 +1,5 @@
 package r4g19.offer100.service.cjs;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import r4g19.offer100.jooq.tables.daos.EntrepreneurialDao;
 import r4g19.offer100.jooq.tables.daos.PersonalDao;
@@ -10,11 +8,9 @@ import r4g19.offer100.jooq.tables.pojos.Login;
 import r4g19.offer100.jooq.tables.pojos.Personal;
 import r4g19.offer100.properties.cym.mapping.UserType;
 import r4g19.offer100.properties.cym.mapping.VerifyType;
+import r4g19.offer100.service.ServiceBase;
 import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.cym.LoginService;
-import r4g19.offer100.service.ServiceBase;
-
-import java.sql.Timestamp;
 
 /**
  * 所有用户的Service
@@ -64,29 +60,29 @@ public class UserService extends ServiceBase {
     /**
      * 从Personal数据库中获取一个用户
      *
-     * @param loginname 登录名
+     * @param username 登录名
      * @return 个人
      */
-    public Personal getPersonal(String loginname) {
-        switch (loginService.getLoginType(loginname)) {
+    public Personal getPersonal(String username) {
+        switch (loginService.getLoginType(username)) {
             case Personal:
-                return new PersonalDao(dsl.configuration()).fetchOneByUsername(loginname);
+                return new PersonalDao(dsl.configuration()).fetchOneByUsername(username);
         }
-        throw new RuntimeException("Error when trying to get Personal's detail");
+        throw new RuntimeException("Error when trying to get Personal's detail with username:" + username);
     }
 
     /**
      * 从Entrepreneurial数据库中获取一个用户
      *
-     * @param loginname 登录名
+     * @param username 登录名
      * @return 企业
      */
-    public Entrepreneurial getEntrepreneurial(String loginname) {
-        switch (loginService.getLoginType(loginname)) {
+    public Entrepreneurial getEntrepreneurial(String username) {
+        switch (loginService.getLoginType(username)) {
             case Entrepreneurial:
-                return new EntrepreneurialDao(dsl.configuration()).fetchOneByUsername(loginname);
+                return new EntrepreneurialDao(dsl.configuration()).fetchOneByUsername(username);
         }
-        throw new RuntimeException("Error when trying to get Entrepreneurial's detail");
+        throw new RuntimeException("Error when trying to get Entrepreneurial's detail with username:" + username);
     }
 
 //    /**
