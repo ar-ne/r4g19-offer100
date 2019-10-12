@@ -15,7 +15,7 @@
                     <button class="btn btn-outline-info" onclick="goBack()">←返回</button>
                 </div>
                 <div class="card-body">
-                    <form id="form" th:action="@{/}" method="post" onsubmit="return formSubmit()">
+                    <form id="form" th:action="@{/web/hiring/new}" method="post" onsubmit="return formSubmit()">
                         <div class="row col-12">
                             <div th:if="${create}"
                                  th:replace="/parts::TextInput('职位名称','position',${hiring.getPosition()},${disabled})"></div>
