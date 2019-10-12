@@ -103,7 +103,8 @@ public class Application {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http.authorizeRequests()
-                    .antMatchers("/", "/webpack/**", "/fonts/**", "/scripts/**", "/styles/**", "/signup/e", "/signup/p").permitAll()
+                    .antMatchers("/", "/webpack/**", "/fonts/**", "/scripts/**").permitAll()
+                    .antMatchers("/styles/**", "/signup/e", "/signup/p", "/pswrestore", "/pswreset").permitAll()
                     .antMatchers("/admin/**", "/api/admin/**", "/devops/**").access("hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
                     .antMatchers("/web/**", "/api/user/**").access("hasAnyRole('Entrepreneurial','Personal')")
                     .antMatchers("/api/public/**").access("hasAnyRole('Entrepreneurial','Personal') or hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")

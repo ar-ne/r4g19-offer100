@@ -1,10 +1,8 @@
 package r4g19.offer100.service.cym;
 
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import r4g19.offer100.api.cym.User;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
 import r4g19.offer100.jooq.tables.pojos.Login;
 import r4g19.offer100.properties.cym.mapping.UserType;
@@ -63,6 +61,10 @@ public class LoginService extends ServiceBase {
         dao.insert(login);
         dbLogger.log(LogMsgHelper.Auth.newLogin(login));
         return login;
+    }
+
+    public String encode(String plainText) {
+        return passwordEncoder.encode(plainText);
     }
 
 

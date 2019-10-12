@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.profile.title}">详细信息</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title" th:text="#{msg.profile.title}">添加</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">
+                    <img alt="User Avatar" class="rounded-circle m-auto" id="avatar" width="110">
+                </div>
+                <div class="card-body">
+                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{pswreset}">
+                        <!--                        <div class="col-12"-->
+                        <!--                             th:include="/parts::passwordInput(#{msg.profile.oldpassword},'password','','')"></div>-->
+                        <!--                        <br>-->
+                        <div class="col-12"
+                             th:include="/parts::passwordInput(#{msg.profile.newpassword},'password','','')"></div>
+                        <br>
+                        <div class="form-group col-md-12">
+                            <button class="mb-2 btn btn-outline-primary mr-2" id="button"
+                                    th:text="#{msg.profile.restore}"
+                                    type="submit">重置密码
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

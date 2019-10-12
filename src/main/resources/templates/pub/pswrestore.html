@@ -1,87 +1,85 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<title th:text="#{msg.profile.pswrestore}">找回密码</title>
-<body th:replace="~{/framework/main}">
-<div th:fragment="mainContent">
-    <div class="page-header row no-gutters py-4">
-        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <h3 class="page-title" th:text="#{msg.profile.pswrestore}">添加</h3>
-        </div>
-    </div>
-    <div class="row ">
-        <div class="mb-3 col-12 ">
-            <div class="card card-small ">
-                <div class="card-header ">
-                    <img alt="User Avatar" class="rounded-circle m-auto" id="avatar" width="110">
-                </div>
-                <div class="card-body">
-                    <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{pswrestore}">
-                        <div class="form-row p-3">
-                            <div th:replace="/parts::TextInput(#{msg.profile.newpassword},'password',${login.getPassword()},'')"></div>
-                        </div>
-                        <div th:replace="/parts::TextInput(#{msg.profile.phoneNum},'tel',${login.getTel()},'')"></div>
-                        <br>
-                        <div th:replace="/parts::TextInput(#{msg.profile.emailAddr},'email',${login.getEmail()},'')"></div>
-                        <br>
-                        <div th:if="${userType.name().equals('Personal')}">
-                            <div class="form-row p-3">
-                                <div th:replace="/parts::TextInput(#{msg.profile.age},'age',${userDetail.getAge()},'')"></div>
-                            </div>
-                            <div class="form-row p-3">
-                                <div class="form-group col-md-5">
-                                    <label for="sex">性别</label>
-                                    <div class="form-row pl-3 pt-1" id="sex">
-                                        <div class="custom-control custom-radio mb-1 pr-5">
-                                            <input class="custom-control-input" id="formsRadioDefault" name="sex"
-                                                   th:checked="${userDetail.getSex()=='Male'}" type="radio"
-                                                   value="Male">
-                                            <label class="custom-control-label" for="formsRadioDefault">男</label>
-                                        </div>
-                                        <div class="custom-control custom-radio mb-1">
-                                            <input class="custom-control-input" id="formsRadioChecked" name="sex"
-                                                   th:checked="${userDetail.getSex()=='Female'}" type="radio"
-                                                   value="Female">
-                                            <label class="custom-control-label" for="formsRadioChecked">女</label>
+<head>
+    <script>if (!window.Turbolinks) window.location.replace('/?redirect=' + window.location.pathname);</script>
+    <script th:inline="javascript">if ([[${login!=null}]]) Turbolinks.visit("/priv/index", {action: "replace"});</script>
+    <meta name="turbolinks-cache-control" content="no-preview">
+    <meta charset="UTF-8">
+    <title th:text="#{msg.profile.pswrestore}">找回密码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body class="h-100">
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-lg-4 col-md-6 col-sm-12 offset-lg-4 offset-md-3" style="display: none;" id="mainContent">
+            <div id="alert"></div>
+            <div class="page-header row no-gutters py-4">
+                <!--                <div class="col-12 col-sm-4 text-center text-sm-left mb-0"></div>-->
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12 ">
+                    <div class="card card-small ">
+                        <div class="card-body">
+                            <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{pswrestore}">
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.username},'username','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::passwordInput(#{msg.profile.newpassword},'password','','')"></div>
+                                <br>
+                                <div class="col-12">
+                                    <label for="电话号码">电话号码</label>
+                                    <div class="input-group">
+                                        <input type="text" id="电话号码" class="form-control" required placeholder="请填写电话号码"
+                                               name="tel">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-primary" id="sendR">发送验证码
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <br>
-                            <div class="form-group col-md-5">
-                                <label for="出生日期">出生日期</label>
-                                <input class="form-control" id="出生日期" name="birth" value="" type="date"
-                                       required="required">
-                            </div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.edu},'edu',${userDetail.getEdu()},'')"></div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.school},'school',${userDetail.getSchool()},'')"></div>
-                            <br>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.code},'code','','')"></div>
+                                <br>
+                                <div class="form-group col-md-12">
+                                    <button class="mb-2 btn btn-outline-primary mr-2" id="button"
+                                            th:text="#{msg.profile.restore}"
+                                            type="submit">找回密码
+                                    </button>
+                                </div>
+                            </form>
                         </div>
-                        <div th:if="${userType.name().equals('Entrepreneurial')}">
-                            <div th:replace="/parts::TextInput(#{msg.profile.address},'address',${userDetail.getAddress()},'')"></div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.scale},'scale',${userDetail.getScale()},'')"></div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.type},'type',${userDetail.getType()},'')"></div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.field},'field',${userDetail.getField()},'')"></div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.brief},'brief',${userDetail.getBrief()},'')"></div>
-                            <br>
-                            <div th:replace="/parts::TextInput(#{msg.profile.detail},'detail',${userDetail.getDetail()},'')"></div>
-                            <br>
-                        </div>
-                        <div class="form-group col-md-12">
-                            <button class="mb-2 btn btn-outline-primary mr-2" id="button"
-                                    th:text="#{msg.profile.button}"
-                                    type="submit">提交
-                            </button>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
-        </div>
+            <script data-turbolinks-eval=true>
+                init();
+                let sendR = $("#sendR");
+                sendR.on("click", function () {
+                    sendR.attr('disabled', true);
+                    sendR.text("正在发送...");
+
+                    apiSubmit("/api/public/verify/restore", "POST",
+                        {
+                            tel: $("#电话号码").val(),
+                            username: $("#用户名").val()
+                        }
+                        , function (data) {
+                            if (data.status !== 200) {
+                                showFailAlert("出了个错，请再试一次");
+                                sendR.text("发送验证码");
+                                sendR.removeAttr("disabled");
+                                return;
+                            }
+                            sendR.text("发送成功。。。");
+                        })
+                })
+
+            </script>
+        </main>
     </div>
 </div>
 </body>
