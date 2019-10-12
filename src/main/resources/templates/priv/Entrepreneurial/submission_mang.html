@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title>申请管理</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">申请列表</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">
+                    全部申请
+                </div>
+                <div class="card-body">
+                    <table id="table"></table>
+                    <script>
+                        let operate = [];
+                        operate.formatter = function (value, row, index) {
+                            return [
+                                '<a class="like" href="javascript:void(0)" title="Like">',
+                                '<i class="fa fa-heart"></i>',
+                                '</a>  ',
+                                '<a class="remove" href="javascript:void(0)" title="Remove">',
+                                '<i class="fa fa-trash"></i>',
+                                '</a>'
+                            ].join('')
+                        };
+                        operate.events = {
+                            'click .like': function (e, value, row, index) {
+                                alert('You click like action, row: ' + JSON.stringify(row))
+                            },
+                            'click .remove': function (e, value, row, index) {
+                                $table.bootstrapTable('remove', {
+                                    field: 'id',
+                                    values: [row.id]
+                                })
+                            }
+                        };
+
+                        generateTables('/api/user/entrepreneurial/submission/list', 'Entrepreneurial', false, 'table', operate);
+                        $('#table').on('click-row.bs.table', function (e, row, $element, field) {
+                            Turbolinks.visit("hiring/" + row.id);
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

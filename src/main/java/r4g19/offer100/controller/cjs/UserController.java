@@ -18,6 +18,7 @@ import r4g19.offer100.properties.cym.mapping.VerifyType;
 import r4g19.offer100.service.cjs.UserService;
 import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.cym.LoginService;
+import r4g19.offer100.utils.cjs.AliyunSMS;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -35,10 +36,17 @@ public class UserController extends ControllerBase {
     UserService userService;
     @Autowired
     CommonCRUD crud;
+    @Autowired
+    AliyunSMS aliyunSMS;
 
     @GetMapping("login")
     public String login() {
         return "pub/login";
+    }
+
+    @GetMapping("logout")
+    public String logout() {
+        return "pub/logout";
     }
 
     @GetMapping("signup/e")
@@ -58,8 +66,7 @@ public class UserController extends ControllerBase {
         if (((SmsCode) session.getAttribute("code")).equals(code, login.getTel())) {
             login.setVerifyType(VerifyType.PHONE);
             personalService.register(personal, login);
-            response.setStatus(Status.eval);
-            return "showSuccessAlert('注册成功',3000,function(){Turbolinks.visit('/login')});";
+            return showSuccessMsgAndVisit("注册成功", "/login", response);
         }
         response.setStatus(Status.showFail);
         return "";
@@ -69,8 +76,7 @@ public class UserController extends ControllerBase {
     @PostMapping("signup/e")
     public String signup_e(Entrepreneurial entrepreneurial, Login login, HttpServletResponse response) {
         entrepreneurialService.register(entrepreneurial, login);
-        response.setStatus(Status.eval);
-        return "showSuccessAlert('注册成功',3000,function(){Turbolinks.visit('/login')});";
+        return showSuccessMsgAndVisit("注册成功", "/login", response);
     }
 
     @GetMapping("/web/profile")
@@ -102,40 +108,40 @@ public class UserController extends ControllerBase {
                 break;
         }
         crud.updateRecord(getUpdatedObject(login, loginService.getLogin(username)), username);
-        response.setStatus(Status.eval);
-        return "showSuccessAlert('修改成功',3000,function(){Turbolinks.visit('/web/profile')});";
+        return showSuccessMsgAndVisit("修改成功", "/web/profile", response);
     }
 
-    @GetMapping("/web/pswrestore")
+    @GetMapping("/pswrestore")
     @Order(1)
     public String pswrestore1(Authentication authentication, Model model) {
-        Login login = loginService.getLogin(getUsername(authentication));
-//        switch (login.getUserType()) {
-//            case Personal:
-//                model.addAttribute("userDetail", userService.getPersonal(getUsername(authentication)));
-//                break;
-//            case Entrepreneurial:
-//                model.addAttribute("userDetail", userService.getEntrepreneurial(getUsername(authentication)));
-//                break;
-//        }
-        model.addAttribute("login", login);
-        return "pub/web/pswrestore";
+        return "/pub/pswrestore";
     }
 
     @ResponseBody
-    @PostMapping("/web/pswrestore")
-    public String pswrestore(Authentication authentication, Login login, HttpServletResponse response) {
-        String username = getUsername(authentication);
-//        switch (getUserType(authentication)){
-//            case Entrepreneurial:
-//                crud.updateRecord(getUpdatedObject(entrepreneurial,userService.getEntrepreneurial(username)),username);
-//                break;
-//            case Personal:
-//                crud.updateRecord(getUpdatedObject(personal,userService.getPersonal(username)),username);
-//                break;
-//        }
-        crud.updateRecord(getUpdatedObject(login, loginService.getLogin(username)), username);
-        response.setStatus(Status.eval);
-        return "showSuccessAlert('密码修改成功',3000,function(){Turbolinks.visit('/login')});";
+    @PostMapping("/pswrestore")
+    public String pswrestore(Login login, String code, HttpSession session, HttpServletResponse response) {
+        if (((SmsCode) session.getAttribute("code")).equals(code, login.getTel())) {
+            login.setPassword(loginService.encode(login.getPassword()));
+            crud.updateRecord(getUpdatedObject(login, loginService.getLogin(login.getUsername())), login.getUsername());
+            return showSuccessMsgAndVisit("密码修改成功", "/login", response);
+        }
+        response.setStatus(Status.showFail);
+        return "";
+    }
+
+    @GetMapping("/web/pswreset")
+    @Order(1)
+    public String pswrepswreset1(Authentication authentication, Model model) {
+        return "/pub/web/pswreset";
+    }
+
+    @ResponseBody
+    @PostMapping("/web/pswreset")
+    public String pswrepswreset(Authentication authentication, Login login, HttpServletResponse response) {
+        login.setPassword(loginService.encode(login.getPassword()));
+        crud.updateRecord(getUpdatedObject(login, loginService.getLogin(getUsername(authentication))), getUsername(authentication));
+        return showSuccessMsgAndVisit("密码重置成功", "/login", response);
+//        response.setStatus(Status.showFail);
+//        return "";
     }
 }

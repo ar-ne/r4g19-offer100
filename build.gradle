@@ -170,6 +170,12 @@ jooq {
                         expression = 'PUBLIC.PERSONAL.SEX'
                         types = '.*'
                     }
+                    forcedType {
+                        userType = 'r4g19.offer100.properties.cym.mapping.SubmissionStatus'
+                        converter = 'r4g19.offer100.properties.cym.mapping.SubmissionStatus.Converter'
+                        expression = 'PUBLIC.SUBMISSION.STATUS'
+                        types = '.*'
+                    }
                 }
             }
             generate {
