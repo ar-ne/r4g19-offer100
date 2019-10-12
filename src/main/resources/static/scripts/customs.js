@@ -110,9 +110,11 @@ function dismissAll() {
 
 //TODO:将第一次请求内容改为只有一个空元素
 function generateTables(dataURL, table, checkbox = true, container = 'table') {
-    $.get(dataURL, function (data, status) {
+    $.get(dataURL, function (jsonTable, status) {
         if (status !== "success") return;
-        let jsonTable = data;
+        if (jsonTable.length < 1) {
+            $('#' + container).text("暂无数据")
+        }
         const col = [];
         for (let key in jsonTable[0]) {
             if (col.indexOf(key) === -1) {
@@ -140,9 +142,9 @@ function generateTables(dataURL, table, checkbox = true, container = 'table') {
                     silentSort: false,
                     maintainSelected: true,
                     clickToSelect: true,
-                    checkboxHeader: false,
+                    checkboxHeader: checkbox,
                     columns: data,
-                    // data: jsonTable,
+                    data: jsonTable,
                     url: dataURL,
                     showRefresh: true,
                     showPaginationSwitch: true,

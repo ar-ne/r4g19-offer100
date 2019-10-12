@@ -13,7 +13,7 @@ public class Devops extends ControllerBase {
     @GetMapping("")
     public String index(Model model) {
         model.addAttribute("userType", "dev");
-        return "devops/index";
+        return "redirect:/devops/index";
     }
 
     @GetMapping("{page}")
