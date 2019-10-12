@@ -77,10 +77,10 @@ function showSuccessAlert(msg = null, time = 3000, callback = null) {
 }
 
 function showFailAlert(msg = null, time = 3000, callback = null) {
-    showAlert(msg === null ? "错误/失败" : msg, time, "danger", "clear", callback);
+    showAlert(msg === null ? "错误/失败" : msg, time, callback, "danger", "clear");
 }
 
-function showAlert(message, time = -1, type = 'success', icon = 'check', callback = null) {
+function showAlert(message, time = -1,callback = null, type = 'success', icon = 'check') {
     type = "alert-" + type;
     const current = alertCount++;
     $("#alert").append("<div class='alert " + type + " alert-dismissible fade mb-0' role='alert'>\n" +
@@ -110,9 +110,11 @@ function dismissAll() {
 
 //TODO:将第一次请求内容改为只有一个空元素
 function generateTables(dataURL, table, checkbox = true, container = 'table') {
-    $.get(dataURL, function (data, status) {
+    $.get(dataURL, function (jsonTable, status) {
         if (status !== "success") return;
-        let jsonTable = data;
+        if (jsonTable.length < 1) {
+            $('#' + container).text("暂无数据")
+        }
         const col = [];
         for (let key in jsonTable[0]) {
             if (col.indexOf(key) === -1) {
@@ -140,9 +142,9 @@ function generateTables(dataURL, table, checkbox = true, container = 'table') {
                     silentSort: false,
                     maintainSelected: true,
                     clickToSelect: true,
-                    checkboxHeader: false,
+                    checkboxHeader: checkbox,
                     columns: data,
-                    // data: jsonTable,
+                    data: jsonTable,
                     url: dataURL,
                     showRefresh: true,
                     showPaginationSwitch: true,

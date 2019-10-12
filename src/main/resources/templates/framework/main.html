@@ -32,7 +32,7 @@
             </div>
             <div class="nav-wrapper">
                 <!--/*@thymesVar id="userType" type="java.lang.String"*/-->
-                <ul class="nav flex-column" th:include="/framework/sidebar::${userType}">
+                <ul class="nav flex-column" th:include="~{/framework/sidebar::${userType}}">
                 </ul>
             </div>
         </aside>

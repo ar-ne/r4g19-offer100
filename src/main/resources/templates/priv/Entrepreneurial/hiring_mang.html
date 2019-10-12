@@ -4,7 +4,24 @@
 <body th:replace="~{/framework/main}">
 <div th:fragment="mainContent">
     <div class="page-header row no-gutters py-4">
-
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">招聘信息列表</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">已发布的招聘信息</div>
+                <div class="card-body">
+                    <div th:include="/parts::tableNoCheckbox('/api/user/entrepreneurial/hiring/list','Entrepreneurial')"></div>
+                    <script>
+                        $('#table').on('click-row.bs.table', function (e, row, $element, field) {
+                            Turbolinks.visit("hiring/" + row.pid);
+                        })
+                    </script>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 </body>
