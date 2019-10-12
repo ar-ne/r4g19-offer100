@@ -8,6 +8,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import r4g19.offer100.annotations.cym.APIEntrance;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.model.cym.BootstrapTableColumn;
 import r4g19.offer100.properties.cym.Flags;
@@ -20,6 +21,7 @@ import static r4g19.offer100.utils.cym.ReflectUtils.getTable;
 
 @RestController
 @RequestMapping("api/public")
+@APIEntrance(name = "public")
 public class Public extends APIBase {
 
     @RestController
