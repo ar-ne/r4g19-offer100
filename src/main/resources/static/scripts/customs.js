@@ -80,7 +80,7 @@ function showFailAlert(msg = null, time = 3000, callback = null) {
     showAlert(msg === null ? "错误/失败" : msg, time, callback, "danger", "clear");
 }
 
-function showAlert(message, time = -1,callback = null, type = 'success', icon = 'check') {
+function showAlert(message, time = -1, callback = null, type = 'success', icon = 'check') {
     type = "alert-" + type;
     const current = alertCount++;
     $("#alert").append("<div class='alert " + type + " alert-dismissible fade mb-0' role='alert'>\n" +
@@ -109,7 +109,7 @@ function dismissAll() {
 }
 
 //TODO:将第一次请求内容改为只有一个空元素
-function generateTables(dataURL, table, checkbox = true, container = 'table') {
+function generateTables(dataURL, table, checkbox = true, container = 'table', operateFormatter = false) {
     $.get(dataURL, function (jsonTable, status) {
         if (status !== "success") return;
         if (jsonTable.length < 1) {
@@ -135,6 +135,14 @@ function generateTables(dataURL, table, checkbox = true, container = 'table') {
             data: JSON.stringify(col),
             success: function (data) {
                 if (checkbox) data.splice(0, 0, {checkbox: true});
+                if (operateFormatter) data.push({
+                    field: '操作',
+                    title: '操作',
+                    align: 'center',
+                    clickToSelect: false,
+                    events: window.operateEvents,
+                    formatter: operateFormatter
+                });
                 $('#' + container).bootstrapTable({
                     locale: 'zh-CN',
                     pagination: true,
