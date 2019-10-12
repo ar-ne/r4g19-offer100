@@ -25,7 +25,7 @@ public class Verify extends APIBase {
     @PostMapping("phone")
     public HttpEntity<String> phone(@RequestBody String phoneNumber, HttpSession httpSession) throws ClientException {
         phoneNumber = phoneNumber.substring(1, phoneNumber.length() - 1);
-        SmsCode smsCode = SmsCode.generate();
+        SmsCode smsCode = SmsCode.generate(phoneNumber);
         if (!logger.isDebugEnabled()&&!aliyunSMS.sendSms(phoneNumber, smsCode.getJSON()).getCode().equals("OK")) {
             return new ResponseEntity<>(HttpStatus.UNPROCESSABLE_ENTITY);
         }

@@ -22,36 +22,27 @@
                         <div class="card-body">
                             <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{/signup/e}">
                                 <div class="col-12"
-                                     th:include="/parts::TextInput(#{msg.profile.username},'loginname','','')"></div>
+                                     th:include="/parts::TextInput(#{msg.profile.username},'username','','')"></div>
                                 <br>
                                 <div class="col-12"
                                      th:include="/parts::passwordInput(#{msg.signup.password},'password','','')"></div>
                                 <br>
                                 <div class="col-12"
-                                     th:include="/parts::TextInput(#{msg.profile.phoneNum},'phonenum','','')"></div>
+                                     th:include="/parts::TextInput(#{msg.profile.phoneNum},'tel','','')"></div>
                                 <br>
                                 <div class="col-12"
-                                     th:include="/parts::TextInput(#{msg.profile.code},'code','','')"></div>
+                                     th:include="/parts::TextInput(#{msg.profile.adress},'address','','')"></div>
                                 <br>
-                                <div class="form-row p-3">
-                                    <div class="form-group col-md-5">
-                                        <label for="sex">性别</label>
-                                        <div class="form-row pl-3 pt-1" id="sex">
-                                            <div class="custom-control custom-radio mb-1 pr-5">
-                                                <input type="radio" id="formsRadioDefault" name="sex"
-                                                       class="custom-control-input"
-                                                       value="Male">
-                                                <label class="custom-control-label" for="formsRadioDefault">男</label>
-                                            </div>
-                                            <div class="custom-control custom-radio mb-1">
-                                                <input type="radio" id="formsRadioChecked" name="sex"
-                                                       class="custom-control-input"
-                                                       value="Female">
-                                                <label class="custom-control-label" for="formsRadioChecked">女</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.EType},'type','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.field},'field','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.brief},'brief','','')"></div>
+                                <br>
+
                                 <div class="form-group col-12">
                                     <button class="btn-block mb-2 btn btn-outline-primary mr-2" id="button"
                                             type="submit"

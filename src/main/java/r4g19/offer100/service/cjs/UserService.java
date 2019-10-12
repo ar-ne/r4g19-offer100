@@ -8,6 +8,7 @@ import r4g19.offer100.jooq.tables.pojos.Entrepreneurial;
 import r4g19.offer100.jooq.tables.pojos.Login;
 import r4g19.offer100.jooq.tables.pojos.Personal;
 import r4g19.offer100.properties.cym.mapping.UserType;
+import r4g19.offer100.properties.cym.mapping.VerifyType;
 import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.cym.LoginService;
 import r4g19.offer100.service.ServiceBase;
@@ -34,6 +35,7 @@ public class UserService extends ServiceBase {
 
         @Override
         public Personal register(Personal personal, Login login) throws LoginService.LoginNameExistsException {
+            login.setUserType(UserType.Personal);
             login = loginService.newLogin(login);
             personal.setUsername(login.getUsername());
             return crud.newRecord(personal, login.getUsername());
@@ -48,6 +50,8 @@ public class UserService extends ServiceBase {
     public class EntrepreneurialService extends ServiceBase implements LoginService.Register<Entrepreneurial> {
         @Override
         public Entrepreneurial register(Entrepreneurial entrepreneurial, Login login) throws LoginService.LoginNameExistsException {
+            login.setUserType(UserType.Entrepreneurial);
+            login.setVerifyType(VerifyType.NONE);
             login = loginService.newLogin(login);
             entrepreneurial.setUsername(login.getUsername());
             return crud.newRecord(entrepreneurial,login.getUsername());
