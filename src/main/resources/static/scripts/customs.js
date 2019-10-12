@@ -71,16 +71,16 @@ function inPageAction(code, args) {
     }
 }
 
-function showSuccessAlert(msg = null, time = 3000) {
-    showAlert(msg === null ? "成功/完成" : msg, time);
+function showSuccessAlert(msg = null, time = 3000, callback = null) {
+    showAlert(msg === null ? "成功/完成" : msg, time, callback);
 
 }
 
-function showFailAlert(msg = null, time = 3000) {
-    showAlert(msg === null ? "错误/失败" : msg, time, "danger", "clear");
+function showFailAlert(msg = null, time = 3000, callback = null) {
+    showAlert(msg === null ? "错误/失败" : msg, time, "danger", "clear", callback);
 }
 
-function showAlert(message, time = -1, type = 'success', icon = 'check') {
+function showAlert(message, time = -1, type = 'success', icon = 'check', callback = null) {
     type = "alert-" + type;
     const current = alertCount++;
     $("#alert").append("<div class='alert " + type + " alert-dismissible fade mb-0' role='alert'>\n" +
@@ -96,6 +96,7 @@ function showAlert(message, time = -1, type = 'success', icon = 'check') {
     if (time !== -1)
         setTimeout(function () {
             dismiss(current);
+            if (callback !== null) callback();
         }, time)
 }
 
