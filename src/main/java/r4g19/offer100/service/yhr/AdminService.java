@@ -9,13 +9,17 @@
 
 package r4g19.offer100.service.yhr;
 
+import org.springframework.stereotype.Service;
+import r4g19.offer100.service.cym.ServiceBase;
+
 /**
  * 功能描述: 
  * @author J.Y
  * @create 2019/10/8
  * @since 1.0.0
  */
-public class AdminService {
+@Service
+public class AdminService extends ServiceBase {
 }
 
     
