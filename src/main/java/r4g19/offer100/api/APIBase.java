@@ -24,7 +24,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RestController
 public abstract class APIBase extends ComponentBase {
     @Autowired
-    DSLContext dsl;  //数据库连接信息
+    protected DSLContext dsl;  //数据库连接信息
 
     @GetMapping("")
     public HttpEntity<EmptyEntityModel> index(HttpServletRequest request) {

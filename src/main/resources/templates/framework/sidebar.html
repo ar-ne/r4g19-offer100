@@ -33,5 +33,12 @@
     <li th:replace="/parts::nav-item('add_circle_outline',#{msg.admin.manageEnterprise},@{/admin/enterprise},false)"></li>
     <li th:replace="/parts::nav-item('add_circle_outline',#{msg.admin.managenotice},@{/admin/noticeManage},false)"></li>
 </ul>
+
+<ul class="nav flex-column" th:fragment="dev">
+    <li th:replace="/parts::nav-item('create_new_folder','首页',@{/devops/},false)"></li>
+    <li th:replace="/parts::nav-item('create_new_folder','查看日志',@{log},false)"></li>
+    <li th:replace="/parts::nav-item('assignment_late','用户列表',@{userList},false)"></li>
+    <li th:replace="/parts::nav-item('assignment_late','添加用户',@{addUser},false)"></li>
+</ul>
 </body>
 </html>

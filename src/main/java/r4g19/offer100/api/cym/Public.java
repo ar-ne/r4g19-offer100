@@ -7,17 +7,16 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import r4g19.offer100.api.APIBase;
-import r4g19.offer100.model.cym.BootStrapTableColumn;
+import r4g19.offer100.model.cym.BootstrapTableColumn;
 import r4g19.offer100.properties.cym.Flags;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+
+import static r4g19.offer100.utils.cym.ReflectUtils.getTable;
 
 @RestController
 @RequestMapping("api/public")
@@ -26,7 +25,7 @@ public class Public extends APIBase {
     @RestController
     @RequestMapping("api/public/lang")
     @PropertySource("classpath:properties/flags.properties")
-    public class Lang extends APIBase {
+    public static class Lang extends APIBase {
 
         private final MessageSource messageSource; //在代码里获取Messages
         private final Flags flags;
@@ -38,16 +37,21 @@ public class Public extends APIBase {
         }
 
         @PostMapping("bs-table/{tableName}")
-        public HttpEntity<List<BootStrapTableColumn>> bs_table(BootStrapTableColumn[] cols, @PathVariable String tableName) {
-            List<BootStrapTableColumn> list = new LinkedList<>();
-            for (BootStrapTableColumn col : cols) {
+        public HttpEntity<List<BootstrapTableColumn>> bs_table(@RequestBody BootstrapTableColumn[] cols, @PathVariable String tableName) {
+            List<BootstrapTableColumn> list = new LinkedList<>();
+            for (BootstrapTableColumn col : cols) {
                 try {
                     col.setTitle(messageSource.getMessage(tableName + "." + col.getField(), null, Locale.getDefault()));
-                    Flags.Field colFlag = flags.getFieldFlag(tableName, col.getField());
-                    col.setVisible(colFlag.visibility);
-                    list.add(col);
                 } catch (NoSuchMessageException ignored) {
+                    col.setTitle(col.getField());
                 }
+                try {
+                    Flags.Field colFlag = flags.getTableField(getTable(tableName), col.getField());
+                    col.setVisible(colFlag.visibility);
+                } catch (Exception e) {
+                    col.setVisible(true);
+                }
+                list.add(col);
             }
             return new ResponseEntity<>(list, HttpStatus.OK);
         }
