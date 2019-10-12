@@ -108,6 +108,20 @@ function dismissAll() {
     $("#alert > div > button").click();
 }
 
+function base64img_encoder(localFile) {
+    let r = new FileReader();
+    let base64img;
+    r.onload = function () {
+        base64img = r.result;
+    };
+    return base64img;
+}
+
+function base64img_render(base64img, container) {
+    container.src = '';
+    container.src = base64img;
+}
+
 //TODO:将第一次请求内容改为只有一个空元素
 function generateTables(dataURL, table, checkbox = true, container = 'table', operate = false) {
     $.get(dataURL, function (jsonTable, status) {
