@@ -25,7 +25,6 @@ public class CommonCRUD extends ServiceBase {
     public <T> T updateRecord(T o, String username) {
         return doOperation(o, username, CRUDOperation.UPDATE);
     }
-
     @SuppressWarnings("unchecked")
     @Transactional
     <T> T doOperation(T o, String username, CRUDOperation operation) {

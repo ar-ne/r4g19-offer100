@@ -2,9 +2,12 @@ package r4g19.offer100.properties.cym;
 
 import org.jooq.Table;
 import org.springframework.hateoas.RepresentationModel;
+import r4g19.offer100.annotations.cym.APIEntrance;
+import r4g19.offer100.api.APIBase;
 import r4g19.offer100.jooq.Public;
 import r4g19.offer100.jooq.Tables;
 import r4g19.offer100.properties.cym.mapping.UserType;
+import r4g19.offer100.utils.cym.AnnotationUtils;
 
 import java.lang.reflect.Constructor;
 import java.util.*;
@@ -22,6 +25,7 @@ public class Vars {
     public static final Map<Class, Table<?>> POJO_DAO_TABLE;
     public static final Map<UserType, Class<? extends RepresentationModel>> TYPE_POJO_MAP;
     public static final String JOOQ_PACKAGE_NAME;
+    public static final Set<Class<? extends APIBase>> APIEntrances;
 //    public static final Map<CRUDOperation, Map<Class, MessageParam[]>> DB_BROADCAST_TRIGGER;
 
 
@@ -30,7 +34,7 @@ public class Vars {
      */
     static {
         JOOQ_PACKAGE_NAME = Tables.class.getPackageName();
-        String[] strings = new String[]{"notification", "profile", "production", "answerTicket"};
+        String[] strings = new String[]{"notification", "profile", "production", "answerTicket", "hiring"};
         PUBLIC_PAGES = unmodifiableSet(new HashSet<>(Arrays.asList(strings)));
 
         HashMap<Class, Constructor> map = new HashMap<>();
@@ -55,6 +59,14 @@ public class Vars {
         map2.put(UserType.Personal, r4g19.offer100.jooq.tables.pojos.Personal.class);
 
         map2.put(UserType.Entrepreneurial, r4g19.offer100.jooq.tables.pojos.Entrepreneurial.class);
-        TYPE_POJO_MAP = Collections.unmodifiableMap(map2);
+        TYPE_POJO_MAP = unmodifiableMap(map2);
+
+        Set<Class> tmpEntrance = AnnotationUtils.findAllClassesWithAnnotation(APIEntrance.class, "r4g19.offer100.api");
+        Set<Class<? extends APIBase>> tmpE2 = new HashSet<>();
+        for (Class aClass : tmpEntrance) {
+            if (aClass.getSuperclass().equals(APIBase.class))
+                tmpE2.add(aClass);
+        }
+        APIEntrances = unmodifiableSet(tmpE2);
     }
 }

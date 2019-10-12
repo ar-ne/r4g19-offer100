@@ -32,6 +32,9 @@ create table personal (
 username             VARCHAR(10240)                 not null,
 birth                DATE,
 edu                  VARCHAR(10240),
+sex                  int,
+age                  int,
+school               VARCHAR(10240),
 primary key (username),
 foreign key (username)
       references login (username)
@@ -117,9 +120,6 @@ username ASC
 create table resume (
 username             VARCHAR(10240)                 not null,
 id                   BIGINT                         not null,
-sex                  int,
-age                  int,
-school               VARCHAR(10240),
 address              VARCHAR(10240),
 phone                VARCHAR(10240),
 email                VARCHAR(10240),

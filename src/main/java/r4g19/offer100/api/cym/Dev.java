@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import r4g19.offer100.annotations.cym.APIEntrance;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.jooq.tables.pojos.Login;
 
@@ -23,6 +24,7 @@ import static r4g19.offer100.properties.cym.Vars.POJO_DAO_MAPPER;
 
 @RestController
 @RequestMapping("api/dev")
+@APIEntrance(name = "dev", localOnly = true)
 public class Dev extends APIBase {
 
     @RestController
