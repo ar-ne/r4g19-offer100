@@ -10,7 +10,7 @@ public interface AliyunSmsSenderService {
     /**
      * @param phoneNumbers:      手机号
      * @param templateParamJson: 模板参数json {"sellerName":"123456","orderSn":"123456"}
-     * @param templateCode:      阿里云短信模板code
+     * @param templateCode:      阿里云短信模板code   "SMS_175051522"
      * @Description: 对接阿里云短信服务实现短信发送
      * 发送验证码类的短信时，每个号码每分钟最多发送一次，每个小时最多发送5次。其它类短信频控请参考阿里云
      */

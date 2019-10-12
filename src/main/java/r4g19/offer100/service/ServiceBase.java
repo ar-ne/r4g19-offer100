@@ -1,4 +1,4 @@
-package r4g19.offer100.service.cym;
+package r4g19.offer100.service;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +9,7 @@ import r4g19.offer100.ComponentBase;
  * 所有服务的父类
  */
 @Service
-abstract class ServiceBase extends ComponentBase {
+public abstract class ServiceBase extends ComponentBase {
     @Autowired
     protected DSLContext dsl;
 //    @Autowired

@@ -1,4 +1,4 @@
-package r4g19.offer100.utils;
+package r4g19.offer100.utils.cjs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

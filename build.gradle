@@ -138,6 +138,10 @@ jooq {
                 matchers {
                     tables {
                         table {
+                            expression = 'PERSONAL|ENTREPRENEURIAL'
+                            pojoExtends = 'r4g19.offer100.jooq.tables.pojos.Login'
+                        }
+                        table {
                             pojoExtends = 'org.springframework.hateoas.RepresentationModel'
                         }
                     }
@@ -151,7 +155,7 @@ jooq {
                     forcedType {
                         userType = 'r4g19.offer100.properties.cym.mapping.UserType'
                         converter = 'r4g19.offer100.properties.cym.mapping.UserType.Converter'
-                        expression = 'PUBLIC.LOGIN.TYPE'
+                        expression = 'PUBLIC.LOGIN.USER_TYPE'
                         types = '.*'
                     }
                     forcedType {

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import r4g19.offer100.jooq.tables.pojos.Log;
 import r4g19.offer100.properties.cym.CRUDOperation;
+import r4g19.offer100.service.ServiceBase;
 import r4g19.offer100.utils.cym.LogMsgHelper;
 
 import java.lang.reflect.InvocationTargetException;

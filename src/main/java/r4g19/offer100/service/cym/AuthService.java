@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
 import r4g19.offer100.jooq.tables.pojos.Login;
+import r4g19.offer100.service.ServiceBase;
 
 import java.util.Collections;
 
@@ -27,7 +28,7 @@ public class AuthService extends ServiceBase implements UserDetailsService {
     public UserDetails loadUserByUsername(String loginName) throws UsernameNotFoundException {
         Login login = new LoginDao(dsl.configuration()).fetchOneByUsername(loginName);
         if (login == null) throw new UsernameNotFoundException("login name:" + loginName);
-        return new User(login.getUsername(), login.getPassword(), Collections.singletonList(login.getType().getAuthority()));
+        return new User(login.getUsername(), login.getPassword(), Collections.singletonList(login.getUserType().getAuthority()));
     }
 
 

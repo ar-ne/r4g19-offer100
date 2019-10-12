@@ -11,7 +11,7 @@ import com.aliyuncs.profile.DefaultProfile;
 import com.aliyuncs.profile.IClientProfile;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import r4g19.offer100.properties.cjs.AliyunSMSConfig;
+import r4g19.offer100.autoconfigure.cjs.aliyunSMS.AliyunSMSConfig;
 
 import javax.annotation.Resource;
 import java.text.SimpleDateFormat;

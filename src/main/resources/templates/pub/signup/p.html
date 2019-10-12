@@ -1,0 +1,99 @@
+<!doctype html>
+<html class="no-js h-100" lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script>if (!window.Turbolinks) window.location.replace('/?redirect=' + window.location.pathname);</script>
+    <script th:inline="javascript">if ([[${login!=null}]]) Turbolinks.visit("/priv/index", {action: "replace"});</script>
+
+    <meta name="turbolinks-cache-control" content="no-preview">
+    <meta charset="UTF-8">
+    <title th:text="#{msg.signup.title.p}">123</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body class="h-100">
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-lg-4 col-md-6 col-sm-12 offset-lg-4 offset-md-3" style="display: none;" id="mainContent">
+            <div id="alert"></div>
+            <div class="page-header row no-gutters py-4">
+                <!--                <div class="col-12 col-sm-4 text-center text-sm-left mb-0"></div>-->
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12 ">
+                    <div class="card card-small ">
+                        <div class="card-body">
+                            <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{/signup/e}">
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.username},'username','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::passwordInput(#{msg.signup.password},'password','','')"></div>
+                                <br>
+                                <div class="col-12">
+                                    <label for="电话号码">电话号码</label>
+                                    <div class="input-group">
+                                        <input type="text" id="电话号码" class="form-control" required placeholder="请填写电话号码" name="tel">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-primary" id="sendB">发送验证码</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.code},'code','','')"></div>
+                                <br>
+                                <div class="form-row p-3">
+                                    <div class="form-group col-md-5">
+                                        <label for="sex">性别</label>
+                                        <div class="form-row pl-3 pt-1" id="sex">
+                                            <div class="custom-control custom-radio mb-1 pr-5">
+                                                <input type="radio" id="formsRadioDefault" name="sex"
+                                                       class="custom-control-input"
+                                                       value="Male">
+                                                <label class="custom-control-label" for="formsRadioDefault">男</label>
+                                            </div>
+                                            <div class="custom-control custom-radio mb-1">
+                                                <input type="radio" id="formsRadioChecked" name="sex"
+                                                       class="custom-control-input"
+                                                       value="Female">
+                                                <label class="custom-control-label" for="formsRadioChecked">女</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-12">
+                                    <button class="btn-block mb-2 btn btn-outline-primary mr-2" id="button"
+                                            type="submit"
+                                            th:text="#{msg.signup.button}">提交
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
+<script data-turbolinks-eval=true>
+    init();
+    let sendB = $("#sendB");
+    sendB.on("click",function () {
+        sendB.attr('disabled',true);
+        sendB.text("正在发送...");
+        apiSubmit("/api/public/verify/phone","POST",$("#电话号码").val(),function (data) {
+            if(data.status !== 200 ){
+                showFailAlert("出了个错，请再试一次");
+                sendB.text("发送验证码");
+                sendB.removeAttr("disabled");
+                return;
+            }
+            sendB.text("发送成功。。。");
+        })
+    })
+
+</script>
+</body>
+</html>

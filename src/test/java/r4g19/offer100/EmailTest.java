@@ -1,15 +1,5 @@
 package r4g19.offer100;
 
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import r4g19.offer100.utils.EmailUtill;
-
-import javax.mail.internet.MimeMessage;
-
 public class EmailTest {
 //    @RunWith(SpringJUnit4ClassRunner.class)
 //    @ContextConfiguration("classpath:applicationContext.xml")

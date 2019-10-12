@@ -25,15 +25,15 @@ public class TestController {
     /**
      * @Description: 短信发送
      */
-    @GetMapping("/sms")
+    @GetMapping("sms")
     @ResponseBody
     public String sms() {
         Map<String, String> map = new HashMap<>();
         map.put("sellerName", "平台自营");
         map.put("orderSn", "P2019041895451");
-        SendSmsResponse sendSmsResponse = aliyunSmsSenderServiceImpl.sendSms("此处填写手机号",
+        SendSmsResponse sendSmsResponse = aliyunSmsSenderServiceImpl.sendSms("13340110608",
                 JSON.toJSONString(map),
-                "此处填写短信模板code");
+                "SMS_175051522");
         return JSON.toJSONString(sendSmsResponse);
     }
 
