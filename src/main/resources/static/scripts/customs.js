@@ -77,10 +77,10 @@ function showSuccessAlert(msg = null, time = 3000, callback = null) {
 }
 
 function showFailAlert(msg = null, time = 3000, callback = null) {
-    showAlert(msg === null ? "错误/失败" : msg, time, "danger", "clear", callback);
+    showAlert(msg === null ? "错误/失败" : msg, time, callback, "danger", "clear");
 }
 
-function showAlert(message, time = -1, type = 'success', icon = 'check', callback = null) {
+function showAlert(message, time = -1,callback = null, type = 'success', icon = 'check') {
     type = "alert-" + type;
     const current = alertCount++;
     $("#alert").append("<div class='alert " + type + " alert-dismissible fade mb-0' role='alert'>\n" +

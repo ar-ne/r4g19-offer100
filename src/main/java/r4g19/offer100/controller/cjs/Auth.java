@@ -55,7 +55,7 @@ public class Auth extends ControllerBase {
     @PostMapping("signup/e")
     public String signup_e(Entrepreneurial entrepreneurial, Login login, HttpServletResponse response){
         entrepreneurialService.register(entrepreneurial,login);
-        response.setStatus(Status.showSuccessMsg);
-        return "注册成功";
+        response.setStatus(Status.eval);
+        return "showSuccessAlert('注册成功',3000,function(){Turbolinks.visit('/login')});";
     }
 }
