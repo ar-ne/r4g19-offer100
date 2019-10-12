@@ -7,8 +7,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import r4g19.offer100.controller.ControllerBase;
 import r4g19.offer100.jooq.tables.pojos.Hiring;
+import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.cym.EntrepreneurialService;
 import r4g19.offer100.service.cym.HiringService;
 
@@ -26,6 +28,8 @@ public class Router extends ControllerBase {
     HiringService hiringService;
     @Autowired
     EntrepreneurialService entrepreneurialService;
+    @Autowired
+    CommonCRUD crud;
 
     /**
      * 跳转到首屏，负责重定向
@@ -61,10 +65,16 @@ public class Router extends ControllerBase {
     @Order(1)
     public String hiring(Model model, Authentication authentication) {
         model.addAttribute("disabled", "");
-        model.addAttribute("new", true);
+        model.addAttribute("create", true);
         model.addAttribute("hiring", new Hiring());
         model.addAttribute("entrepreneurial", entrepreneurialService.getEntrepreneurial(getUsername(authentication)));
         return "/pub/web/hiring";
+    }
+
+    @PostMapping("/web/hiring/new")
+    public String hiring(Hiring hiring, Authentication authentication) {
+        hiring = crud.newRecord(hiring, getUsername(authentication));
+        return "/pub/web/hiring/" + hiring.getId();
     }
 
     @GetMapping("/web/hiring/{id}")
