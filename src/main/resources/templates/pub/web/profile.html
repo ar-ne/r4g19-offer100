@@ -47,11 +47,26 @@
                         <div th:replace="/parts::TextInput(#{msg.profile.emailAddr},'email',${login.getEmail()},'')"></div>
                         <br>
                         <br>
-                        <div th:replace="/parts::titledTextarea(#{msg.profile.birth},'birth',${userDetail.getBirth()},'')"></div>
+                        <div class="form-group col-md-5">
+                            <label for="出生日期">出生日期</label>
+                            <input class="form-control" id="出生日期" name="birth" value="" type="date" required="required">
+                        </div>
                         <br>
-                        <div th:replace="/parts::titledTextarea(#{msg.profile.edu},'edu',${userDetail.getEdu()},'')"></div>
+                        <div th:replace="/parts::TextInput(#{msg.profile.edu},'edu',${userDetail.getEdu()},'')"></div>
                         <br>
-                        <div th:replace="/parts::titledTextarea(#{msg.profile.school},'school',${userDetail.getSchool()},'')"></div>
+                        <div th:replace="/parts::TextInput(#{msg.profile.school},'school',${userDetail.getSchool()},'')"></div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.address},'address',${userDetail.getAddress()},'')"></div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.scale},'scale',${userDetail.getScale()},'')"></div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.type},'type',${userDetail.getType()},'')"></div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.field},'field',${userDetail.getField()},'')"></div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.brief},'brief',${userDetail.getBrief()},'')"></div>
+                        <br>
+                        <div th:replace="/parts::TextInput(#{msg.profile.detail},'detail',${userDetail.getDetail()},'')"></div>
                         <br>
                         <div class="form-group col-md-12">
                             <button class="mb-2 btn btn-outline-primary mr-2" id="button"

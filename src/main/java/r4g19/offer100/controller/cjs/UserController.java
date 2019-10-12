@@ -16,6 +16,7 @@ import r4g19.offer100.model.cjs.SmsCode;
 import r4g19.offer100.properties.cym.Status;
 import r4g19.offer100.properties.cym.mapping.VerifyType;
 import r4g19.offer100.service.cjs.UserService;
+import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.cym.LoginService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -32,6 +33,8 @@ public class UserController extends ControllerBase {
     LoginService loginService;
     @Autowired
     UserService userService;
+    @Autowired
+    CommonCRUD crud;
 
     @GetMapping("login")
     public String login() {
@@ -87,8 +90,15 @@ public class UserController extends ControllerBase {
     }
 
     @ResponseBody
-    @PostMapping("pub/web/profile")
-    public String profile(Authentication authentication) {
-        return null;
+    @PostMapping("/web/profile")
+    public String profile(Authentication authentication,Login login ,Personal personal,Entrepreneurial entrepreneurial) {
+        switch (getUserType(authentication)){
+            case Entrepreneurial:
+                crud.updateRecord(entrepreneurial,getUsername(authentication));
+            case Personal:
+                crud.updateRecord(personal,getUsername(authentication));
+        }
+        crud.updateRecord(login,getUsername(authentication));
+        return "showSuccessAlert('修改成功',3000,function(){Turbolinks.visit('/profile')});";
     }
 }
