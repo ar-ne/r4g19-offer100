@@ -2,6 +2,7 @@ package r4g19.offer100;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,8 @@ import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
+import r4g19.offer100.autoconfigure.cjs.aliyunSMS.AliyunSMSConfig;
+import r4g19.offer100.properties.cjs.EmailConfig;
 import r4g19.offer100.utils.cym.Auth;
 
 /**
@@ -29,6 +32,7 @@ import r4g19.offer100.utils.cym.Auth;
  */
 @SpringBootApplication
 @EnableCaching
+@EnableConfigurationProperties({AliyunSMSConfig.class, EmailConfig.class})
 public class Application {
 
     public static void main(String[] args) {
@@ -98,13 +102,13 @@ public class Application {
     public class WebSecurity extends WebSecurityConfigurerAdapter {
         @Override
         protected void configure(HttpSecurity http) throws Exception {
-//            http.authorizeRequests()
-//                    .antMatchers("/", "/webpack/**", "/fonts/**", "/scripts/**", "/styles/**", "/register").permitAll()
-//                    .antMatchers("/admin/**", "/api/admin/**", "/devops/**").access("hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
-//                    .antMatchers("/web/**", "/api/user/**").access("hasAnyRole('Entrepreneurial','Personal')")
-//                    .antMatchers("/api/public/**").access("hasAnyRole('Entrepreneurial','Personal') or hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
-//                    .and().formLogin().loginPage("/login").successHandler(authSuccessHandler()).failureHandler(authFailureHandler()).permitAll()
-//                    .and().logout().logoutSuccessHandler(logoutHandler());
+            http.authorizeRequests()
+                    .antMatchers("/", "/webpack/**", "/fonts/**", "/scripts/**", "/styles/**", "/signup/e", "/signup/p").permitAll()
+                    .antMatchers("/admin/**", "/api/admin/**", "/devops/**").access("hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
+                    .antMatchers("/web/**", "/api/user/**").access("hasAnyRole('Entrepreneurial','Personal')")
+                    .antMatchers("/api/public/**").access("hasAnyRole('Entrepreneurial','Personal') or hasIpAddress('127.0.0.1') or hasIpAddress('0:0:0:0:0:0:0:1')")
+                    .and().formLogin().loginPage("/login").successHandler(authSuccessHandler()).failureHandler(authFailureHandler()).permitAll()
+                    .and().logout().logoutSuccessHandler(logoutHandler());
         }
 
     }
