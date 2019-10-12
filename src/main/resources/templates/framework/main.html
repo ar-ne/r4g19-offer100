@@ -54,7 +54,8 @@
                             </a>
                             <div class="dropdown-menu dropdown-menu-small"
                                  aria-labelledby="dropdownMenuLink">
-                                <div data-turbolinks-permanent="" id="aNotification" style="overflow-y:scroll;max-height: 75vh;">
+                                <div data-turbolinks-permanent="" id="aNotification"
+                                     style="overflow-y:scroll;max-height: 75vh;">
                                     <a class="dropdown-item notification__all text-center" th:href="@{notification}">
                                         查看全部提醒 </a>
                                 </div>
@@ -66,8 +67,8 @@
                                role="button" aria-haspopup="true" aria-expanded="false">
                                 <!--                                <img class="user-avatar rounded-circle mr-2" th:src="@{/images/avatars/0.jpg}"-->
                                 <!--                                     alt="User Avatar">-->
-                                <!--/*@thymesVar id="user" type="r4g19.offer100.webhw.model.User"*/-->
-                                <span class="d-none d-md-inline-block" th:text="${user!=null?user.getName():'admin'}">Sierra Brooks</span>
+                                <!--/*@thymesVar id="username" type="java.lang.String"*/-->
+                                <span class="d-none d-md-inline-block" th:text="${username!=null?username:'Admin'}">Sierra Brooks</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-small">
                                 <a class="dropdown-item" href="#" th:href="@{profile}">
