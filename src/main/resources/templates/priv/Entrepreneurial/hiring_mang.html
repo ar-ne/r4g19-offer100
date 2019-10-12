@@ -13,16 +13,42 @@
             <div class="card card-small ">
                 <div class="card-header ">
                     已发布的招聘信息
+                </div>
+                <div class="card-body">
                     <a th:href="@{/web/hiring/new}">
                         <button class="btn btn-outline-primary">新建招聘信息</button>
                     </a>
-                </div>
-                <div class="card-body">
-                    <div th:include="/parts::tableNoCheckbox('/api/user/entrepreneurial/hiring/list','Entrepreneurial')"></div>
+                    <table id="table"></table>
                     <script>
+                        // let operate=[];
+                        // operate.formatter = function (value, row, index) {
+                        //     return [
+                        //         '<a class="like" href="javascript:void(0)" title="Like">',
+                        //         '<i class="fa fa-heart"></i>',
+                        //         '</a>  ',
+                        //         '<a class="remove" href="javascript:void(0)" title="Remove">',
+                        //         '<i class="fa fa-trash"></i>',
+                        //         '</a>'
+                        //     ].join('')
+                        // };
+                        // operate.events = {
+                        //     'click .like': function (e, value, row, index) {
+                        //         alert('You click like action, row: ' + JSON.stringify(row))
+                        //     },
+                        //     'click .remove': function (e, value, row, index) {
+                        //         $table.bootstrapTable('remove', {
+                        //             field: 'id',
+                        //             values: [row.id]
+                        //         })
+                        //     }
+                        // };
+
+                        generateTables('/api/user/entrepreneurial/hiring/list', 'Entrepreneurial', false, 'table');
                         $('#table').on('click-row.bs.table', function (e, row, $element, field) {
                             Turbolinks.visit("hiring/" + row.id);
                         })
+
+
                     </script>
                 </div>
             </div>

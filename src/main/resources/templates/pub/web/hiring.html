@@ -1,35 +1,44 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <title th:text="${entrepreneurial.getDisplayname()}">招聘单位名称</title>
-<body th:replace="~{/framework/main}">
+<body th:replace="~{/framework/brief}">
 <div th:fragment="mainContent">
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <h3 th:text="${'职位详情 - '}+${create?'新建职位':hiring.getPosition()}" class="page-title">职位详情</h3>
+            <h3 th:text="${entrepreneurial.getDisplayname()}+${' - '}+${create?'新建职位':hiring.getPosition()}"
+                class="page-title">职位详情</h3>
         </div>
     </div>
     <div class="row ">
         <div class="mb-3 col-12 ">
             <div class="card card-small ">
                 <div class="card-header ">
-                    <button class="btn btn-outline-info" onclick="goBack()">←返回</button>
+                    <button class="btn btn-outline-info" onclick="goBack()"><i class="material-icons">arrow_back</i>返回
+                    </button>
+                    <button th:if="${editable}" class="btn btn-outline-success ml-auto"
+                            onclick="goBack()"><i class="material-icons">edit</i>编辑
+                    </button>
+                    <button th:if="${editable}" class="btn btn-outline-danger ml-auto"
+                            onclick="goBack()"><i class="material-icons">delete_outline</i>删除
+                    </button>
                 </div>
                 <div class="card-body">
                     <form id="form" th:action="@{/web/hiring/new}" method="post" onsubmit="return formSubmit()">
-                        <div class="row col-12">
+                        <div class="col-12">
                             <div th:if="${create}"
-                                 th:replace="/parts::TextInput('职位名称','position',${hiring.getPosition()},${disabled})"></div>
-                            <div th:replace="/parts::TextInput('预期薪资','position',${hiring.getPosition()},${disabled})"></div>
+                                 th:include="/parts::TextInput('职位名称','position',${hiring.getPosition()},${disabled})"></div>
+                            <div th:if="!${create}"
+                                 th:include="/parts::TextInput('发布时间','pubtime',${hiring.getPubtime()},${disabled})"></div>
                         </div>
                         <div class="row col-12">
-                            <div th:replace="/parts::TextInput('学历要求','position',${hiring.getPosition()},${disabled})"></div>
-                            <div th:replace="/parts::TextInput('工作地点','position',${hiring.getPosition()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('预期薪资','salary',${hiring.getSalary()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('学历要求','eduRequirement',${hiring.getEduRequirement()},${disabled})"></div>
                         </div>
                         <div class="row col-12">
-                            <div th:replace="/parts::TextInput('面试地点','position',${hiring.getPosition()},${disabled})"></div>
-                            <div th:replace="/parts::TextInput('职位简介','position',${hiring.getPosition()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('工作地点','workAddress',${hiring.getWorkAddress()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('面试地点','interviewAddress',${hiring.getInterviewAddress()},${disabled})"></div>
                         </div>
-                        <div th:replace="/parts::titledTextarea('详细描述','position',${hiring.getPosition()},${disabled})"></div>
+                        <div th:replace="/parts::titledTextarea('详细描述','detail',${hiring.getDetail()},${disabled})"></div>
                         <br>
                         <div th:if="${create}" class="form-group col-md-12">
                             <button type="submit" id="button" class="mb-2 btn btn-outline-primary mr-2">发布

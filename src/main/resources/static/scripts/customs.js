@@ -109,7 +109,7 @@ function dismissAll() {
 }
 
 //TODO:将第一次请求内容改为只有一个空元素
-function generateTables(dataURL, table, checkbox = true, container = 'table', operateFormatter = false) {
+function generateTables(dataURL, table, checkbox = true, container = 'table', operate = false) {
     $.get(dataURL, function (jsonTable, status) {
         if (status !== "success") return;
         if (jsonTable.length < 1) {
@@ -135,13 +135,13 @@ function generateTables(dataURL, table, checkbox = true, container = 'table', op
             data: JSON.stringify(col),
             success: function (data) {
                 if (checkbox) data.splice(0, 0, {checkbox: true});
-                if (operateFormatter) data.push({
-                    field: '操作',
-                    title: '操作',
+                if (operate) data.push({
+                    field: '操  作',
+                    title: '操  作',
                     align: 'center',
                     clickToSelect: false,
-                    events: window.operateEvents,
-                    formatter: operateFormatter
+                    events: operate.events,
+                    formatter: operate.formatter
                 });
                 $('#' + container).bootstrapTable({
                     locale: 'zh-CN',
@@ -175,6 +175,31 @@ function generateTables(dataURL, table, checkbox = true, container = 'table', op
         });
     });
 }
+
+
+Date.prototype.format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+    }
+    return fmt;
+};
+Date.prototype.defFmt = function (fmt) {
+    return this.format("yyyy-MM-dd hh:mm:ss");
+};
 
 function goBack() {
     history.back(-1);

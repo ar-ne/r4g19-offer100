@@ -68,7 +68,7 @@ public class Router extends ControllerBase {
     @Order(1)
     public String hiring(Model model, Authentication authentication) {
         model.addAttribute("disabled", "");
-        model.addAttribute("create", true);
+        model.addAttribute("create", "true");
         model.addAttribute("hiring", new Hiring());
         model.addAttribute("entrepreneurial", entrepreneurialService.getEntrepreneurial(getUsername(authentication)));
         return "/pub/web/hiring";
@@ -77,17 +77,24 @@ public class Router extends ControllerBase {
     @PostMapping("/web/hiring/new")
     @ResponseBody
     public String hiring(Hiring hiring, Authentication authentication, HttpServletResponse response) {
-        hiring.setPubtime(new Timestamp(System.currentTimeMillis()).toString());
+        hiring.setPubtime(new Timestamp(System.currentTimeMillis()));
+        hiring.setUsername(getUsername(authentication));
         hiring = crud.newRecord(hiring, getUsername(authentication));
         return showSuccessMsgAndVisit("发布成功，正在跳转...", "/web/hiring/" + hiring.getId(), response);
     }
 
     @GetMapping("/web/hiring/{id}")
     @Order(2)
-    public String hiring(@PathVariable Long id, Model model) {
+    public String hiring(@PathVariable Long id, Model model, Authentication authentication) {
         Hiring hiring = hiringService.getHiring(id);
+        model.addAttribute("disabled", "disabled");
+        model.addAttribute("create", false);
         model.addAttribute("hiring", hiring);
         model.addAttribute("entrepreneurial", hiringService.getEntrepreneurial(hiring));
+        if (hiring.getUsername().equals(getUsername(authentication)))
+            model.addAttribute("editable", true);
+        else
+            model.addAttribute("editable", false);
         return "/pub/web/hiring";
     }
 }
