@@ -26,8 +26,13 @@
                         </div>
                         <form id="form" method="POST" onsubmit="return formSubmit(null,'form',null,disconnect())"
                               th:action="@{/login}">
-                            <ul class="card-body list-group list-group-flush">
+                            <ul class="card-body list-group list-group-flush pt-0">
+                                <div class="input-group mb-0">
+                                    <a class="ml-auto text-muted" th:href="@{/pswrestore}"
+                                       id="forgetpsw"><small>忘记密码?</small></a>
+                                </div>
                                 <li class="list-group-item px-3">
+
                                     <div class="input-group mb-3">
                                         <div class="input-group input-group-seamless">
                                         <span class="input-group-prepend">
@@ -71,12 +76,6 @@
                                                     type="button">Secondary
                                             </button>
                                         </a>
-                                    </div>
-                                    <div class="input-group mb-3">
-                                        <button class="btn btn-outline-primary btn-block form-control" id="button"
-                                                th:text="#{msg.login.btn.forgetpsw}"
-                                                type="submit">Primary
-                                        </button>
                                     </div>
                                 </li>
                             </ul>
