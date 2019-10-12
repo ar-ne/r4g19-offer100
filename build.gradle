@@ -167,7 +167,7 @@ jooq {
                     forcedType {
                         userType = 'r4g19.offer100.properties.cym.mapping.Sex'
                         converter = 'r4g19.offer100.properties.cym.mapping.Sex.Converter'
-                        expression = 'PUBLIC.RESUME.SEX'
+                        expression = 'PUBLIC.PERSONAL.SEX'
                         types = '.*'
                     }
                 }
