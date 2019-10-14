@@ -1,31 +1,30 @@
-create table login (
-username             VARCHAR(10240)                 not null,
-displayname          VARCHAR(10240),
-password             VARCHAR(10240),
-email                VARCHAR(10240),
-tel                  VARCHAR(10240),
-join_time            TIMESTAMP,
-user_type            INTEGER,
-avatar               BLOB,
+create table Log
+(
+    username    VARCHAR(10240),
+    time        TIMESTAMP,
+    description VARCHAR(10240),
+    notes       VARCHAR(10240),
+    id          BIGINT not null,
+    primary key (id)
+);
+
+create index Index_5 on Log (
+                             time ASC
+    );
+
+create table login
+(
+    username         VARCHAR(10240) not null,
+    displayname      VARCHAR(10240),
+    password         VARCHAR(10240),
+    email            VARCHAR(10240),
+    tel              VARCHAR(10240),
+    join_time        TIMESTAMP,
+    user_type        INTEGER,
+    avatar           BLOB,
 contact              VARCHAR(10240),
 verify_type          INTEGER,
 primary key (username)
-);
-
-create table Log (
-username             VARCHAR(10240),
-time                 TIMESTAMP,
-description          VARCHAR(10240),
-notes                VARCHAR(10240),
-id                   BIGINT                         not null,
-primary key (id),
-foreign key (username)
-      references login (username)
-);
-
-create  index Index_5 on Log (
-username ASC,
-time ASC
 );
 
 create table personal
@@ -71,18 +70,19 @@ create table hiring
         references entrepreneurial (username)
 );
 
-create table collection (
-                            per_username    VARCHAR(10240)                 not null,
-                            hir_username    VARCHAR(10240),
-                            hir_id          BIGINT                         not null,
-                            valid           INT,
-                            collection_time TIMESTAMP,
-                            apply           INT,
-                            primary key (per_username, hir_id),
-                            foreign key (per_username)
-                                references personal (username),
-                            foreign key (hir_username, hir_id)
-                                references hiring (username, id)
+create table collection
+(
+    per_username    VARCHAR(10240) not null,
+    hir_username    VARCHAR(10240),
+    hir_id          BIGINT         not null,
+    valid           INT,
+    collection_time TIMESTAMP,
+    apply           INT,
+    primary key (per_username, hir_id),
+    foreign key (per_username)
+        references personal (username),
+    foreign key (hir_username, hir_id)
+        references hiring (username, id)
 );
 
 create index Index_7 on collection (
