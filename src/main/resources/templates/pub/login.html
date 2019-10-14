@@ -27,8 +27,13 @@
                         </div>
                         <form id="form" method="POST" onsubmit="return formSubmit(null,'form',null,disconnect())"
                               th:action="@{/login}">
-                            <ul class="card-body list-group list-group-flush">
+                            <ul class="card-body list-group list-group-flush pt-0">
+                                <div class="input-group mb-0">
+                                    <a class="ml-auto text-muted" th:href="@{/pswrestore}"
+                                       id="forgetpsw"><small>忘记密码?</small></a>
+                                </div>
                                 <li class="list-group-item px-3">
+
                                     <div class="input-group mb-3">
                                         <div class="input-group input-group-seamless">
                                         <span class="input-group-prepend">
@@ -59,10 +64,16 @@
                                                 type="submit">Primary
                                         </button>
                                     </div>
-                                    <div class="input-group mb-3">
-                                        <a class="btn-block" th:href="@{/signup}">
-                                            <button class="btn btn-outline-warning form-control"
-                                                    th:text="#{msg.login.btn.register}"
+                                    <div class="input-group mb-3 form-inline    ">
+                                        <a class="col-6 pl-0 pr-1" th:href="@{/signup/e}">
+                                            <button class="col-12 btn btn-outline-warning"
+                                                    th:text="#{msg.login.btn.register.e}"
+                                                    type="button">Secondary
+                                            </button>
+                                        </a>
+                                        <a class="col-6 pl-1 pr-0" th:href="@{/signup/p}">
+                                            <button class="col-12 btn btn-outline-warning"
+                                                    th:text="#{msg.login.btn.register.p}"
                                                     type="button">Secondary
                                             </button>
                                         </a>

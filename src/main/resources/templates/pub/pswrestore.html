@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script>if (!window.Turbolinks) window.location.replace('/?redirect=' + window.location.pathname);</script>
+    <script th:inline="javascript">if ([[${login!=null}]]) Turbolinks.visit("/priv/index", {action: "replace"});</script>
+    <meta name="turbolinks-cache-control" content="no-preview">
+    <meta charset="UTF-8">
+    <title th:text="#{msg.profile.pswrestore}">找回密码</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
+</head>
+<body class="h-100">
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-lg-4 col-md-6 col-sm-12 offset-lg-4 offset-md-3" style="display: none;" id="mainContent">
+            <div id="alert"></div>
+            <div class="page-header row no-gutters py-4">
+                <!--                <div class="col-12 col-sm-4 text-center text-sm-left mb-0"></div>-->
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12 ">
+                    <div class="card card-small ">
+                        <div class="card-body">
+                            <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{pswrestore}">
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.username},'username','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::passwordInput(#{msg.profile.newpassword},'password','','')"></div>
+                                <br>
+                                <div class="col-12">
+                                    <label for="电话号码">电话号码</label>
+                                    <div class="input-group">
+                                        <input type="text" id="电话号码" class="form-control" required placeholder="请填写电话号码"
+                                               name="tel">
+                                        <div class="input-group-append">
+                                            <button type="button" class="btn btn-outline-primary" id="sendR">发送验证码
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.code},'code','','')"></div>
+                                <br>
+                                <div class="form-group col-md-12">
+                                    <button class="mb-2 btn btn-outline-primary mr-2" id="button"
+                                            th:text="#{msg.profile.restore}"
+                                            type="submit">找回密码
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script data-turbolinks-eval=true>
+                init();
+                let sendR = $("#sendR");
+                sendR.on("click", function () {
+                    sendR.attr('disabled', true);
+                    sendR.text("正在发送...");
+
+                    apiSubmit("/api/public/verify/restore", "POST",
+                        {
+                            tel: $("#电话号码").val(),
+                            username: $("#用户名").val()
+                        }
+                        , function (data) {
+                            if (data.status !== 200) {
+                                showFailAlert("出了个错，请再试一次");
+                                sendR.text("发送验证码");
+                                sendR.removeAttr("disabled");
+                                return;
+                            }
+                            sendR.text("发送成功。。。");
+                        })
+                })
+
+            </script>
+        </main>
+    </div>
+</div>
+</body>
+</html>

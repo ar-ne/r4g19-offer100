@@ -2,6 +2,8 @@ drop table LOG;
 
 drop table COLLECTION;
 
+drop table NOTICE;
+
 drop table SUBMISSION;
 
 drop table HIRING;

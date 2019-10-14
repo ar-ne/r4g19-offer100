@@ -1,6 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
 <body>
+<ul class="nav flex-column" th:fragment="Entrepreneurial">
+    <li th:replace="/parts::nav-item('add_circle_outline','招聘信息管理',@{hiring_mang},false)"></li>
+    <li th:replace="/parts::nav-item('select_all','申请管理',@{submission_mang},false)"></li>
+</ul>
 <ul class="nav flex-column" th:fragment="Manager">
     <li th:replace="/parts::nav-item('add_circle_outline',#{msg.manager.sidebar.add.production},@{addProduction},false)"></li>
     <li th:replace="/parts::nav-item('select_all',#{msg.manager.sidebar.select.production},@{selectProduction},false)"></li>
@@ -35,7 +39,7 @@
 </ul>
 
 <ul class="nav flex-column" th:fragment="dev">
-    <li th:replace="/parts::nav-item('create_new_folder','首页',@{/devops/},false)"></li>
+    <li th:replace="/parts::nav-item('create_new_folder','首页',@{/devops/index},false)"></li>
     <li th:replace="/parts::nav-item('create_new_folder','查看日志',@{log},false)"></li>
     <li th:replace="/parts::nav-item('assignment_late','用户列表',@{userList},false)"></li>
     <li th:replace="/parts::nav-item('assignment_late','添加用户',@{addUser},false)"></li>

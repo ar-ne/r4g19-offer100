@@ -1,0 +1,63 @@
+<!doctype html>
+<html class="no-js h-100" lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script>if (!window.Turbolinks) window.location.replace('/?redirect=' + window.location.pathname);</script>
+    <script th:inline="javascript">if ([[${login!=null}]]) Turbolinks.visit("/priv/index", {action: "replace"});</script>
+    <meta name="turbolinks-cache-control" content="no-preview">
+    <meta charset="UTF-8">
+    <title th:text="#{msg.signup.title.e}">123</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+</head>
+<body class="h-100">
+<div class="container-fluid">
+    <div class="row">
+        <main class="col-lg-4 col-md-6 col-sm-12 offset-lg-4 offset-md-3" style="display: none;" id="mainContent">
+            <div id="alert"></div>
+            <div class="page-header row no-gutters py-4">
+                <!--                <div class="col-12 col-sm-4 text-center text-sm-left mb-0"></div>-->
+            </div>
+            <div class="row">
+                <div class="mb-3 col-12 ">
+                    <div class="card card-small ">
+                        <div class="card-body">
+                            <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{/signup/e}">
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.username},'username','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::passwordInput(#{msg.signup.password},'password','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.phoneNum},'tel','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.adress},'address','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.EType},'type','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.field},'field','','')"></div>
+                                <br>
+                                <div class="col-12"
+                                     th:include="/parts::TextInput(#{msg.profile.brief},'brief','','')"></div>
+                                <br>
+
+                                <div class="form-group col-12">
+                                    <button class="btn-block mb-2 btn btn-outline-primary mr-2" id="button"
+                                            type="submit"
+                                            th:text="#{msg.signup.button}">提交
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</div>
+<script data-turbolinks-eval=true>init()</script>
+</body>
+</html>

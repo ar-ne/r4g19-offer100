@@ -18,7 +18,7 @@ public class LogMsgHelper {
     public static class Auth {
         public static Log newLogin(Login login) {
             Log log = new Log();
-            log.setDescription(String.format("Add new login info=>loginName: %s, passwd: masked, type: %s", login.getUsername(), login.getType()));
+            log.setDescription(String.format("Add new login info=>loginName: %s, passwd: masked, type: %s", login.getUsername(), login.getUserType()));
             log.setTime(getTimestamp());
             return log;
         }

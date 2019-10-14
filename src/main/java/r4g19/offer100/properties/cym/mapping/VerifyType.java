@@ -9,16 +9,15 @@ public enum VerifyType {
         @Override
         public VerifyType from(Integer databaseObject) {
             switch (databaseObject) {
-                case 0:
-                    return NONE;
                 case 1:
                     return PHONE;
                 case 2:
                     return EMAIL;
                 case 3:
                     return ALL;
+                default:
+                    return NONE;
             }
-            throw new RuntimeException("DBO not a valid 'VerifyType");
         }
 
         @Override

@@ -71,16 +71,16 @@ function inPageAction(code, args) {
     }
 }
 
-function showSuccessAlert(msg = null, time = 3000) {
-    showAlert(msg === null ? "成功/完成" : msg, time);
+function showSuccessAlert(msg = null, time = 3000, callback = null) {
+    showAlert(msg === null ? "成功/完成" : msg, time, callback);
 
 }
 
-function showFailAlert(msg = null, time = 3000) {
-    showAlert(msg === null ? "错误/失败" : msg, time, "danger", "clear");
+function showFailAlert(msg = null, time = 3000, callback = null) {
+    showAlert(msg === null ? "错误/失败" : msg, time, callback, "danger", "clear");
 }
 
-function showAlert(message, time = -1, type = 'success', icon = 'check') {
+function showAlert(message, time = -1, callback = null, type = 'success', icon = 'check') {
     type = "alert-" + type;
     const current = alertCount++;
     $("#alert").append("<div class='alert " + type + " alert-dismissible fade mb-0' role='alert'>\n" +
@@ -96,6 +96,7 @@ function showAlert(message, time = -1, type = 'success', icon = 'check') {
     if (time !== -1)
         setTimeout(function () {
             dismiss(current);
+            if (callback !== null) callback();
         }, time)
 }
 
@@ -107,11 +108,27 @@ function dismissAll() {
     $("#alert > div > button").click();
 }
 
+function base64img_encoder(localFile) {
+    let r = new FileReader();
+    let base64img;
+    r.onload = function () {
+        base64img = r.result;
+    };
+    return base64img;
+}
+
+function base64img_render(base64img, container) {
+    container.src = '';
+    container.src = base64img;
+}
+
 //TODO:将第一次请求内容改为只有一个空元素
-function generateTables(dataURL, table, checkbox = true, container = 'table',operateFormatter = false) {
-    $.get(dataURL, function (data, status) {
+function generateTables(dataURL, table, checkbox = true, container = 'table', operate = false) {
+    $.get(dataURL, function (jsonTable, status) {
         if (status !== "success") return;
-        let jsonTable = data;
+        if (jsonTable.length < 1) {
+            $('#' + container).text("暂无数据")
+        }
         const col = [];
         for (let key in jsonTable[0]) {
             if (col.indexOf(key) === -1) {
@@ -132,16 +149,14 @@ function generateTables(dataURL, table, checkbox = true, container = 'table',ope
             data: JSON.stringify(col),
             success: function (data) {
                 if (checkbox) data.splice(0, 0, {checkbox: true});
-                if(operateFormatter){
-                    data.push( {
-                        field: '操作',
-                        title: '操作',
-                        align: 'center',
-                        clickToSelect: false,
-                        events: window.operateEvents,
-                        formatter: operateFormatter
-                    })
-                }
+                if (operate) data.push({
+                    field: '操  作',
+                    title: '操  作',
+                    align: 'center',
+                    clickToSelect: false,
+                    events: operate.events,
+                    formatter: operate.formatter
+                });
                 $('#' + container).bootstrapTable({
                     locale: 'zh-CN',
                     pagination: true,
@@ -149,9 +164,9 @@ function generateTables(dataURL, table, checkbox = true, container = 'table',ope
                     silentSort: false,
                     maintainSelected: true,
                     clickToSelect: true,
-                    checkboxHeader: false,
+                    checkboxHeader: checkbox,
                     columns: data,
-                    // data: jsonTable,
+                    data: jsonTable,
                     url: dataURL,
                     showRefresh: true,
                     showPaginationSwitch: true,
@@ -175,6 +190,30 @@ function generateTables(dataURL, table, checkbox = true, container = 'table',ope
     });
 }
 
+
+Date.prototype.format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1,                 //月份
+        "d+": this.getDate(),                    //日
+        "h+": this.getHours(),                   //小时
+        "m+": this.getMinutes(),                 //分
+        "s+": this.getSeconds(),                 //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds()             //毫秒
+    };
+    if (/(y+)/.test(fmt)) {
+        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    }
+    for (var k in o) {
+        if (new RegExp("(" + k + ")").test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        }
+    }
+    return fmt;
+};
+Date.prototype.defFmt = function (fmt) {
+    return this.format("yyyy-MM-dd hh:mm:ss");
+};
 
 function goBack() {
     history.back(-1);

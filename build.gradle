@@ -69,7 +69,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'uk.com.robust-it:cloning:1.9.12'
+    // https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi
+    compile group: 'com.aliyun', name: 'aliyun-java-sdk-dysmsapi', version: '1.1.0'
+    // https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core
+    compile group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: '4.4.6'
+    // https://mvnrepository.com/artifact/com.alibaba/fastjson
+    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
     compile group: 'org.apache.logging.log4j', name: 'log4j-api'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core'
     compile group: 'org.apache.logging.log4j', name: 'log4j-web'
@@ -82,6 +89,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+
 }
 
 dependencyManagement {
@@ -130,6 +138,10 @@ jooq {
                 matchers {
                     tables {
                         table {
+                            expression = 'PERSONAL|ENTREPRENEURIAL'
+                            pojoExtends = 'r4g19.offer100.jooq.tables.pojos.Login'
+                        }
+                        table {
                             pojoExtends = 'org.springframework.hateoas.RepresentationModel'
                         }
                     }
@@ -143,7 +155,7 @@ jooq {
                     forcedType {
                         userType = 'r4g19.offer100.properties.cym.mapping.UserType'
                         converter = 'r4g19.offer100.properties.cym.mapping.UserType.Converter'
-                        expression = 'PUBLIC.LOGIN.TYPE'
+                        expression = 'PUBLIC.LOGIN.USER_TYPE'
                         types = '.*'
                     }
                     forcedType {
@@ -155,7 +167,13 @@ jooq {
                     forcedType {
                         userType = 'r4g19.offer100.properties.cym.mapping.Sex'
                         converter = 'r4g19.offer100.properties.cym.mapping.Sex.Converter'
-                        expression = 'PUBLIC.RESUME.SEX'
+                        expression = 'PUBLIC.PERSONAL.SEX'
+                        types = '.*'
+                    }
+                    forcedType {
+                        userType = 'r4g19.offer100.properties.cym.mapping.SubmissionStatus'
+                        converter = 'r4g19.offer100.properties.cym.mapping.SubmissionStatus.Converter'
+                        expression = 'PUBLIC.SUBMISSION.STATUS'
                         types = '.*'
                     }
                 }

@@ -11,13 +11,14 @@ import r4g19.offer100.utils.cym.LogMsgHelper;
 import java.lang.reflect.InvocationTargetException;
 
 import static r4g19.offer100.properties.cym.Vars.POJO_DAO_MAPPER;
-import static r4g19.offer100.properties.cym.Vars.POJO_DAO_TABLE;
+import static r4g19.offer100.properties.cym.Vars.POJO_TABLE_MAPPER;
 
 /**
  * 常用的增删改查
  */
 @Service
 public class CommonCRUD extends ServiceBase {
+
     public <T> T newRecord(T o, String username) {
         return doOperation(o, username, CRUDOperation.INSERT);
     }
@@ -44,7 +45,7 @@ public class CommonCRUD extends ServiceBase {
                 case GET:
                     ((DAOImpl) POJO_DAO_MAPPER.get(c).newInstance(dsl.configuration())).findAll();
             }
-            Log log = LogMsgHelper.CRUD.newOperation(POJO_DAO_TABLE.get(c), username, operation, o);
+            Log log = LogMsgHelper.CRUD.newOperation(POJO_TABLE_MAPPER.get(c), username, operation, o);
             dbLogger.log(log);
 //            notification.dbTrigger(operation, o, username);
             return o;

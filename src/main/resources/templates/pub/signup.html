@@ -26,12 +26,15 @@
                                 <br>
                                 <div class="col-12"
                                      th:include="/parts::passwordInput(#{msg.signup.password},'password','','')"></div>
+                                 <br>
+                                <div class="col-12"
+                                     th:include="/parts::passwordInput(#{msg.signup.passwordAgain},'passwordAgain','','')"></div>
                                 <br>
                                 <div class="col-12"
                                      th:include="/parts::TextInput(#{msg.profile.phoneNum},'phonenum','','')"></div>
                                 <br>
                                 <div class="col-12"
-                                     th:include="/parts::TextInput(#{msg.profile.personid},'personid','','')"></div>
+                                     th:include="/parts::TextInput(#{msg.profile.code},'code','','')"></div>
                                 <br>
                                 <div class="form-row p-3">
                                     <div class="form-group col-md-5">
@@ -52,10 +55,6 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-12"
-                                     th:include="/parts::TextInput(#{msg.profile.adress},'adress','','')"></div>
-                                <br>
-
                                 <div class="form-group col-12">
                                     <button class="btn-block mb-2 btn btn-outline-primary mr-2" id="button"
                                             type="submit"
