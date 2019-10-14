@@ -2,7 +2,8 @@
 <html class="no-js h-100" lang="zh" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script th:inline="javascript">
-        if (!window.Turbolinks) window.location.replace('/?redirect=' + window.location.pathname);
+        if (!window.Turbo
+            + links) window.location.replace('/?redirect=' + window.location.pathname);
         if ([[${login!=null}]]) Turbolinks.visit("/priv/index", {action: "replace"});
     </script>
     <meta content="no-preview" name="turbolinks-cache-control">
