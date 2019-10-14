@@ -13,16 +13,28 @@
 
 
                         <script>
-                            generateTables('/api/admin/userList/tables', 'Login', false, 't1',
-                                function (value, row, index) {
-                                var usrename = row.username;
+                            let operate=[];
+                            operate.formatter = function (value, row, index) {
                                 return [
-                                    '<a class="btn btn-primary" href="javascript:void(0)" >详情',
+                                    '<a class="like" href="javascript:void(0)" title="Like">',
+                                    '<i class="fa fa-heart"></i>',
                                     '</a>  ',
-                                    '<a class="btn btn-danger" th:href="@{/admin/deleteUSer/{usrename}}" >删除',
+                                    '<a class="remove" href="javascript:void(0)" title="Remove">',
+                                    '<i class="fa fa-trash"></i>',
                                     '</a>'
                                 ].join('')
-                            });
+                            };
+                            operate.events = {
+                                'click .like': function (e, value, row, index) {
+                                    alert('You click like action, row: ' + JSON.stringify(row))
+                                },
+                                'click .remove': function (e, value, row, index) {
+                                    apiSubmit("/api/admin/personal/delete/"+row.username,"delete",null,function (xhr) {
+                                            if(xhr.status===200) showSuccessAlert("用户{1}已删除".format(row.username));
+                                    })
+                                }
+                            };
+                            generateTables('/api/admin/personal/list', 'Login', false, 't1', operate);
 
 
                         </script>

@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import r4g19.offer100.controller.ControllerBase;
 import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.yhr.AdminService;
@@ -56,15 +55,6 @@ public class AdminRouter extends ControllerBase {
 
     }*/
 
-    /***
-     * 根据username删除用户信息
-     * @param usrename
-     */
-
-    @GetMapping("/deleteUser/{usrename}")
-    public void deleteEntreprise(@PathVariable String usrename){
-        adminService.deleteUser(usrename);
-    }
 
     @GetMapping("{page}")
     public String router(Model model ,@PathVariable String page) {
