@@ -5,10 +5,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 import r4g19.offer100.controller.ControllerBase;
 import r4g19.offer100.jooq.tables.pojos.Hiring;
 import r4g19.offer100.service.cym.CommonCRUD;
@@ -64,37 +61,55 @@ public class Router extends ControllerBase {
         return String.format("/priv/%s/%s", getUserType(authentication), page);
     }
 
-    @GetMapping("/web/hiring/new")
-    @Order(1)
-    public String hiring(Model model, Authentication authentication) {
-        model.addAttribute("disabled", "");
-        model.addAttribute("create", "true");
-        model.addAttribute("hiring", new Hiring());
-        model.addAttribute("entrepreneurial", entrepreneurialService.getEntrepreneurial(getUsername(authentication)));
-        return "/pub/web/hiring";
-    }
+    @RequestMapping("/web/hiring")
+    public class HiringController extends ControllerBase {
+        @GetMapping("new/edit")
+        @Order(1)
+        public String hiring(Model model, Authentication authentication) {
+            model.addAttribute("disabled", "");
+            model.addAttribute("create", "true");
+            model.addAttribute("hiring", new Hiring());
+            model.addAttribute("entrepreneurial", entrepreneurialService.getEntrepreneurial(getUsername(authentication)));
+            return "/pub/web/hiring";
+        }
 
-    @PostMapping("/web/hiring/new")
-    @ResponseBody
-    public String hiring(Hiring hiring, Authentication authentication, HttpServletResponse response) {
-        hiring.setPubtime(new Timestamp(System.currentTimeMillis()));
-        hiring.setUsername(getUsername(authentication));
-        hiring = crud.newRecord(hiring, getUsername(authentication));
-        return showSuccessMsgAndVisit("发布成功，正在跳转...", "/web/hiring/" + hiring.getId(), response);
-    }
+        @PostMapping("new")
+        @ResponseBody
+        public String hiring(Hiring hiring, Authentication authentication, HttpServletResponse response) {
+            hiring.setPubtime(new Timestamp(System.currentTimeMillis()));
+            hiring.setUsername(getUsername(authentication));
+            hiring = crud.newRecord(hiring, getUsername(authentication));
+            return showSuccessMsgAndVisit("发布成功，正在跳转...", "/web/hiring/" + hiring.getId(), response);
+        }
 
-    @GetMapping("/web/hiring/{id}")
-    @Order(2)
-    public String hiring(@PathVariable Long id, Model model, Authentication authentication) {
-        Hiring hiring = hiringService.getHiring(id);
-        model.addAttribute("disabled", "disabled");
-        model.addAttribute("create", false);
-        model.addAttribute("hiring", hiring);
-        model.addAttribute("entrepreneurial", hiringService.getEntrepreneurial(hiring));
-        if (hiring.getUsername().equals(getUsername(authentication)))
-            model.addAttribute("editable", true);
-        else
-            model.addAttribute("editable", false);
-        return "/pub/web/hiring";
+        @GetMapping("{id}/edit")
+        @Order(2)
+        public String edit(@PathVariable Long id, Model model, Authentication authentication) {
+            Hiring hiring = hiringService.getHiring(id);
+            model.addAttribute("disabled", "disabled");
+            model.addAttribute("create", false);
+            model.addAttribute("hiring", hiring);
+            model.addAttribute("entrepreneurial", hiringService.getEntrepreneurial(hiring));
+            if (hiring.getUsername().equals(getUsername(authentication)))
+                model.addAttribute("editable", true);
+            else
+                model.addAttribute("editable", false);
+            return "/pub/web/hiring";
+        }
+
+        @GetMapping("{id}")
+        @Order(2)
+        public String hiring(@PathVariable Long id, Model model, Authentication authentication) {
+            Hiring hiring = hiringService.getHiring(id);
+            model.addAttribute("disabled", "disabled");
+            model.addAttribute("create", false);
+            model.addAttribute("hiring", hiring);
+            model.addAttribute("entrepreneurial", hiringService.getEntrepreneurial(hiring));
+            if (hiring.getUsername().equals(getUsername(authentication)))
+                model.addAttribute("editable", true);
+            else
+                model.addAttribute("editable", false);
+            return "/pub/web/hiring";
+        }
     }
 }
