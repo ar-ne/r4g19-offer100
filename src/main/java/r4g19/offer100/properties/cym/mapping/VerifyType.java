@@ -8,6 +8,7 @@ public enum VerifyType {
 
         @Override
         public VerifyType from(Integer databaseObject) {
+            if (databaseObject == null) return NONE;
             switch (databaseObject) {
                 case 1:
                     return PHONE;

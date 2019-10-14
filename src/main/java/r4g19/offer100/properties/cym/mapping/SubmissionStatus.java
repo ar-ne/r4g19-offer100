@@ -6,6 +6,7 @@ public enum SubmissionStatus {
     public static class Converter implements org.jooq.Converter<Integer, SubmissionStatus> {
         @Override
         public SubmissionStatus from(Integer databaseObject) {
+            if (databaseObject == null) return NONE;
             switch (databaseObject) {
                 case 1:
                     return APPROVE;
