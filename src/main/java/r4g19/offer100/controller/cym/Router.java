@@ -61,6 +61,7 @@ public class Router extends ControllerBase {
         return String.format("/priv/%s/%s", getUserType(authentication), page);
     }
 
+    @Controller
     @RequestMapping("/web/hiring")
     public class HiringController extends ControllerBase {
         @GetMapping("new/edit")
