@@ -21,8 +21,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
-import org.thymeleaf.spring5.SpringTemplateEngine;
-import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 import r4g19.offer100.autoconfigure.cjs.aliyunSMS.AliyunSMSConfig;
 import r4g19.offer100.properties.cjs.EmailConfig;
 import r4g19.offer100.utils.cym.Auth;
@@ -60,17 +58,17 @@ public class Application {
         return new Auth.LogoutHandler();
     }
 
-    @Configuration
-    public static class ThymeleafConfig {
-        public ThymeleafConfig(SpringTemplateEngine engine) {
-            ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
-            resolver.setPrefix("templates/");
-            resolver.setSuffix(".html");
-            resolver.setOrder(engine.getTemplateResolvers().size());
-            resolver.setCharacterEncoding("UTF-8");
-            engine.addTemplateResolver(resolver);
-        }
-    }
+//    @Configuration
+//    public static class ThymeleafConfig {
+//        public ThymeleafConfig(SpringTemplateEngine engine) {
+//            ClassLoaderTemplateResolver resolver = new ClassLoaderTemplateResolver();
+//            resolver.setPrefix("templates/");
+//            resolver.setSuffix(".html");
+//            resolver.setOrder(engine.getTemplateResolvers().size());
+//            resolver.setCharacterEncoding("UTF-8");
+//            engine.addTemplateResolver(resolver);
+//        }
+//    }
 
     @Configuration
     @EnableWebSocketMessageBroker
