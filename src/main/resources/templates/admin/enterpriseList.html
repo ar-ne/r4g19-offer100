@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+
+                        <table id="t1"></table>
+
+
+                        <script>
+                            generateTables('/api/admin/enterpriseList/tables', 'Entrepreneurial', false, 't1',
+                                function (value, row, index) {
+                                    return [
+                                        '<a class="btn btn-primary" href="javascript:void(0)" >详情',
+                                        '</a>  ',
+                                        '<a class="btn btn-danger" href="javascript:void(0)" >删除',
+                                        '</a>'
+                                    ].join('')
+                                });
+
+                            window.operateEvents = {
+                                'click .btn btn-primary': function (e, value, row, index) {
+                                    alert('You click like action, row: ' + JSON.stringify(row))
+                                },
+                                'click .btn btn-danger': function (e, value, row, index) {
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: "/admin/delete",
+                                        data: {
+                                            "username": [row.id]
+                                        },
+                                        success: function (result) {
+
+                                            if (result.success) {
+                                                window.location.href = "/enterprise";
+                                            } else {
+                                                alert("编号不存在!")
+
+                                                window.location.href = "/enterprise";
+                                            }
+                                        }
+                                    });
+                                }
+                            }
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

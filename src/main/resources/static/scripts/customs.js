@@ -108,7 +108,7 @@ function dismissAll() {
 }
 
 //TODO:将第一次请求内容改为只有一个空元素
-function generateTables(dataURL, table, checkbox = true, container = 'table') {
+function generateTables(dataURL, table, checkbox = true, container = 'table',operateFormatter = false) {
     $.get(dataURL, function (data, status) {
         if (status !== "success") return;
         let jsonTable = data;
@@ -132,6 +132,16 @@ function generateTables(dataURL, table, checkbox = true, container = 'table') {
             data: JSON.stringify(col),
             success: function (data) {
                 if (checkbox) data.splice(0, 0, {checkbox: true});
+                if(operateFormatter){
+                    data.push( {
+                        field: '操作',
+                        title: '操作',
+                        align: 'center',
+                        clickToSelect: false,
+                        events: window.operateEvents,
+                        formatter: operateFormatter
+                    })
+                }
                 $('#' + container).bootstrapTable({
                     locale: 'zh-CN',
                     pagination: true,
@@ -164,6 +174,7 @@ function generateTables(dataURL, table, checkbox = true, container = 'table') {
         });
     });
 }
+
 
 function goBack() {
     history.back(-1);

@@ -9,8 +9,17 @@
 
 package r4g19.offer100.service.yhr;
 
+import org.jooq.*;
+import org.jooq.impl.DSL;
 import org.springframework.stereotype.Service;
-import r4g19.offer100.service.cym.ServiceBase;
+import r4g19.offer100.jooq.tables.Login;
+import r4g19.offer100.jooq.tables.daos.EntrepreneurialDao;
+import r4g19.offer100.jooq.tables.daos.LoginDao;
+import r4g19.offer100.jooq.tables.pojos.Entrepreneurial;
+import r4g19.offer100.service.ServiceBase;
+
+import java.util.Collection;
+
 
 /**
  * 功能描述: 
@@ -20,6 +29,10 @@ import r4g19.offer100.service.cym.ServiceBase;
  */
 @Service
 public class AdminService extends ServiceBase {
+
+    public void deleteUser(String username){
+       new LoginDao(dsl.configuration()).deleteById(username);
+    }
 }
 
     
