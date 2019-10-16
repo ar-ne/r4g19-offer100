@@ -8,38 +8,35 @@
             <div class="col-12">
                 <div class="card card-small ">
                     <div class="card-body">
-                        <ul>
-                            <li class="p-1">
-                                <a th:href="@{index}">
-                                    <button class="btn btn-outline-primary">返回首页</button>
-                                </a>
-                                <a th:href="@{addUser}">
-                                    <button class="btn btn-outline-primary">添加用户</button>
-                                </a>
-                            </li>
-                            <li>
-                                <h3>Customer</h3>
-                                <table id="t1"></table>
-                            </li>
-                            <li>
-                                <h3>Manager</h3>
-                                <table id="t2"></table>
 
-                            </li>
-                            <li>
-                                <h3>Staff</h3>
-                                <table id="t3"></table>
-                            </li>
-                            <li>
-                                <h3>Login</h3>
-                                <table id="t4"></table>
-                            </li>
-                        </ul>
+                                <table id="t1"></table>
+
+
                         <script>
-                            generateTables('http://localhost:8080/api/admin/users/Customer', 'Customer', false, 't1');
-                            generateTables('http://localhost:8080/api/admin/users/Manager', 'Manager', false, 't2');
-                            generateTables('http://localhost:8080/api/admin/users/Staff', 'Staff', false, 't3');
-                            generateTables('http://localhost:8080/api/admin/users/Login', 'Login', false, 't4');
+                            let operate=[];
+                            operate.formatter = function (value, row, index) {
+                                return [
+                                    '<a class="like" href="javascript:void(0)" title="Like">',
+                                    '<i class="fa fa-heart"></i>',
+                                    '</a>  ',
+                                    '<a class="remove" href="javascript:void(0)" title="Remove">',
+                                    '<i class="fa fa-trash"></i>',
+                                    '</a>'
+                                ].join('')
+                            };
+                            operate.events = {
+                                'click .like': function (e, value, row, index) {
+                                    alert('You click like action, row: ' + JSON.stringify(row))
+                                },
+                                'click .remove': function (e, value, row, index) {
+                                    apiSubmit("/api/admin/personal/delete/"+row.username,"delete",null,function (xhr) {
+                                            if(xhr.status===200) showSuccessAlert("用户{1}已删除".format(row.username));
+                                    })
+                                }
+                            };
+                            generateTables('/api/admin/personal/list', 'Login', false, 't1', operate);
+
+
                         </script>
                     </div>
                 </div>

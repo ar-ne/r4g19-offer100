@@ -6,3 +6,4 @@ alter table LOG
     alter column ID BIGINT auto_increment;
 alter table NOTICE
     alter column NOTICE_ID INTEGER auto_increment;
+

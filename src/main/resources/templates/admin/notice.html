@@ -1,6 +1,10 @@
+
 <!DOCTYPE html>
 <html lang="zh" xmlns:th="http://www.thymeleaf.org">
-<title th:text="#{msg.index.title}">欢迎</title>
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
 <body th:replace="~{/framework/main}">
 <div th:fragment="mainContent">
     <div class="row">
@@ -12,13 +16,18 @@
                     </a>
                 </li>
                 <li class="p-1">
-                    <a th:href="@{userList}">
-                        <button class="btn btn-outline-primary">查询用户信息</button>
+                    <a th:href="@{queryEnterprise}">
+                        <button class="btn btn-outline-primary">查询公告</button>
                     </a>
                 </li>
                 <li class="p-1">
-                    <a th:href="@{editUser}">
-                        <button class="btn btn-outline-primary">修改用户信息</button>
+                    <a th:href="@{editEnterprise}">
+                        <button class="btn btn-outline-primary">修改公告</button>
+                    </a>
+                </li>
+                <li class="p-1">
+                    <a th:href="@{editEnterprise}">
+                        <button class="btn btn-outline-primary">添加公告</button>
                     </a>
                 </li>
             </ul>
