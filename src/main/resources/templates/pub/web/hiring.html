@@ -16,16 +16,16 @@
                     <button class="btn btn-outline-info" onclick="goBack()"><i class="material-icons">arrow_back</i>返回
                     </button>
                     <a th:if="${editable}" class="btn btn-outline-success ml-auto"
-                       th:href="${'/hiring/'}+${hiring.getId()}+${'/edit'}">
+                       th:href="${'/web/hiring/'}+${hiring.getId()}+${'/edit'}">
                         <i class="material-icons">edit</i>编辑
                     </a>
                     <a th:if="${editable}" class="btn btn-outline-danger ml-auto"
-                       th:href="${'/hiring/'}+${hiring.getId()}+${'/del'}">
+                       th:href="${'/web/hiring/'}+${hiring.getId()}+${'/del'}">
                         <i class="material-icons">delete_outline</i>删除
                     </a>
                 </div>
                 <div class="card-body">
-                    <form id="form" th:action="@{/web/hiring/new}" method="post" onsubmit="return formSubmit()">
+                    <form id="form" th:action="${'/web/hiring/new/'}+${}" method="post" onsubmit="return formSubmit()">
                         <div class="col-12">
                             <div th:if="${create}"
                                  th:include="/parts::TextInput('职位名称','position',${hiring.getPosition()},${disabled})"></div>

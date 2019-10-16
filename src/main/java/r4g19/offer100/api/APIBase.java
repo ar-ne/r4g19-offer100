@@ -2,21 +2,16 @@ package r4g19.offer100.api;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import r4g19.offer100.ComponentBase;
-import r4g19.offer100.model.cym.EmptyEntityModel;
 
 import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.util.Collection;
-import java.util.HashSet;
+import javax.ws.rs.GET;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.SecurityContext;
+import javax.ws.rs.core.UriInfo;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 /**
  * 所有API的父类
@@ -26,33 +21,42 @@ public abstract class APIBase extends ComponentBase {
     @Autowired
     protected DSLContext dsl;  //数据库连接信息
 
-    @GetMapping("")
-    public HttpEntity<EmptyEntityModel> index(HttpServletRequest request) {
-        EmptyEntityModel entity = new EmptyEntityModel();
-        entity.add(getAllLinkWithinClass(this.getClass()));
-        return new ResponseEntity<>(entity, HttpStatus.OK);
+//    @SuppressWarnings("unchecked")
+//    public static Collection<Link> getAllLinkWithinClass(Class<? extends APIBase> clazz, UriInfo uriInfo) {
+//        Collection<Link> links = new HashSet<>();
+//        links.add(fromUriBuilder(uriInfo.getAbsolutePathBuilder()).rel("_self").build());
+//        links.addAll(getAllMethodLinkWithRel(clazz, "methods", uriInfo));
+//        Class<?>[] innerClass = clazz.getDeclaredClasses();
+//        for (Class<?> aClass : innerClass) {
+//            if (aClass.getSuperclass().equals(APIBase.class)) {
+//                links.add(fromUriBuilder(uriInfo.getAbsolutePathBuilder()).rel(aClass.getSimpleName().toLowerCase()).build());
+////                links.addAll(getAllMethodLinkWithRel((Class<? extends APIBase>) aClass, aClass.getSimpleName().toLowerCase()));
+//            }
+//        }
+//        return links;
+//    }
+//
+//    public static Collection<Link> getAllMethodLinkWithRel(Class<? extends APIBase> clazz, String rel, UriInfo uriInfo) {
+//        Collection<Link> links = new HashSet<>();
+//        for (Method declaredMethod : clazz.getDeclaredMethods()) {
+//            links.add(fromUriBuilder(uriInfo.getAbsolutePathBuilder()).rel(rel).build());
+//        }
+//        return links;
+//    }
+
+    @GET
+    public Response index(HttpServletRequest request, @Context UriInfo uriInfo) {
+        return Response.ok(String.format("%s says Hello World!", this.getClass())).build();
     }
 
-    @SuppressWarnings("unchecked")
-    public Collection<Link> getAllLinkWithinClass(Class<? extends APIBase> clazz) {
-        Collection<Link> links = new HashSet<>();
-        links.add(linkTo(clazz).withSelfRel());
-        links.addAll(getAllMethodLinkWithRel(clazz, "methods"));
-        Class<?>[] innerClass = clazz.getDeclaredClasses();
-        for (Class<?> aClass : innerClass) {
-            if (aClass.getSuperclass().equals(APIBase.class)) {
-                links.add(linkTo(aClass).withRel(aClass.getSimpleName().toLowerCase()));
-//                links.addAll(getAllMethodLinkWithRel((Class<? extends APIBase>) aClass, aClass.getSimpleName().toLowerCase()));
-            }
-        }
-        return links;
+    /**
+     * 获取登录名
+     *
+     * @param context 按照JAX-RS规范获取登录名
+     * @return 登录名
+     */
+    public static String getUsername(SecurityContext context) {
+        return context.getUserPrincipal().getName();
     }
 
-    public Collection<Link> getAllMethodLinkWithRel(Class<? extends APIBase> clazz, String rel) {
-        Collection<Link> links = new HashSet<>();
-        for (Method declaredMethod : clazz.getDeclaredMethods()) {
-            links.add(linkTo(declaredMethod, "").withRel(rel));
-        }
-        return links;
-    }
 }
