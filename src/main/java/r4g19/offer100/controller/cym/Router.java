@@ -68,7 +68,7 @@ public class Router extends ControllerBase {
         @GetMapping("new")
         @Order(1)
         public String hiring(Model model, Authentication authentication) {
-            setAttributes(false, true, false,
+            setAttributes(false, true, false, false,
                     new Hiring(), entrepreneurialService.getEntrepreneurial(getUsername(authentication)), model);
             return "/pub/web/hiring";
         }
@@ -84,32 +84,48 @@ public class Router extends ControllerBase {
 
         @GetMapping("{id}/{operate}")
         @Order(2)
-        public String edit(@PathVariable Long id, Model model, Authentication authentication, @PathVariable String operate) {
+        public String edit(@PathVariable Long id, Hiring newHiring, Model model, Authentication authentication, @PathVariable String operate) {
             Hiring hiring = hiringService.getHiring(id);
-            if (operate.equalsIgnoreCase("edit")) {
-                setAttributes(false, hiring.getUsername().equals(getUsername(authentication)), true, hiring, hiringService.getEntrepreneurial(hiring), model);
+            if (operate.equalsIgnoreCase("edit") &&
+                    hiringService.getEntrepreneurial(hiring).getUsername().equals(getUsername(authentication))) {
+                setAttributes(false, false, true, hiring.getUsername().equals(getUsername(authentication)), hiring, hiringService.getEntrepreneurial(hiring), model);
                 return "/pub/web/hiring";
             }
             if (operate.equalsIgnoreCase("del")) {
                 if (hiring.getUsername().equals(getUsername(authentication)))
                     hiringService.delete(hiring.getId());
             }
+            if (operate.equalsIgnoreCase("save") && hiringService.getEntrepreneurial(hiring).getUsername().equals(getUsername(authentication))) {
+                crud.updateRecord(getUpdatedObject(newHiring, hiring), getUsername(authentication));
+            }
             return "redirect:/web/hiring_mang";
+        }
+
+        @PostMapping("{id}/save")
+        @ResponseBody
+        @Order(2)
+        public String save(@PathVariable Long id, Hiring newHiring, Authentication authentication, HttpServletResponse response) {
+            Hiring hiring = hiringService.getHiring(id);
+            if (hiringService.getEntrepreneurial(hiring).getUsername().equals(getUsername(authentication))) {
+                crud.updateRecord(getUpdatedObject(newHiring, hiring), getUsername(authentication));
+            }
+            return showSuccessMsgAndVisit("修改成功，正在跳转...", "/web/hiring/" + hiring.getId(), response);
         }
 
         @GetMapping("{id}")
         @Order(2)
         public String hiring(@PathVariable Long id, Model model, Authentication authentication) {
             Hiring hiring = hiringService.getHiring(id);
-            setAttributes(true, false,
+            setAttributes(true, false, false,
                     hiring.getUsername().equals(getUsername(authentication)), hiring, hiringService.getEntrepreneurial(hiring), model);
             return "/pub/web/hiring";
         }
 
-        private Model setAttributes(boolean disabled, boolean create, boolean editable, Hiring hiring, Entrepreneurial entrepreneurial, Model model) {
+        private Model setAttributes(boolean disabled, boolean creating, boolean editing, boolean userEditable, Hiring hiring, Entrepreneurial entrepreneurial, Model model) {
             model.addAttribute("disabled", disabled ? "disabled" : "");
-            model.addAttribute("create", create);
-            model.addAttribute("editable", editable);
+            model.addAttribute("creating", creating);
+            model.addAttribute("editing", editing);
+            model.addAttribute("userEditable", userEditable);
             model.addAttribute("hiring", hiring);
             model.addAttribute("entrepreneurial", entrepreneurial);
             return model;

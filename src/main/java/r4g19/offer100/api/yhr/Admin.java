@@ -10,11 +10,7 @@
 package r4g19.offer100.api.yhr;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-import r4g19.offer100.annotations.cym.APIEntrance;
+import r4g19.offer100.annotations.cym.API;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.jooq.tables.daos.EntrepreneurialDao;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
@@ -22,42 +18,45 @@ import r4g19.offer100.jooq.tables.pojos.Login;
 import r4g19.offer100.properties.cym.mapping.UserType;
 import r4g19.offer100.service.yhr.AdminService;
 
+import javax.ws.rs.DELETE;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
 import java.util.List;
 
-@RestController
-@RequestMapping("api/admin")
-@APIEntrance(name = "admin")
+@API("admin")
 public class Admin extends APIBase {
 
     @Autowired
     AdminService adminService;
 
-    @RestController
-    @RequestMapping("api/admin/personal")
+    @API("admin/personal")
     public class Personal extends APIBase {
-        @GetMapping("/list")
-        public HttpEntity list() {
+        @GET
+        @Path("/list")
+        public List list() {
             List<Login> d = new LoginDao(dsl.configuration()).fetchByUserType(UserType.Personal);
-            return new ResponseEntity(d, HttpStatus.OK);
+            return d;
         }
 
-        @DeleteMapping("delete/{username}")
-        public void delete(@PathVariable String username) {
+        @DELETE
+        @Path("delete/{username}")
+        public void delete(String username) {
             adminService.deleteUser(username);
         }
     }
 
-    @RestController
-    @RequestMapping("api/admin/enterprise")
+    @API("admin/enterprise")
     public class Enterprise extends APIBase {
-        @GetMapping("/list")
-        public HttpEntity list() {
+        @GET
+        @Path("/list")
+        public List list() {
             List d = new EntrepreneurialDao(dsl.configuration()).findAll();
-            return new ResponseEntity(d, HttpStatus.OK);
+            return d;
         }
 
-        @DeleteMapping("/delete/{username}")
-        public void delete(@PathVariable String username) {
+        @DELETE
+        @Path("/delete/{username}")
+        public void delete(String username) {
             adminService.deleteUser(username);
         }
     }

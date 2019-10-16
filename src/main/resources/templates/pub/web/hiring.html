@@ -5,7 +5,7 @@
 <div th:fragment="mainContent">
     <div class="page-header row no-gutters py-4">
         <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
-            <h3 th:text="${entrepreneurial.getDisplayname()}+${' - '}+${create?'新建职位':hiring.getPosition()}"
+            <h3 th:text="${entrepreneurial.getDisplayname()}+${' - '}+${creating?'新建职位':hiring.getPosition()}"
                 class="page-title">职位详情</h3>
         </div>
     </div>
@@ -15,21 +15,23 @@
                 <div class="card-header ">
                     <button class="btn btn-outline-info" onclick="goBack()"><i class="material-icons">arrow_back</i>返回
                     </button>
-                    <a th:if="${editable}" class="btn btn-outline-success ml-auto"
+                    <a th:if="${userEditable}" class="btn btn-outline-success ml-auto"
                        th:href="${'/web/hiring/'}+${hiring.getId()}+${'/edit'}">
                         <i class="material-icons">edit</i>编辑
                     </a>
-                    <a th:if="${editable}" class="btn btn-outline-danger ml-auto"
+                    <a th:if="${userEditable}" class="btn btn-outline-danger ml-auto"
                        th:href="${'/web/hiring/'}+${hiring.getId()}+${'/del'}">
                         <i class="material-icons">delete_outline</i>删除
                     </a>
                 </div>
                 <div class="card-body">
-                    <form id="form" th:action="${'/web/hiring/new/'}+${}" method="post" onsubmit="return formSubmit()">
+                    <form id="form" th:action="${'/web/hiring/'}+${creating?'new':(editing?hiring.getId()+'/save':'')}"
+                          method="post"
+                          onsubmit="return formSubmit()">
                         <div class="col-12">
-                            <div th:if="${create}"
+                            <div th:if="${editing} or ${creating}"
                                  th:include="/parts::TextInput('职位名称','position',${hiring.getPosition()},${disabled})"></div>
-                            <div th:if="!${create}"
+                            <div th:if="!(${editing} or ${creating})"
                                  th:include="/parts::TextInput('发布时间','pubtime',${hiring.getPubtime()},${disabled})"></div>
                         </div>
                         <div class="row col-12">
@@ -42,8 +44,9 @@
                         </div>
                         <div th:replace="/parts::titledTextarea('详细描述','detail',${hiring.getDetail()},${disabled})"></div>
                         <br>
-                        <div th:if="${create}" class="form-group col-md-12">
-                            <button type="submit" id="button" class="mb-2 btn btn-outline-primary mr-2">发布
+                        <div th:if="${editing} or ${creating}" class="form-group col-md-12">
+                            <button th:text="${editing?'保存':creating?'发布':'save'}" type="submit" id="button"
+                                    class="mb-2 btn btn-outline-primary mr-2">save
                             </button>
                         </div>
                     </form>
