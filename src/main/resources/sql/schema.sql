@@ -61,14 +61,13 @@ interview_address    VARCHAR(10240),
 pubtime              TIMESTAMP,
 salary               VARCHAR(10240),
 detail               VARCHAR(81920),
-primary key (username, id),
+primary key (id),
 foreign key (username)
       references entrepreneurial (username)
 );
 
 create table collection (
 per_username         VARCHAR(10240)                 not null,
-hir_username         VARCHAR(10240),
 hir_id               BIGINT                         not null,
 valid                INT,
 collection_time      TIMESTAMP,
@@ -76,13 +75,12 @@ apply                INT,
 primary key (per_username, hir_id),
 foreign key (per_username)
       references personal (username),
-foreign key (hir_username, hir_id)
-      references hiring (username, id)
+foreign key (hir_id)
+      references hiring (id)
 );
 
 create  index Index_7 on collection (
 per_username ASC,
-hir_username ASC,
 hir_id ASC
 );
 
@@ -123,7 +121,7 @@ phone                VARCHAR(10240),
 email                VARCHAR(10240),
 introduce            VARCHAR(10240),
 experience           VARCHAR(10240),
-primary key (username, id),
+primary key (id),
 foreign key (username)
       references personal (username)
 );
@@ -139,11 +137,11 @@ res_username         VARCHAR(10240)                 not null,
 hir_id               BIGINT                         not null,
 res_id               BIGINT                         not null,
 status               INT,
-primary key (hir_username, res_username, hir_id, res_id),
-foreign key (hir_username, hir_id)
-      references hiring (username, id),
-foreign key (res_username, res_id)
-      references resume (username, id)
+primary key (hir_id, res_id),
+foreign key (hir_id)
+      references hiring (id),
+foreign key (res_id)
+      references resume (id)
 );
 
 create  index Index_8 on submission (
