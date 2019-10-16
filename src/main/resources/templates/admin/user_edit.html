@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+                        <br>
+                        <form id="form" method="post"  th:action="@{/admin/userDoEdit}" onsubmit="return formSubmit()">
+                            <lu >
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;昵称：&nbsp;&nbsp;<input type="text"  name="dN" th:value="${login.getDisplayname()}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;邮箱：&nbsp;&nbsp;<input type="text"  name="email" th:value="${login.getEmail()}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;电话：&nbsp;&nbsp;<input type="text"  name="tel" th:value="${login.getTel()}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;年龄：&nbsp;&nbsp;<input type="text"  name="age" th:value="${personal.age}"></li>
+                                <br>
+                                <li>教育经历：&nbsp;&nbsp;<input type="text"  name="edu" th:value="${personal.edu}"></li>
+                                <br>
+                                <li>就读学校：&nbsp;&nbsp;<input type="text"  name="school" th:value="${personal.school}"></li>
+                                <br>
+                                <input type="hidden"  name="username" th:value="${login.username}">
+
+                            </lu>
+                            <br>
+                            <div class="form-group col-md-12">
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="sub" type="submit">
+                                    提交
+                                </button>
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="cancel" type="button" onclick="javascript:history.back(-1);">
+                                    取消
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

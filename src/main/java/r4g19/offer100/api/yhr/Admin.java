@@ -18,6 +18,7 @@ import r4g19.offer100.annotations.cym.APIEntrance;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.jooq.tables.daos.EntrepreneurialDao;
 import r4g19.offer100.jooq.tables.daos.LoginDao;
+import r4g19.offer100.jooq.tables.daos.NoticeDao;
 import r4g19.offer100.jooq.tables.pojos.Login;
 import r4g19.offer100.properties.cym.mapping.UserType;
 import r4g19.offer100.service.yhr.AdminService;
@@ -41,10 +42,11 @@ public class Admin extends APIBase {
             return new ResponseEntity(d, HttpStatus.OK);
         }
 
-        @DeleteMapping("delete/{username}")
-        public void delete(@PathVariable String username) {
-            adminService.deleteUser(username);
+        @DeleteMapping("delete")
+        public void delete(@RequestBody String username) {
+            adminService.deleteUser(username.substring(1, username.length() - 1));
         }
+
     }
 
     @RestController
@@ -56,12 +58,22 @@ public class Admin extends APIBase {
             return new ResponseEntity(d, HttpStatus.OK);
         }
 
-        @DeleteMapping("/delete/{username}")
-        public void delete(@PathVariable String username) {
-            adminService.deleteUser(username);
-        }
     }
 
+    @RestController
+    @RequestMapping("api/admin/notice")
+    public class Notice extends APIBase {
+        @GetMapping("/list")
+        public HttpEntity list() {
+            List d = new NoticeDao(dsl.configuration()).findAll();
+            return new ResponseEntity(d, HttpStatus.OK);
+        }
+
+        @DeleteMapping("/delete")
+        public void delete(@RequestBody Integer noticeId) {
+            adminService.deleteNotice(noticeId);
+        }
+    }
 
 }
 

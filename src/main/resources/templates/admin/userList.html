@@ -13,11 +13,12 @@
 
 
                         <script>
-                            let operate=[];
+                            operate=[];
+                            generateTables('/api/admin/personal/list', 'Login', false, 't1', operate);
                             operate.formatter = function (value, row, index) {
                                 return [
-                                    '<a class="like" href="javascript:void(0)" title="Like">',
-                                    '<i class="fa fa-heart"></i>',
+                                    '<a class="detail" href="javascript:void(0)" title="Like">',
+                                    '<i class="fa fa-info-circle"></i>',
                                     '</a>  ',
                                     '<a class="remove" href="javascript:void(0)" title="Remove">',
                                     '<i class="fa fa-trash"></i>',
@@ -25,16 +26,24 @@
                                 ].join('')
                             };
                             operate.events = {
-                                'click .like': function (e, value, row, index) {
-                                    alert('You click like action, row: ' + JSON.stringify(row))
+                                'click .detail': function (e, value, row, index) {
+                                    Turbolinks.visit("/admin/userEdit/" + row.username);
                                 },
                                 'click .remove': function (e, value, row, index) {
-                                    apiSubmit("/api/admin/personal/delete/"+row.username,"delete",null,function (xhr) {
-                                            if(xhr.status===200) showSuccessAlert("用户{1}已删除".format(row.username));
-                                    })
+                                    var r = confirm("是否删除")
+                                    if(true) {
+                                        apiSubmit("/api/admin/personal/delete", "delete", row.username, function (xhr) {
+                                            console.log(row);
+                                            if (xhr.status === 200) {
+                                                showSuccessAlert("用户" + row.username + "已删除");
+                                                window.location = "/admin/";
+                                            }
+                                        })
+                                    }else {
+                                    }window.location = "/admin/";
                                 }
                             };
-                            generateTables('/api/admin/personal/list', 'Login', false, 't1', operate);
+
 
 
                         </script>
