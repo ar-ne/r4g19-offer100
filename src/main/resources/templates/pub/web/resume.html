@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title>个人简历信息</title>
+<body th:replace="~{/framework/brief}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3>简历详情</h3>
+        </div>
+    </div>
+    <div class="row ">
+        <div class="mb-3 col-12 ">
+            <div class="card card-small ">
+                <div class="card-header ">
+                    <button class="btn btn-outline-info" onclick="goBack()"><i class="material-icons">arrow_back</i>返回
+                    </button>
+                    <a th:if="${editable}" class="btn btn-outline-success ml-auto"
+                       th:href="${'/web/resume/'}+${resume.getId()}+${'/edit'}">
+                        <i class="material-icons">edit</i>编辑
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form id="form" th:action="@{/web/resume/new}" method="post" onsubmit="return formSubmit()">
+                        <div th:if="!${create}" class="col-12">
+                            <div
+                                    th:include="/parts::TextInput('姓名','username',${personal.getUsername()},${disabled})"></div>
+                            <div
+                                    th:include="/parts::TextInput('生日','birth',${personal.getBirth()},${disabled})"></div>
+                        </div>
+                        <div th:if="!${create}" class="row col-12">
+                            <div th:replace="/parts::TextInput('性别','sex',${personal.getSex()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('年龄','age',${personal.getAge()},${disabled})"></div>
+                        </div>
+                        <div th:if="!${create}" class="row col-12">
+                            <div th:replace="/parts::TextInput('毕业院校','school',${personal.getSchool()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('教育经历','edu',${personal.getEdu()},${disabled})"></div>
+                        </div>
+                        <div class="row col-12">
+                            <div th:replace="/parts::TextInput('家庭住址','address',${resume.getAddress()},${disabled})"></div>
+                            <div th:replace="/parts::TextInput('联系电话','phone',${resume.getPhone()},${disabled})"></div>
+                        </div>
+                        <div class="row col-12">
+                            <div th:replace="/parts::TextInput('电子邮箱','email',${resume.getEmail()},${disabled})"></div>
+                            <!--                            <div th:replace="/parts::TextInput('个人id','id',${resume.getId()},${disabled})"></div>-->
+                        </div>
+                        <div th:replace="/parts::titledTextarea('个人介绍','introduce',${resume.getIntroduce()},${disabled})"></div>
+                        <div th:replace="/parts::titledTextarea('个人经历','experience',${resume.getExperience()},${disabled})"></div>
+                        <br>
+                        <div th:if="${create}" class="form-group col-md-12">
+                            <button type="submit" id="button" class="mb-2 btn btn-outline-primary mr-2">提交
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
