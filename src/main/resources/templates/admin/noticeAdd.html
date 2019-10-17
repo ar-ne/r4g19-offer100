@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+                        <br>
+                        <form id="form" method="post"  th:action="@{/admin/noticeDoAdd}" onsubmit="return formSubmit()">
+                        <lu >
+                            <li>输入标题：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text" placeholder="标题不能为空" name="title"></li>
+                            <br>
+                            <br>
+                            <li>输入公告内容：<textarea class="form-control" rows="10"placeholder="内容不能为空" name="noticeMessage"></textarea></li>
+                        </lu>
+                            <br>
+                        <div class="form-group col-md-12">
+                            <button class="mb-2 btn btn-outline-primary mr-2" id="button" type="submit">
+                                发布公告
+                            </button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

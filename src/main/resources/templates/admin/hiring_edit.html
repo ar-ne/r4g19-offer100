@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+                        <br>
+                        <form id="form" method="post"  th:action="@{/admin/hiringDoEdit}" onsubmit="return formSubmit()">
+                            <lu >
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;薪资：&nbsp;&nbsp;<input type="text"  name="salary" th:value="${hiring.salary}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;职位：&nbsp;&nbsp;<input type="text"  name="position" th:value="${hiring.position}"></li>
+                                <br>
+                                <li>学历要求：&nbsp;<input type="text"  name="eduRequirement" th:value="${hiring.eduRequirement}"></li>
+                                <br>
+                                <li>工作地点：&nbsp;<input type="text"  name="workAddress" th:value="${hiring.workAddress}"></li>
+                                <br>
+                                <li>面试地点：&nbsp;<input type="text"  name="interviewAddress" th:value="${hiring.interviewAddress}"></li>
+                                <br>
+                                <li>招聘详情：<textarea class="form-control" rows="10" name="detail"th:text="${hiring.detail}"></textarea></li>
+                                <input type="hidden"  name="id" th:value="${hiring.id}">
+
+                            </lu>
+                            <br>
+                            <div class="form-group col-md-12">
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="sub" type="submit">
+                                    提交
+                                </button>
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="cancel" type="button" onclick="javascript:history.back(-1);">
+                                    取消
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

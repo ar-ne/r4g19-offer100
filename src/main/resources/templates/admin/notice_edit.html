@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+                        <<br>
+                        <form id="form" method="post"  th:action="@{/admin/noticeDoEdit}" onsubmit="return formSubmit()">
+                            <lu>
+                                <li>输入标题：<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="text"  name="noticeTitle"th:value="${notice.noticeTitle}"></li>
+                                <br>
+                                <br>
+                                <li>输入公告内容：<textarea class="form-control" rows="10" name="noticeText"th:text="${notice.noticeText}"></textarea></li>
+                            </lu>
+                            <br>
+                            <input type="hidden"  name="noticeId" th:value="${notice.noticeId}">
+                            <div class="form-group col-md-12">
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="button" type="submit">
+                                    提交
+                                </button>
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="cancel" type="button" onclick="javascript:history.back(-1);">
+                                    取消
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

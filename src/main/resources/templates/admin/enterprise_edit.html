@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+                        <br>
+                        <form id="form" method="post"  th:action="@{/admin/enterpriseDoEdit}" onsubmit="return formSubmit()">
+                            <lu >
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;地址：&nbsp;&nbsp;<input type="text"  name="address" th:value="${entrepreneurial.address}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;规模：&nbsp;&nbsp;<input type="text"  name="scale" th:value="${entrepreneurial.scale}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;类型：&nbsp;&nbsp;<input type="text"  name="type" th:value="${entrepreneurial.type}"></li>
+                                <br>
+                                <li>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简介：&nbsp;&nbsp;<input type="text"  name="brief" th:value="${entrepreneurial.brief}"></li>
+                                <br>
+                                <li>涉及领域：&nbsp;<input type="text"  name="field" th:value="${entrepreneurial.field}"></li>
+                                <br>
+                                <li>精确地址：&nbsp;<input type="text"  name="accuAddr" th:value="${entrepreneurial.accuAddr}"></li>
+                                <br>
+                                <li>详细介绍：&nbsp;<input type="text"  name="school" th:value="${entrepreneurial.detail}"></li>
+                                <br>
+                                <input type="hidden"  name="username" th:value="${entrepreneurial.username}">
+
+                            </lu>
+                            <br>
+                            <div class="form-group col-md-12">
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="sub" type="submit">
+                                    提交
+                                </button>
+                                <button class="mb-2 btn btn-outline-primary mr-2" id="cancel" type="button" onclick="javascript:history.back(-1);">
+                                    取消
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

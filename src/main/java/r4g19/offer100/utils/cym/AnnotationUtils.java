@@ -60,8 +60,12 @@ public class AnnotationUtils {
     @SuppressWarnings("unchecked")
     public static void alertAnnotationAtRuntime(Class target, Class<? extends Annotation> annotationType, Map values) {
         try {
-            LoggerFactory.getLogger(AnnotationUtils.class).trace("alertAnnotationToClassAtRuntime:target={},annotation={}", target, annotationType);
+            LoggerFactory.getLogger(AnnotationUtils.class).trace("alertAnnotationAtRuntime:target={},annotation={}", target, annotationType);
             target.getAnnotation(Annotation.class);
+            if (target.getAnnotation(annotationType) != null) {
+                LoggerFactory.getLogger(AnnotationUtils.class).trace("alertAnnotationAtRuntime:target={},annotation={} annotation already exist", target, annotationType);
+                return;
+            }
             Method method = Class.class.getDeclaredMethod(ANNOTATION_DATA, (Class<?>[]) null);
             method.setAccessible(true);
             Object annotationData = method.invoke(target);
