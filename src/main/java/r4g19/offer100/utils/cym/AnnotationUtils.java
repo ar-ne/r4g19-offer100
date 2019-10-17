@@ -21,7 +21,6 @@ public class AnnotationUtils {
      * @param basePackage    basePackage
      * @return Set<Class> which class will have the annotation
      */
-    @Deprecated
     public static Set<Class> findAllClassesWithAnnotation(Class<? extends Annotation> annotationType, String basePackage) {
         LoggerFactory.getLogger(AnnotationUtils.class).trace("findAllClassesWithAnnotation:annotationType={},basePackage={}", annotationType, basePackage);
         ClassPathScanningCandidateComponentProvider provider = new ClassPathScanningCandidateComponentProvider(false);
