@@ -12,7 +12,10 @@
         <div class="mb-3 col-12 ">
             <div class="card card-small ">
                 <div class="card-header ">
-                    <img alt="User Avatar" class="rounded-circle m-auto" id="avatar" width="110">
+                    <img src="/images/cc.png" alt="User Avatar" class="rounded-circle m-auto" id="avatar_img"
+                         width="110">
+                    <input type="file" id="avatar_file" name="avatar_file" accept="image/jpg,image/png,image/gif"
+                           style="width: 100%;height:100%;opacity: 0;position: absolute;left:0;top: 0;"/>
                 </div>
                 <div class="card-body">
                     <form id="form" method="post" onsubmit="return formSubmit()" th:action="@{profile}">
@@ -33,13 +36,13 @@
                                     <div class="form-row pl-3 pt-1" id="sex">
                                         <div class="custom-control custom-radio mb-1 pr-5">
                                             <input class="custom-control-input" id="formsRadioDefault" name="sex"
-                                                   th:checked="${userDetail.getSex()=='Male'}" type="radio"
+                                                   th:checked="${userDetail.getSex().name()=='Male'}" type="radio"
                                                    value="Male">
                                             <label class="custom-control-label" for="formsRadioDefault">男</label>
                                         </div>
                                         <div class="custom-control custom-radio mb-1">
                                             <input class="custom-control-input" id="formsRadioChecked" name="sex"
-                                                   th:checked="${userDetail.getSex()=='Female'}" type="radio"
+                                                   th:checked="${userDetail.getSex().name()=='Female'}" type="radio"
                                                    value="Female">
                                             <label class="custom-control-label" for="formsRadioChecked">女</label>
                                         </div>
@@ -49,7 +52,8 @@
                             <br>
                             <div class="form-group col-md-5">
                                 <label for="出生日期">出生日期</label>
-                                <input class="form-control" id="出生日期" name="birth" value="" type="date"
+                                <input class="form-control" id="出生日期" name="birth"
+                                       th:value="${simpleDateFormat.format(userDetail.getBirth())}" type="date"
                                        required="required">
                             </div>
                             <br>
@@ -84,5 +88,21 @@
         </div>
     </div>
 </div>
+
+<script>
+    // 头像预览
+    $("#avatar_file").onclick(function () {
+        // 获取上传文件对象
+        var file = $(this)[0].files[0];
+        // 读取文件URL
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        // 阅读文件完成后触发的事件
+        reader.onload = function () {
+            // 读取的URL结果：this.result
+            $("#avatar_img").attr("src", this.result);
+        }
+    });
+</script>
 </body>
 </html>

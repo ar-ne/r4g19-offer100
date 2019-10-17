@@ -8,6 +8,7 @@ import r4g19.offer100.properties.cym.Status;
 import r4g19.offer100.properties.cym.mapping.UserType;
 
 import javax.servlet.http.HttpServletResponse;
+import java.text.SimpleDateFormat;
 
 @Controller
 public abstract class ControllerBase extends ComponentBase {
@@ -22,6 +23,11 @@ public abstract class ControllerBase extends ComponentBase {
         if (authentication != null && authentication.isAuthenticated())
             return getUserType(authentication);
         return null;
+    }
+
+    @ModelAttribute("simpleDateFormat")
+    private SimpleDateFormat setSimpleDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd");
     }
 
 
