@@ -12,7 +12,7 @@
     <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <script src="../../static/webpack/fonts.bundle.js"></script>
 </head>
-<body class="h-100">
+<body class="h-100" style="overflow-y: scroll;">
 <div class="container-fluid">
     <div class="row">
         <aside class="main-sidebar col-12 col-md-3 col-lg-2 px-0">
@@ -65,9 +65,8 @@
                             <a id="permanentElement01" data-turbolinks-permanent
                                class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                                role="button" aria-haspopup="true" aria-expanded="false">
-                                <!--                                <img class="user-avatar rounded-circle mr-2" th:src="@{/images/avatars/0.jpg}"-->
-                                <!--                                     alt="User Avatar">-->
-                                <!--/*@thymesVar id="username" type="java.lang.String"*/-->
+                                <img class="user-avatar rounded-circle mr-2" src="/images/cc.png" alt="User Avatar">
+                                <!-- /*@thymesVar id="username" type="java.lang.String"*/-->
                                 <span class="d-none d-md-inline-block" th:text="${username!=null?username:'Admin'}">Sierra Brooks</span>
                             </a>
                             <div class="dropdown-menu dropdown-menu-small">
