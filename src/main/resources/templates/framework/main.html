@@ -65,7 +65,9 @@
                             <a id="permanentElement01" data-turbolinks-permanent
                                class="nav-link dropdown-toggle text-nowrap px-3" data-toggle="dropdown" href="#"
                                role="button" aria-haspopup="true" aria-expanded="false">
-                                <img class="user-avatar rounded-circle mr-2" src="/images/cc.png" alt="User Avatar">
+                                <img class="user-avatar rounded-circle mr-2"
+                                     th:src="${ (login==null || login.getAvatar()==null)?'/images/cc.png':byteToString.c(login.getAvatar())}"
+                                     alt="User Avatar">
                                 <!-- /*@thymesVar id="username" type="java.lang.String"*/-->
                                 <span class="d-none d-md-inline-block" th:text="${username!=null?username:'Admin'}">Sierra Brooks</span>
                             </a>

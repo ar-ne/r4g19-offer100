@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">职位申请</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+                        <div class="card-header"
+                             th:text="'你正在申请 '+${entrepreneurial.getDisplayname()}+'-'+${hiring.getPosition()}+', 从列表中选择你想投递的简历'">
+                        </div>
+                        <table id="table"></table>
+
+
+                        <script th:inline="javascript">
+                            generateTables('/api/user/personal/resume/list', 'Resume', false, 'table');
+                            $('#table').on('click-row.bs.table', function (e, row, $element, field) {
+                                if (confirm("确定投递该简历吗？")) {
+                                    apiSubmit("/api/user/personal/request/" + [[${hiring.getId()}]], "PUT", JSON.stringify(row), function (xhr) {
+                                        if (xhr.responseText === 'success') {
+                                            showSuccessAlert("投递成功", 2000, function () {
+                                                Turbolinks.visit("/web/collectionList");
+                                            })
+                                        } else if (xhr.responseText === "already") {
+                                            showSuccessAlert("已提交过申请，请勿重复提交", 2000, function () {
+                                                Turbolinks.visit("/web/collectionList");
+                                            })
+                                        } else showFailAlert();
+                                    })
+                                }
+                            })
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

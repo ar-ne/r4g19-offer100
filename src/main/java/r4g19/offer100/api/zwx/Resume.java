@@ -10,15 +10,11 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.SecurityContext;
 import java.util.List;
 
+@API("user/personal/resume")
 public class Resume extends APIBase {
-
-
-    @API("user/personal")
-    public static class Personal extends APIBase {
-        @GET
-        @Path("resume/list")
-        public List resumeList(@Context SecurityContext securityContext) {
-            return new ResumeDao(dsl.configuration()).fetchByUsername(Resume.getUsername(securityContext));
-        }
+    @GET
+    @Path("list")
+    public List resumeList(@Context SecurityContext securityContext) {
+        return new ResumeDao(dsl.configuration()).fetchByUsername(Resume.getUsername(securityContext));
     }
 }

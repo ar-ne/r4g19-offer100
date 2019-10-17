@@ -62,6 +62,14 @@ public class Router extends ControllerBase {
         return String.format("/priv/%s/%s", getUserType(authentication), page);
     }
 
+    @GetMapping("/web/request/{hir_id}")
+    public String request(@PathVariable Long hir_id, Model model) {
+        Hiring hiring = hiringService.getHiring(hir_id);
+        model.addAttribute("hiring", hiring);
+        model.addAttribute("entrepreneurial", hiringService.getEntrepreneurial(hiring));
+        return "/priv/Personal/request";
+    }
+
     @Controller
     @RequestMapping("/web/hiring")
     public class HiringController extends ControllerBase {

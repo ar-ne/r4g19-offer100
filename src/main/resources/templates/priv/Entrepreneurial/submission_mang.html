@@ -17,33 +17,49 @@
                 <div class="card-body">
                     <table id="table"></table>
                     <script>
-                        let operate = [];
+                        operate = [];
                         operate.formatter = function (value, row, index) {
                             return [
-                                '<a class="like" href="javascript:void(0)" title="Like">',
-                                '<i class="fa fa-heart"></i>',
-                                '</a>  ',
-                                '<a class="remove" href="javascript:void(0)" title="Remove">',
-                                '<i class="fa fa-trash"></i>',
-                                '</a>'
+                                '<a class="approve" href="javascript:void(0)" title="接受" style="color: green">' +
+                                '<i class="material-icons">check_box</i></a>',
+                                '<a class="reject" href="javascript:void(0)" title="拒绝" style="color: red">' +
+                                '<i class="material-icons">do_not_disturb_on</i></a>',
+                                '<a href="/web/hiring/' + row.hirId + '" title="职位详情" style="color: blue">' +
+                                '<i class="material-icons">info</i></a>',
+                                '<a href="/web/resume/' + row.resId + '" title="简历详情" style="color: mediumblue">' +
+                                '<i class="material-icons">info_outline</i></a>'
                             ].join('')
                         };
                         operate.events = {
-                            'click .like': function (e, value, row, index) {
-                                alert('You click like action, row: ' + JSON.stringify(row))
+                            'click .approve': function (e, value, row, index) {
+                                if (confirm("确定要接受这份申请？")) {
+                                    let p = [];
+                                    p.push(row);
+                                    apiSubmit("/api/user/entrepreneurial/submission/APPROVE", "POST", JSON.stringify(p), function (xhr) {
+                                        if (xhr.responseText === "success") {
+                                            showSuccessAlert("操作成功", 700, function () {
+                                                $("#table").bootstrapTable("refresh");
+                                            });
+                                        } else showFailAlert();
+                                    })
+                                }
                             },
-                            'click .remove': function (e, value, row, index) {
-                                $table.bootstrapTable('remove', {
-                                    field: 'id',
-                                    values: [row.id]
-                                })
+                            'click .reject': function (e, value, row, index) {
+                                if (confirm("确定要拒绝这份申请？")) {
+                                    let p = [];
+                                    p.push(row);
+                                    apiSubmit("/api/user/entrepreneurial/submission/REJECT", "POST", JSON.stringify(p), function (xhr) {
+                                        if (xhr.responseText === "success") {
+                                            showSuccessAlert("操作成功", 700, function () {
+                                                $("#table").bootstrapTable("refresh");
+                                            });
+                                        } else showFailAlert();
+                                    })
+                                }
                             }
                         };
 
-                        generateTables('/api/user/entrepreneurial/submission/list', 'Entrepreneurial', false, 'table', operate);
-                        $('#table').on('click-row.bs.table', function (e, row, $element, field) {
-                            Turbolinks.visit("hiring/" + row.id);
-                        })
+                        generateTables('/api/user/entrepreneurial/submission/list', 'Submission', true, 'table', operate);
                     </script>
                 </div>
             </div>

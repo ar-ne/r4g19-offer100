@@ -14,6 +14,9 @@
                 <div class="card-header ">
                     <button class="btn btn-outline-info" onclick="goBack()"><i class="material-icons">arrow_back</i>返回
                     </button>
+                    <button class="btn btn-outline-success ml-auto" onclick="print()">
+                        <i class="material-icons">edit</i>打印
+                    </button>
                     <a th:if="${userEditable}" class="btn btn-outline-success ml-auto"
                        th:href="${'/web/resume/'}+${resume.getId()}+${'/edit'}">
                         <i class="material-icons">edit</i>编辑

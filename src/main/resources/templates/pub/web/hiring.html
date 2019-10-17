@@ -19,6 +19,11 @@
                        th:href="${'/web/hiring/'}+${hiring.getId()}+${'/edit'}">
                         <i class="material-icons">edit</i>编辑
                     </a>
+                    <a class="btn btn-outline-success ml-auto"
+                       th:href="${'/web/request/'}+${hiring.getId()}"
+                       th:if="${userType!=null && userType.name()=='Personal'}">
+                        <i class="material-icons">add</i>申请
+                    </a>
                     <!--                    <a th:if="${userEditable}" class="btn btn-outline-danger ml-auto"-->
                     <!--                       th:href="${'/web/hiring/'}+${hiring.getId()}+${'/del'}">-->
                     <!--                        <i class="material-icons">delete_outline</i>删除-->

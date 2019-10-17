@@ -1,6 +1,5 @@
 package r4g19.offer100.api.cym;
 
-import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.impl.DAOImpl;
 import r4g19.offer100.annotations.cym.API;
@@ -10,13 +9,13 @@ import r4g19.offer100.jooq.tables.pojos.Login;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static r4g19.offer100.jooq.Public.PUBLIC;
-import static r4g19.offer100.properties.cym.Vars.JOOQ_PACKAGE_NAME;
-import static r4g19.offer100.properties.cym.Vars.POJO_DAO_MAPPER;
+import static r4g19.offer100.properties.cym.Vars.*;
 
 @API(value = "dev", localOnly = true)
 public class Dev extends APIBase {
@@ -54,11 +53,25 @@ public class Dev extends APIBase {
     public static class Info extends APIBase {
         @GET
         @Path("/tables")
-        public List<String> table() {
+        public List<String> visibility() {
             List<String> list = new ArrayList<>();
             for (Table<?> table : PUBLIC.getTables()) {
-                for (Field<?> field : table.fields()) {
+                for (org.jooq.Field<?> field : table.fields()) {
                     list.add(table.getName() + "." + field.getName().toLowerCase());
+                }
+            }
+            return list;
+        }
+
+        @GET
+        @Path("/bs-tables")
+        public List<String> translate() {
+            List<String> list = new ArrayList<>();
+            for (Table<?> table : PUBLIC.getTables()) {
+                Class t = TABLE_POJO_MAPPER.get(table);
+                for (Field field : t.getDeclaredFields()) {
+                    if (field.getName().equalsIgnoreCase("serialVersionUID")) continue;
+                    list.add(table.getName() + "." + field.getName());
                 }
             }
             return list;
