@@ -10,8 +10,6 @@
 package r4g19.offer100.api.yhr;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import r4g19.offer100.annotations.cym.API;
 import r4g19.offer100.api.APIBase;
 import r4g19.offer100.jooq.tables.daos.EntrepreneurialDao;
@@ -86,18 +84,20 @@ public class Admin extends APIBase {
         }
     }
 
-    @API("/admin/hr")
-    public class HR extends APIBase {
+    @API("admin/hr")
+    public static class HR extends APIBase {
         @Autowired
         AdminService adminService;
 
-        @GetMapping("/list")
+        @GET
+        @Path("/list")
         public List list() {
             List d = new HiringDao(dsl.configuration()).findAll();
             return d;
         }
 
-        @DeleteMapping("/delete")
+        @DELETE
+        @Path("/delete")
         public void delete(Long id) {
             adminService.deletehr(id);
         }
