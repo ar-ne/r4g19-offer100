@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import r4g19.offer100.properties.cym.mapping.UserType;
 import r4g19.offer100.service.cym.DatabaseLog;
 
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Field;
 
 /**
@@ -17,8 +18,8 @@ import java.lang.reflect.Field;
  */
 @Component
 public abstract class ComponentBase {
-    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     protected static final Cloner cloner = new Cloner();
+    protected final Logger logger = LoggerFactory.getLogger(this.getClass());
     @Autowired
     protected DatabaseLog dbLogger;
 
@@ -57,5 +58,18 @@ public abstract class ComponentBase {
             e.printStackTrace();
         }
         return uo;
+    }
+
+    /**
+     * only return local or anonymous
+     *
+     * @param request
+     * @return
+     */
+    public UserType getUserType(HttpServletRequest request) {
+        if (request.getRemoteHost().equalsIgnoreCase("127.0.0.1") ||
+                request.getRemoteHost().equalsIgnoreCase("0:0:0:0:0:0:0:1"))
+            return UserType.Localhost;
+        return UserType.Anonymous;
     }
 }
