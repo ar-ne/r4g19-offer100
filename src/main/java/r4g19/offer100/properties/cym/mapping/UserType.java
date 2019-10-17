@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
  * 用户类型的枚举类型和转换器
  */
 public enum UserType {
-    Personal, Entrepreneurial;
+    Personal, Entrepreneurial, Localhost, Anonymous;
 
     public static final String prefix = "ROLE_";
 

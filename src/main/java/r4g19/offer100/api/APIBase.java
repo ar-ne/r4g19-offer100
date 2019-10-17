@@ -2,8 +2,11 @@ package r4g19.offer100.api;
 
 import org.jooq.DSLContext;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.RestController;
 import r4g19.offer100.ComponentBase;
+import r4g19.offer100.properties.cym.mapping.UserType;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.GET;
@@ -44,11 +47,6 @@ public abstract class APIBase extends ComponentBase {
 //        return links;
 //    }
 
-    @GET
-    public Response index(HttpServletRequest request, @Context UriInfo uriInfo) {
-        return Response.ok(String.format("%s says Hello World!", this.getClass())).build();
-    }
-
     /**
      * 获取登录名
      *
@@ -56,7 +54,20 @@ public abstract class APIBase extends ComponentBase {
      * @return 登录名
      */
     public static String getUsername(SecurityContext context) {
-        return context.getUserPrincipal().getName();
+        return getUsername(getAuthentication(context));
+    }
+
+    public static UserType getUserType(SecurityContext context) {
+        return getUserType(getAuthentication(context));
+    }
+
+    public static Authentication getAuthentication(SecurityContext context) {
+        return (UsernamePasswordAuthenticationToken) context.getUserPrincipal();
+    }
+
+    @GET
+    public Response index(HttpServletRequest request, @Context UriInfo uriInfo) {
+        return Response.ok(String.format("%s says Hello World!", this.getClass())).build();
     }
 
 }

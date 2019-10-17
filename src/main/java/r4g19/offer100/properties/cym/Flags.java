@@ -9,9 +9,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import r4g19.offer100.ComponentBase;
+import r4g19.offer100.properties.cym.mapping.UserType;
 
 @Configuration
-@PropertySource("classpath:properties/flags.properties")
+@PropertySource("classpath:properties/visibility.properties")
 public class Flags extends ComponentBase {
 
     public static final char TRUE = 'T';
@@ -36,29 +37,44 @@ public class Flags extends ComponentBase {
      * @param fieldName 字段
      * @return Field Flags
      */
-    public Field getTableField(Table jTable, String fieldName) {
+    public Visibility getTableField(Table jTable, String fieldName) {
         String flagStr = env.getProperty(String.format("%s.%s", jTable.getName(), fieldName));
         if (flagStr == null) {
-            logger.trace(String.format("field not exist: field.%s.%s", jTable, fieldName));
-            return new Field(true, false, true);
+            logger.error(String.format("field not exist: field.%s.%s", jTable, fieldName));
+            return new Visibility(true, false, false, false);
         }
         logger.trace(String.format("field.%s.%s", jTable, fieldName));
-
-        Field field = new Field();
-        field.setVisibility(c2b(flagStr.charAt(0)));
-        field.setEditability(c2b(flagStr.charAt(1)));
-        field.setShowType(c2b(flagStr.charAt(2)));
-        logger.debug(field.toString());
-        return field;
+        Visibility visibility = new Visibility();
+        visibility.setLocalhost(c2b(flagStr.charAt(0)));
+        visibility.setPersonal(c2b(flagStr.charAt(1)));
+        visibility.setEntrepreneurial(c2b(flagStr.charAt(2)));
+        visibility.setAnonymous(c2b(flagStr.charAt(3)));
+        logger.trace(visibility.toString());
+        return visibility;
     }
 
     @Data
     @AllArgsConstructor
     @NoArgsConstructor
-    public static class Field {
-        public boolean visibility;
-        public boolean editability;
-        public boolean showType;
+    public static class Visibility {
+        public boolean localhost;
+        public boolean personal;
+        public boolean entrepreneurial;
+        public boolean anonymous;
+
+        public boolean getByUserType(UserType userType) {
+            switch (userType) {
+                case Anonymous:
+                    return anonymous;
+                case Localhost:
+                    return localhost;
+                case Entrepreneurial:
+                    return entrepreneurial;
+                case Personal:
+                    return personal;
+            }
+            return false;
+        }
     }
 
 }
