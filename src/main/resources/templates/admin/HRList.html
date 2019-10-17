@@ -31,17 +31,15 @@
                                 },
                                 'click .remove': function (e, value, row, index) {
                                     var r = confirm("是否删除")
-                                    if(true) {
+                                    if(r) {
                                         apiSubmit("/api/admin/hr/delete", "delete", row.id, function (xhr) {
                                             console.log(row);
-                                            if (xhr.status === 200) {
+                                            if (xhr.status === 204) {
                                                 showSuccessAlert( row.username + "招聘信息已删除");
-                                                window.location = "/admin/hr";
-
+                                                $('#t1').bootstrapTable('refresh');
                                             }
                                         })
                                     }else {
-                                        window.location = "/admin/hr";
                                     }
                                 }
                             };
