@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+
+                                <table id="t1"></table>
+
+
+                        <script>
+                            operate=[];
+                            operate.formatter = function (value, row, index) {
+                                return [
+                                    '<a class="like" href="javascript:void(0)" title="Like">',
+                                    '<i class="fa fa-heart"></i>',
+                                    '</a>  '
+                                ].join('')
+                            };
+                            operate.events = {
+                                'click .like': function (e, value, row, index) {
+                                    alert('是否收藏该职位？');
+                                    apiSubmit("/api/user/job/addToCollection","POST",JSON.stringify(row),function (xhr) {
+                                        if(xhr.status===200) showSuccessAlert("职位已收藏".format(row.username));
+                                    })
+                                }
+                            };
+                            generateTables('/api/user/job/search', 'Login', false, 't1', operate);
+
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
