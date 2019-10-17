@@ -25,6 +25,7 @@ public class Vars {
     public static final Set<String> PUBLIC_PAGES;
     public static final Map<Class, Constructor> POJO_DAO_MAPPER;
     public static final Map<Class, Table<?>> POJO_TABLE_MAPPER;
+    public static final Map<Table<?>, Class> TABLE_POJO_MAPPER;
     public static final Map<UserType, Class> TYPE_POJO_MAP;
     public static final String JOOQ_PACKAGE_NAME;
     public static final Set<Class<? extends APIBase>> API;
@@ -52,6 +53,7 @@ public class Vars {
         {
             HashMap<Class, Constructor> map = new HashMap<>();
             HashMap<Class, Table<?>> map1 = new HashMap<>();
+            HashMap<Table<?>, Class> map2 = new HashMap<>();
             logger.trace("Building static maps: Vars.POJO_DAO_MAPPER , Vars.POJO_DAO_MAPPER");
             for (Table<?> table : Public.PUBLIC.getTables()) {
                 String pojo = String.format("%s.pojos.%s", table.getClass().getPackage().getName(), table.getClass().getSimpleName());
@@ -60,12 +62,14 @@ public class Vars {
                 try {
                     map.put(Class.forName(pojo), Class.forName(dao).getConstructor(org.jooq.Configuration.class));
                     map1.put(Class.forName(pojo), table);
+                    map2.put(table, Class.forName(pojo));
                 } catch (ClassNotFoundException | NoSuchMethodException e) {
                     e.printStackTrace();
                 }
             }
             POJO_DAO_MAPPER = unmodifiableMap(map);
             POJO_TABLE_MAPPER = unmodifiableMap(map1);
+            TABLE_POJO_MAPPER = unmodifiableMap(map2);
             logger.trace("Build static maps: Vars.POJO_DAO_MAPPER , Vars.POJO_DAO_MAPPER...DONE");
             logger.trace("POJO_DAO_MAPPER={}", Arrays.toString(POJO_DAO_MAPPER.entrySet().toArray()));
             logger.trace("POJO_TABLE_MAPPER={}", Arrays.toString(POJO_TABLE_MAPPER.entrySet().toArray()));

@@ -42,9 +42,9 @@ public class Public extends APIBase {
             List<BootstrapTableColumn> list = new LinkedList<>();
             for (BootstrapTableColumn col : cols) {
                 try {
-                    col.setTitle(messageSource.getMessage(tableName + "." + col.getField(), null, Locale.getDefault()));
+                    col.setTitle(messageSource.getMessage(tableName.toUpperCase() + "." + col.getField(), null, Locale.getDefault()));
                 } catch (NoSuchMessageException ignored) {
-                    logger.error("Can not get Visibility flags from file for {}.{}, which will be set to field name.", tableName, col.getField());
+                    logger.error("Can not get field from messages for {}.{}, which will be set to field name.", tableName, col.getField());
                     col.setTitle(col.getField());
                 }
                 try {
