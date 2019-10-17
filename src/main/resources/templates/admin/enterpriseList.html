@@ -31,17 +31,15 @@
                                 },
                                 'click .remove': function (e, value, row, index) {
                                     var r = confirm("是否删除")
-                                    if(true) {
+                                    if(r) {
                                         apiSubmit("/api/admin/personal/delete", "delete", row.username, function (xhr) {
                                             console.log(row);
-                                            if (xhr.status === 200) {
+                                            if (xhr.status === 204) {
                                                 showSuccessAlert("企业用户" + row.username + "已删除");
-                                                window.location = "/admin/enterprise";
-
+                                                $('#t1').bootstrapTable('refresh');
                                             }
                                         })
                                     }else {
-                                        window.location = "/admin/enterprise";
                                     }
                                 }
                             };

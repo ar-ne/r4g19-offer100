@@ -37,13 +37,12 @@
                                     var r = confirm("是否删除")
                                     if(true){
                                     apiSubmit("/api/admin/notice/delete","delete",row.noticeId,function (xhr) {
-                                        if(xhr.status===200) {
+                                        if(xhr.status===204) {
                                             showSuccessAlert("公告“" + row.noticeTitle + "”已删除");
-                                            window.location = "/admin/notice";
+                                            $('#t1').bootstrapTable('refresh');
                                         }
                                     })}
                                     else{
-                                        window.location = "/admin/notice";
                                     }
 
                                 }

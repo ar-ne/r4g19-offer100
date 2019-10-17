@@ -9,11 +9,11 @@
                 <div class="card card-small ">
                     <div class="card-body">
 
-                                <table id="t1"></table>
+                        <table id="t1"></table>
 
 
                         <script>
-                            operate=[];
+                            operate = [];
                             generateTables('/api/admin/personal/list', 'Login', false, 't1', operate);
                             operate.formatter = function (value, row, index) {
                                 return [
@@ -30,20 +30,20 @@
                                     Turbolinks.visit("/admin/userEdit/" + row.username);
                                 },
                                 'click .remove': function (e, value, row, index) {
-                                    var r = confirm("是否删除")
-                                    if(true) {
+                                    var r = confirm("是否删除");
+                                    if (r) {
                                         apiSubmit("/api/admin/personal/delete", "delete", row.username, function (xhr) {
                                             console.log(row);
-                                            if (xhr.status === 200) {
+                                            if (xhr.status === 204) {
                                                 showSuccessAlert("用户" + row.username + "已删除");
-                                                window.location = "/admin/";
+                                                $('#t1').bootstrapTable('refresh');
                                             }
                                         })
-                                    }else {
-                                    }window.location = "/admin/";
+                                    } else {
+                                    }
+                                    ;
                                 }
                             };
-
 
 
                         </script>
