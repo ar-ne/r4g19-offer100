@@ -4,6 +4,7 @@ import org.jooq.Table;
 import r4g19.offer100.jooq.Tables;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 
 import static r4g19.offer100.properties.cym.Vars.JOOQ_PACKAGE_NAME;
 
@@ -15,17 +16,16 @@ public class ReflectUtils {
      */
     public static Table getTable(String tableName) {
         try {
-            return (Table) Class.forName(String.format("%s.tables.%s", JOOQ_PACKAGE_NAME, tableName)).newInstance();
-
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException ignored) {
+            return (Table) Class.forName(String.format("%s.tables.%s", JOOQ_PACKAGE_NAME, tableName)).getConstructor().newInstance();
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | NoSuchMethodException | InvocationTargetException ignored) {
         }
         try {
             Class tables = Tables.class;
             for (Field field : tables.getDeclaredFields()) {
                 if (field.getName().equalsIgnoreCase(tableName))
-                    return (Table) field.getType().newInstance();
+                    return (Table) field.getType().getConstructor().newInstance();
             }
-        } catch (IllegalAccessException | InstantiationException ignored) {
+        } catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException ignored) {
         }
 
         throw new RuntimeException("Can't find the table with name " + tableName);

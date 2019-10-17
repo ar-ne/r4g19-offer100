@@ -58,30 +58,28 @@ ext {
 
 dependencies {
 //    implementation 'de.codecentric:spring-boot-admin-starter-client'
-    implementation 'org.springframework.boot:spring-boot-starter-websocket'
 //    implementation 'org.springframework.boot:spring-boot-starter-cache'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-mongodb'
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 //    implementation 'org.springframework.session:spring-session-data-redis'
+//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-websocket'
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
     implementation 'org.springframework.boot:spring-boot-starter-jersey'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation "org.springframework.boot:spring-boot-starter-security"
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'uk.com.robust-it:cloning:1.9.12'
-    // https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi
-    compile group: 'com.aliyun', name: 'aliyun-java-sdk-dysmsapi', version: '1.1.0'
-    // https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-core
-    compile group: 'com.aliyun', name: 'aliyun-java-sdk-core', version: '4.4.6'
-    // https://mvnrepository.com/artifact/com.alibaba/fastjson
-    compile group: 'com.alibaba', name: 'fastjson', version: '1.2.62'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-web'
-    compile "org.springframework.boot:spring-boot-starter-security"
+    implementation 'com.aliyun:aliyun-java-sdk-dysmsapi:1.1.0'
+    implementation 'com.aliyun:aliyun-java-sdk-core:4.4.6'
+    implementation 'com.alibaba:fastjson:1.2.62'
+    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation 'org.apache.logging.log4j:log4j-api'
+    implementation 'org.apache.logging.log4j:log4j-core'
+    implementation 'org.apache.logging.log4j:log4j-web'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'org.springframework.boot:spring-boot-devtools'
     runtimeOnly 'com.h2database:h2'

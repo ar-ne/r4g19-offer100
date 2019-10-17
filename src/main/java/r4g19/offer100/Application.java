@@ -67,13 +67,6 @@ public class Application {
             AnnotationUtils.alertAnnotationAtRuntime(resourceClass, Consumes.class, MEDIA_TYPE);
             AnnotationUtils.alertAnnotationAtRuntime(resourceClass, Path.class, Map.of("value", ((API) resourceClass.getAnnotation(API.class)).value()));
             AnnotationUtils.alertAnnotationAtRuntime(resourceClass, RestController.class, Map.of("value", ((API) resourceClass.getAnnotation(API.class)).value()));
-//            for (Method declaredMethod : resourceClass.getDeclaredMethods()) {
-//                r4g19.offer100.annotations.cym.Path path = declaredMethod.getAnnotation(r4g19.offer100.annotations.cym.Path.class);
-//                if (path != null) {
-//                    AnnotationUtils.alertAnnotationAtRuntime(declaredMethod, Path.class, Map.of("value", path.value()));
-//                    AnnotationUtils.alertAnnotationAtRuntime(declaredMethod, Consumes.class, MEDIA_TYPE);
-//                }
-//            }
         }
         System.out.println("DONE");
     }
