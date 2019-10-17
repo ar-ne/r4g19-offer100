@@ -43,7 +43,7 @@
                         //     }
                         // };
 
-                        generateTables('/api/user/resume/list', 'Resume', false, 'table');
+                        generateTables('/api/user/personal/resume/list', 'Resume', false, 'table');
                         $('#table').on('click-row.bs.table', function (e, row, $element, field) {
                             Turbolinks.visit("resume/" + row.id);
                         })

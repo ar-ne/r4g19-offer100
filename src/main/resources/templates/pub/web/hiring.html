@@ -19,10 +19,10 @@
                        th:href="${'/web/hiring/'}+${hiring.getId()}+${'/edit'}">
                         <i class="material-icons">edit</i>编辑
                     </a>
-                    <a th:if="${userEditable}" class="btn btn-outline-danger ml-auto"
-                       th:href="${'/web/hiring/'}+${hiring.getId()}+${'/del'}">
-                        <i class="material-icons">delete_outline</i>删除
-                    </a>
+                    <!--                    <a th:if="${userEditable}" class="btn btn-outline-danger ml-auto"-->
+                    <!--                       th:href="${'/web/hiring/'}+${hiring.getId()}+${'/del'}">-->
+                    <!--                        <i class="material-icons">delete_outline</i>删除-->
+                    <!--                    </a>-->
                 </div>
                 <div class="card-body">
                     <form id="form" th:action="${'/web/hiring/'}+${creating?'new':(editing?hiring.getId()+'/save':'')}"

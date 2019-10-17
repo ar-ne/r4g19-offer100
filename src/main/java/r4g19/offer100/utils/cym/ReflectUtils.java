@@ -46,4 +46,22 @@ public class ReflectUtils {
         }
         throw new RuntimeException("Not impled");
     }
+
+    public static <T> T mergeWithSuper(T current, Object super_) {
+        Class curClazz = current.getClass().getSuperclass();
+        Class superClazz = super_.getClass();
+        if (!curClazz.equals(superClazz)) throw new RuntimeException("can not mergeWithSuper!");
+        for (Field superField : superClazz.getDeclaredFields()) {
+            if (superField.getName().equalsIgnoreCase("serialVersionUID")) continue;
+            try {
+                Field curField = curClazz.getDeclaredField(superField.getName());
+                curField.setAccessible(true);
+                superField.setAccessible(true);
+                curField.set(current, superField.get(super_));
+            } catch (NoSuchFieldException | IllegalAccessException e) {
+                e.printStackTrace();
+            }
+        }
+        return current;
+    }
 }

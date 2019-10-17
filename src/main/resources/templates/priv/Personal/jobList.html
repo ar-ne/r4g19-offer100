@@ -3,13 +3,18 @@
 <title th:text="#{msg.index.title}">欢迎</title>
 <body th:replace="~{/framework/main}">
 <div th:fragment="mainContent">
+    <div class="page-header row no-gutters py-4">
+        <div class="col-12 col-sm-4 text-center text-sm-left mb-0">
+            <h3 class="page-title">求职信息</h3>
+        </div>
+    </div>
     <div class="row">
         <div class="row mb-3 col-12 ">
             <div class="col-12">
                 <div class="card card-small ">
                     <div class="card-body">
 
-                                <table id="t1"></table>
+                        <table id="t1"></table>
 
 
                         <script>
@@ -24,12 +29,12 @@
                             operate.events = {
                                 'click .like': function (e, value, row, index) {
                                     alert('是否收藏该职位？');
-                                    apiSubmit("/api/user/job/addToCollection","POST",JSON.stringify(row),function (xhr) {
-                                        if(xhr.status===200) showSuccessAlert("职位已收藏".format(row.username));
+                                    apiSubmit("/api/user/job/addToCollection", "POST", JSON.stringify(row), function (xhr) {
+                                        if (xhr.status === 200) showSuccessAlert("职位已收藏".format(row.username));
                                     })
                                 }
                             };
-                            generateTables('/api/user/job/search', 'Login', false, 't1', operate);
+                            generateTables('/api/user/job/search', 'Hiring', false, 't1', operate);
 
 
                         </script>

@@ -20,7 +20,7 @@
                     </a>
                     <table id="table"></table>
                     <script>
-                        // let operate=[];
+                        // operate=[];
                         // operate.formatter = function (value, row, index) {
                         //     return [
                         //         '<a class="like" href="javascript:void(0)" title="Like">',
@@ -43,7 +43,7 @@
                         //     }
                         // };
 
-                        generateTables('/api/user/entrepreneurial/hiring/list', 'Entrepreneurial', false, 'table');
+                        generateTables('/api/user/entrepreneurial/hiring/list', 'Hiring', false, 'table');
                         $('#table').on('click-row.bs.table', function (e, row, $element, field) {
                             Turbolinks.visit("hiring/" + row.id);
                         })
