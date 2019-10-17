@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+
+                                <table id="t1"></table>
+
+
+                        <script>
+                            operate=[];
+                            operate.formatter = function (value, row, index) {
+                                return [
+                                    '<a class="remove" href="javascript:void(0)" title="Remove">',
+                                    '<i class="fa fa-trash"></i>',
+                                    '</a>'
+                                ].join('')
+                            };
+                            operate.events = {
+                                'click .remove': function (e, value, row, index) {
+                                    alert('是否取消收藏？');
+                                    apiSubmit("/api/user/job/delCollection","POST",JSON.stringify(row),function (xhr) {
+                                        if(xhr.status===200) showSuccessAlert("职位已取消收藏".format(row.username));
+                                    })
+                                }
+                            };
+                            generateTables('/api/user/job/collection', 'Login', false, 't1', operate);
+
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
