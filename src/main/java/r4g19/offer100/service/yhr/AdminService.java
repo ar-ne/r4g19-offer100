@@ -9,15 +9,13 @@
 
 package r4g19.offer100.service.yhr;
 
+import org.jooq.Result;
 import org.springframework.stereotype.Service;
 import r4g19.offer100.jooq.Tables;
 import r4g19.offer100.jooq.tables.daos.*;
-import r4g19.offer100.jooq.tables.pojos.Entrepreneurial;
-import r4g19.offer100.jooq.tables.pojos.Login;
-import r4g19.offer100.jooq.tables.pojos.Notice;
-import r4g19.offer100.jooq.tables.pojos.Personal;
+import r4g19.offer100.jooq.tables.pojos.*;
+import r4g19.offer100.jooq.tables.records.PersonalRecord;
 import r4g19.offer100.service.ServiceBase;
-
 
 
 /**
@@ -32,7 +30,6 @@ public class AdminService extends ServiceBase {
     public void deleteUser(String username) {
         new LogDao(dsl.configuration()).deleteById();
         dsl.delete(Tables.COLLECTION).where(Tables.COLLECTION.PER_USERNAME.eq(username)).execute();
-        dsl.delete(Tables.COLLECTION).where(Tables.COLLECTION.HIR_USERNAME.eq(username)).execute();
         dsl.delete(Tables.SUBMISSION).where(Tables.SUBMISSION.RES_USERNAME.eq(username)).execute();
         dsl.delete(Tables.SUBMISSION).where(Tables.SUBMISSION.HIR_USERNAME.eq(username)).execute();
         dsl.delete(Tables.HIRING).where(Tables.HIRING.USERNAME.eq(username)).execute();
@@ -66,6 +63,11 @@ public class AdminService extends ServiceBase {
         return entrepreneurial;
     }
 
+    public Hiring queryHiring(Long id) {
+        Hiring hiring = new HiringDao(dsl.configuration()).fetchOneById(id);
+        return hiring;
+    }
+
     public Notice queryNotice(Integer noticeId) {
         Notice notice = new NoticeDao(dsl.configuration()).fetchOneByNoticeId(noticeId);
         return notice;
@@ -83,9 +85,43 @@ public class AdminService extends ServiceBase {
         new EntrepreneurialDao(dsl.configuration()).update(entrepreneurial);
     }
 
+    public void updateHiring(Hiring hiring) {
+        new HiringDao(dsl.configuration()).update(hiring);
+    }
+
     public void updateNotice(Notice notice) {
         new NoticeDao(dsl.configuration()).update(notice);
     }
+
+    public int first() {
+        Result<PersonalRecord> personals = dsl.selectFrom(Tables.PERSONAL).where(Tables.PERSONAL.AGE.between(16, 20)).fetch();
+        return personals.size();
+    }
+
+    public int sencond() {
+        Result<PersonalRecord> personals = dsl.selectFrom(Tables.PERSONAL).where(Tables.PERSONAL.AGE.between(21, 30)).fetch();
+        return personals.size();
+    }
+
+    public int third() {
+        Result<PersonalRecord> personals = dsl.selectFrom(Tables.PERSONAL).where(Tables.PERSONAL.AGE.between(31, 40)).fetch();
+        return personals.size();
+    }
+
+    public int fourth() {
+        Result<PersonalRecord> personals = dsl.selectFrom(Tables.PERSONAL).where(Tables.PERSONAL.AGE.between(41, 50)).fetch();
+        return personals.size();
+    }
+
+    public int fifth() {
+        Result<PersonalRecord> personals = dsl.selectFrom(Tables.PERSONAL).where(Tables.PERSONAL.AGE.between(51, 60)).fetch();
+        return personals.size();
+    }
+
+    public void deletehr(Long id) {
+        new HiringDao(dsl.configuration()).deleteById(id);
+    }
+
 }
 
     

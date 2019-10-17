@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<title th:text="#{msg.index.title}">欢迎</title>
+<body th:replace="~{/framework/main}">
+<div th:fragment="mainContent">
+    <div class="row">
+        <div class="row mb-3 col-12 ">
+            <div class="col-12">
+                <div class="card card-small ">
+                    <div class="card-body">
+
+                        <table id="t1"></table>
+
+
+                        <script>
+                            operate=[];
+                            generateTables('/api/admin/hr/list', 'Hiring', false, 't1', operate);
+                            operate.formatter = function (value, row, index) {
+                                return [
+                                    '<a class="detail" href="javascript:void(0)" title="详情">',
+                                    '<i class="fa fa-info-circle"></i>',
+                                    '</a>  ',
+                                    '<a class="remove" href="javascript:void(0)" title="删除">',
+                                    '<i class="fa fa-trash"></i>',
+                                    '</a>'
+                                ].join('')
+                            };
+                            operate.events = {
+                                'click .detail': function (e, value, row, index) {
+                                    Turbolinks.visit("/admin/hrEdit/" + row.id);
+                                },
+                                'click .remove': function (e, value, row, index) {
+                                    var r = confirm("是否删除")
+                                    if(true) {
+                                        apiSubmit("/api/admin/hr/delete", "delete", row.id, function (xhr) {
+                                            console.log(row);
+                                            if (xhr.status === 200) {
+                                                showSuccessAlert( row.username + "招聘信息已删除");
+                                                window.location = "/admin/hr";
+
+                                            }
+                                        })
+                                    }else {
+                                        window.location = "/admin/hr";
+                                    }
+                                }
+                            };
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

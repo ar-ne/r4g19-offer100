@@ -5,10 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import r4g19.offer100.controller.ControllerBase;
-import r4g19.offer100.jooq.tables.pojos.Entrepreneurial;
-import r4g19.offer100.jooq.tables.pojos.Login;
-import r4g19.offer100.jooq.tables.pojos.Notice;
-import r4g19.offer100.jooq.tables.pojos.Personal;
+import r4g19.offer100.jooq.tables.pojos.*;
 import r4g19.offer100.properties.cym.Status;
 import r4g19.offer100.service.cym.CommonCRUD;
 import r4g19.offer100.service.yhr.AdminService;
@@ -108,6 +105,39 @@ public class AdminRouter extends ControllerBase {
 
     }
 
+    @GetMapping("/hr")
+    public String hr(Model model) {
+        model.addAttribute("userType", "admin");
+        return "redirect:HRList";
+    }
+
+    @GetMapping("/hrEdit/{id}")
+    public String hrEdit(Model model, @PathVariable Long id) {
+        Hiring hiring = adminService.queryHiring(id);
+        model.addAttribute("userType", "admin");
+        model.addAttribute("hiring", hiring);
+        return "admin/hiring_edit";
+    }
+
+    @PostMapping("/hiringDoEdit")
+    @ResponseBody
+    public String hiringDoEdit(HttpServletResponse response, Long id, String salary, String position, String eduRequirement, String workAddress, String interviewAddress, String detail) {
+        Hiring hiring = adminService.queryHiring(id);
+        if (hiring == null) {
+            response.setStatus(Status.showFailMsg);
+            return "标题与内容不能为空！";
+        } else {
+            hiring.setDetail(detail);
+            hiring.setEduRequirement(eduRequirement);
+            hiring.setInterviewAddress(interviewAddress);
+            hiring.setSalary(salary);
+            hiring.setWorkAddress(workAddress);
+            hiring.setPosition(position);
+            adminService.updateHiring(hiring);
+            return showSuccessMsgAndVisit("修改成功", "/admin/HRList", response);
+        }
+    }
+
     @GetMapping("/notice")
     public String noticeList(Model model) {
         model.addAttribute("userType", "admin");
@@ -168,6 +198,23 @@ public class AdminRouter extends ControllerBase {
             return showSuccessMsgAndVisit("修改成功", "/admin/noticeList", response);
         }
 
+    }
+
+    @GetMapping("/statistic")
+    public String statistic(Model model) {
+        int first = adminService.first();
+        int second = adminService.sencond();
+        int third = adminService.third();
+        int fourth = adminService.fourth();
+        int fifth = adminService.fifth();
+        model.addAttribute("userType", "admin");
+        model.addAttribute("first", first);
+        model.addAttribute("second", second);
+        model.addAttribute("third", third);
+        model.addAttribute("fourth", fourth);
+        model.addAttribute("fifth", fifth);
+
+        return "redirect:statistics";
     }
 
     @GetMapping("{page}")
