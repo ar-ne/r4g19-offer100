@@ -9,6 +9,7 @@ import 'bootstrap-table/dist/bootstrap-table-locale-all.min'
 import 'chart.js/dist/Chart.bundle.min'
 import 'sockjs-client/dist/sockjs.min'
 
+const _printThis = require("print-this");
 const SockJS = require("sockjs-client/dist/sockjs.min");
 const Stomp = require("stompjs");
 const Turbolinks = require("turbolinks");
