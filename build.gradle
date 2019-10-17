@@ -64,11 +64,12 @@ dependencies {
 //    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 //    implementation 'org.springframework.session:spring-session-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-jooq'
+    implementation 'org.springframework.boot:spring-boot-starter-jersey'
     implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+//    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-mail'
     implementation 'uk.com.robust-it:cloning:1.9.12'
     // https://mvnrepository.com/artifact/com.aliyun/aliyun-java-sdk-dysmsapi
@@ -141,9 +142,9 @@ jooq {
                             expression = 'PERSONAL|ENTREPRENEURIAL'
                             pojoExtends = 'r4g19.offer100.jooq.tables.pojos.Login'
                         }
-                        table {
-                            pojoExtends = 'org.springframework.hateoas.RepresentationModel'
-                        }
+//                        table {
+//                            pojoExtends = 'org.springframework.hateoas.RepresentationModel'
+//                        }
                     }
                 }
             }

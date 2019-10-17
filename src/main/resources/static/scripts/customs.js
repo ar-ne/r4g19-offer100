@@ -9,7 +9,7 @@ function apiSubmit(url, method, dat, callback) {
     $.ajax({
         type: method,
         url: url,
-        data: JSON.stringify(dat),
+        data: dat,
         dataType: "json",
         contentType: "application/json",
         headers: {'X-CSRF-TOKEN': $("meta[name='_csrf']").attr("content")},

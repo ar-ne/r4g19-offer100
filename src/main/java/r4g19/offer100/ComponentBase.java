@@ -18,7 +18,7 @@ import java.lang.reflect.Field;
 @Component
 public abstract class ComponentBase {
     protected final Logger logger = LoggerFactory.getLogger(this.getClass());
-    protected final Cloner cloner = new Cloner();
+    protected static final Cloner cloner = new Cloner();
     @Autowired
     protected DatabaseLog dbLogger;
 

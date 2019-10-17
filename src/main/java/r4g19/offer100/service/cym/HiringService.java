@@ -16,4 +16,8 @@ public class HiringService extends ServiceBase {
     public Hiring getHiring(Long id) {
         return new HiringDao(dsl.configuration()).fetchById(id).get(0);
     }
+
+    public void delete(Long id) {
+        new HiringDao(dsl.configuration()).fetchById(id);
+    }
 }

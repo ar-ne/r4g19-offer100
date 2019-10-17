@@ -1,11 +1,16 @@
 package r4g19.offer100;
 
+import org.glassfish.jersey.server.ResourceConfig;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.type.filter.AnnotationTypeFilter;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration;
@@ -17,13 +22,26 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.config.annotation.WebSocketMessageBrokerConfigurer;
+import r4g19.offer100.annotations.cym.API;
 import r4g19.offer100.autoconfigure.cjs.aliyunSMS.AliyunSMSConfig;
 import r4g19.offer100.properties.cjs.EmailConfig;
+import r4g19.offer100.utils.cym.AnnotationUtils;
 import r4g19.offer100.utils.cym.Auth;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.Path;
+import javax.ws.rs.Produces;
+import java.util.Map;
+import java.util.Set;
+
+import static r4g19.offer100.properties.cym.Vars.MEDIA_TYPE;
 
 /**
  * 入口类和配置信息
@@ -32,6 +50,33 @@ import r4g19.offer100.utils.cym.Auth;
 @EnableCaching
 @EnableConfigurationProperties({AliyunSMSConfig.class, EmailConfig.class})
 public class Application {
+
+    static {
+        //inject annotation before everything start
+        ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+        scanner.addIncludeFilter(new AnnotationTypeFilter(API.class));
+        Set<BeanDefinition> components = scanner.findCandidateComponents("r4g19.offer100.api");
+        for (BeanDefinition beanDefinition : components) {
+            Class resourceClass = null;
+            try {
+                resourceClass = Application.class.getClassLoader().loadClass(beanDefinition.getBeanClassName());
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            AnnotationUtils.alertAnnotationAtRuntime(resourceClass, Produces.class, MEDIA_TYPE);
+            AnnotationUtils.alertAnnotationAtRuntime(resourceClass, Consumes.class, MEDIA_TYPE);
+            AnnotationUtils.alertAnnotationAtRuntime(resourceClass, Path.class, Map.of("value", ((API) resourceClass.getAnnotation(API.class)).value()));
+            AnnotationUtils.alertAnnotationAtRuntime(resourceClass, RestController.class, Map.of("value", ((API) resourceClass.getAnnotation(API.class)).value()));
+//            for (Method declaredMethod : resourceClass.getDeclaredMethods()) {
+//                r4g19.offer100.annotations.cym.Path path = declaredMethod.getAnnotation(r4g19.offer100.annotations.cym.Path.class);
+//                if (path != null) {
+//                    AnnotationUtils.alertAnnotationAtRuntime(declaredMethod, Path.class, Map.of("value", path.value()));
+//                    AnnotationUtils.alertAnnotationAtRuntime(declaredMethod, Consumes.class, MEDIA_TYPE);
+//                }
+//            }
+        }
+        System.out.println("DONE");
+    }
 
     public static void main(String[] args) {
         new ConsoleThread().start();
@@ -69,6 +114,20 @@ public class Application {
 //            engine.addTemplateResolver(resolver);
 //        }
 //    }
+
+    @Component
+    @ApplicationPath("api")
+    public static class JerseyConfig extends ResourceConfig {
+        public JerseyConfig() throws ClassNotFoundException {
+            ClassPathScanningCandidateComponentProvider scanner = new ClassPathScanningCandidateComponentProvider(false);
+            scanner.addIncludeFilter(new AnnotationTypeFilter(API.class));
+            for (final BeanDefinition resourceBean : scanner.findCandidateComponents("r4g19.offer100.api")) {
+                Class resourceClass = getClass().getClassLoader().loadClass(resourceBean.getBeanClassName());
+                register(resourceClass);
+                LoggerFactory.getLogger(this.getClass()).trace("Registered Jersey component:{}", resourceBean);
+            }
+        }
+    }
 
     @Configuration
     @EnableWebSocketMessageBroker
