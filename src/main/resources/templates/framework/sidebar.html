@@ -29,7 +29,7 @@
     <li th:replace="/parts::nav-item('assignment_late',#{msg.staff.sidebar.ticket},@{ticket},false)"></li>
 </ul>
 <ul class="nav flex-column" th:fragment="Personal">
-    <li th:replace="/parts::nav-item('create_new_folder',#{msg.staff.sidebar.advice},@{advice},false)"></li>
+    <li th:replace="/parts::nav-item('create_new_folder','个人简历',@{resume_m},false)"></li>
     <li th:replace="/parts::nav-item('assignment_late',#{msg.staff.sidebar.ticket},@{ticket},false)"></li>
 </ul>
 <ul class="nav flex-column" th:fragment="admin">
