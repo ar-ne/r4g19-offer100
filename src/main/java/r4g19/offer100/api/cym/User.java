@@ -16,7 +16,6 @@ import javax.ws.rs.core.SecurityContext;
 import java.util.Arrays;
 import java.util.List;
 
-@API("user")
 public class User extends APIBase {
     @API("user/entrepreneurial")
     public static class Entrepreneurial extends APIBase {

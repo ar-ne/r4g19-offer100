@@ -28,6 +28,7 @@
     "jquery": "^3.4.1",
     "net": "^1.0.2",
     "popper.js": "^1.15.0",
+    "print-this": "^1.15.1",
     "sockjs-client": "^1.3.0",
     "stompjs": "^2.3.3",
     "turbolinks": "^5.2.0"

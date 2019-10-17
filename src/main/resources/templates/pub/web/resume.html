@@ -14,24 +14,25 @@
                 <div class="card-header ">
                     <button class="btn btn-outline-info" onclick="goBack()"><i class="material-icons">arrow_back</i>返回
                     </button>
-                    <a th:if="${editable}" class="btn btn-outline-success ml-auto"
+                    <a th:if="${userEditable}" class="btn btn-outline-success ml-auto"
                        th:href="${'/web/resume/'}+${resume.getId()}+${'/edit'}">
                         <i class="material-icons">edit</i>编辑
                     </a>
                 </div>
                 <div class="card-body">
-                    <form id="form" th:action="@{/web/resume/new}" method="post" onsubmit="return formSubmit()">
-                        <div th:if="!${create}" class="col-12">
+                    <form id="form" th:action="${'/web/resume/'}+${creating?'new':(editing?resume.getId()+'/save':'')}"
+                          method="post" onsubmit="return formSubmit()">
+                        <div th:if="!(${creating} or ${editing})" class="col-12">
                             <div
                                     th:include="/parts::TextInput('姓名','username',${personal.getUsername()},${disabled})"></div>
                             <div
                                     th:include="/parts::TextInput('生日','birth',${personal.getBirth()},${disabled})"></div>
                         </div>
-                        <div th:if="!${create}" class="row col-12">
+                        <div th:if="!(${creating} or ${editing})" class="row col-12">
                             <div th:replace="/parts::TextInput('性别','sex',${personal.getSex()},${disabled})"></div>
                             <div th:replace="/parts::TextInput('年龄','age',${personal.getAge()},${disabled})"></div>
                         </div>
-                        <div th:if="!${create}" class="row col-12">
+                        <div th:if="!(${creating} or ${editing})" class="row col-12">
                             <div th:replace="/parts::TextInput('毕业院校','school',${personal.getSchool()},${disabled})"></div>
                             <div th:replace="/parts::TextInput('教育经历','edu',${personal.getEdu()},${disabled})"></div>
                         </div>
@@ -46,7 +47,7 @@
                         <div th:replace="/parts::titledTextarea('个人介绍','introduce',${resume.getIntroduce()},${disabled})"></div>
                         <div th:replace="/parts::titledTextarea('个人经历','experience',${resume.getExperience()},${disabled})"></div>
                         <br>
-                        <div th:if="${create}" class="form-group col-md-12">
+                        <div th:if="(${creating} or ${editing})" class="form-group col-md-12">
                             <button type="submit" id="button" class="mb-2 btn btn-outline-primary mr-2">提交
                             </button>
                         </div>
